@@ -14,7 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using MahApps.Metro.Controls;
-
+using System.ComponentModel;
+using GMap.NET;
 namespace DiReCTUI
 {
     /// <summary>
@@ -25,8 +26,13 @@ namespace DiReCTUI
         public MainWindow()
         {
             InitializeComponent();
+            Closing += new CancelEventHandler(MainWindow_Closing);
             
-            
+        }
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            GMaps.Instance.DisableTileHost();
+            GMaps.Instance.CancelTileCaching();
         }
     }
 }

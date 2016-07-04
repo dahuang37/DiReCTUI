@@ -59,7 +59,7 @@ namespace DiReCTUI.Map
             //DataContext
             this.DataContext = new GPSLocation();
 
-            GMaps.Instance.EnableTileHost(8844);
+            GMaps.Instance.EnableTileHost(8845);
             // The pushpin to add to the map.
             Pushpin pin = new Pushpin();
             {
