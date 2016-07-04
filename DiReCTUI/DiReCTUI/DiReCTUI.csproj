@@ -76,9 +76,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Controls\GPSLocation.cs" />
     <Compile Include="Map\BingMap.xaml.cs">
       <DependentUpon>BingMap.xaml</DependentUpon>

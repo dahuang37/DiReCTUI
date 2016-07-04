@@ -19,9 +19,9 @@
             <local:CustomTileLayer/>
         </m:Map>
         <StackPanel>
-            <TextBlock Name="LongitudeTextBlock" Text="{Binding userLocation.Longitude}" FontSize="24"/>
-            <TextBlock Name="LatitudeTextBlock" Text="Latitude: " FontSize="24"/>
-            <TextBlock Name="StatusTextBlock" Text="Status: " FontSize="24" />
+            <TextBlock Name="LongitudeTextBlock" Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  FontSize="24"/>
+            <TextBlock Name="LatitudeTextBlock" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" FontSize="24"/>
+            <TextBlock Name="StatusTextBlock" Text="{Binding Status, StringFormat='Status: {0}'}" FontSize="24" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button Content="+" FontSize="25" Width="80" Click="ZoomIn_Click" Height="40" />
