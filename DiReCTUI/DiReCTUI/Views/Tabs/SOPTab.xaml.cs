@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MahApps.Metro.Controls;
-
-namespace DiReCTUI
+namespace DiReCTUI.Views.Tabs
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SOPTab.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class SOPTab : Page
     {
-        public MainWindow()
+        public SOPTab()
         {
             InitializeComponent();
-            
-            
         }
     }
 }

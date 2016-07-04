@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MahApps.Metro.Controls;
-
-namespace DiReCTUI
+namespace DiReCTUI.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ObservationSample.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class ObservationSample : Page
     {
-        public MainWindow()
+        public ObservationSample()
         {
             InitializeComponent();
-            
-            
         }
     }
 }

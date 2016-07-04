@@ -1,0 +1,34 @@
+﻿<Page x:Class="DiReCTUI.Map.BingMap"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiReCTUI.Map"
+      xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="BingMap">
+
+    
+    <Grid>
+        <m:Map x:Name="Map" CredentialsProvider="AhNqGR0mz68gFtWvoV3hXQno5_QkAG-3W-vOl96zKr60BxQv49GJbzeOJud_YoXi" 
+               Mode="Road" Center="23.6978, 120.9650" ZoomLevel="7"
+               TouchDown="BingMap_TouchDown"
+               >
+            <!--m:Pushpin Location="23.6978, 120.9650"/>-->
+            <local:CustomTileLayer/>
+        </m:Map>
+        <StackPanel>
+            <TextBlock Name="LongitudeTextBlock" Text="{Binding userLocation.Longitude}" FontSize="24"/>
+            <TextBlock Name="LatitudeTextBlock" Text="Latitude: " FontSize="24"/>
+            <TextBlock Name="StatusTextBlock" Text="Status: " FontSize="24" />
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Content="+" FontSize="25" Width="80" Click="ZoomIn_Click" Height="40" />
+            <Button Content="-" FontSize="25" Width="80" Click="ZoomOut_Click" Height="40"  />
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="Add Marker" FontSize="25" Click="Add_Marker_Click" />
+        </StackPanel>
+    </Grid>
+</Page>
