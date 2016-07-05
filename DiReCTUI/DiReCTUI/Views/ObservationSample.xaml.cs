@@ -24,5 +24,13 @@ namespace DiReCTUI.Views
         {
             InitializeComponent();
         }
+
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+        }
     }
 }
