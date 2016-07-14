@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using DiReCTUI.Views;
 
 
+
+
 namespace DiReCTUI.Views.Tabs
 {
     /// <summary>
@@ -30,7 +32,7 @@ namespace DiReCTUI.Views.Tabs
 
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new ObservationSample());
+            this.NavigationService.Navigate(new DebrisFlowPage());
         }
 
         private void Fire_Click(object sender, RoutedEventArgs e)

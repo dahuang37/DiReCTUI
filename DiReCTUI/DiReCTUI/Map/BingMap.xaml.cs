@@ -19,9 +19,15 @@ using GMap.NET.WindowsPresentation;
 using System.ComponentModel;
 using Microsoft.Maps.MapControl.WPF;
 using DiReCTUI.Controls;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+
 
 namespace DiReCTUI.Map
 {
+    //TODO:
+    // add search function allow user to search for location
     /// <summary>
     /// Interaction logic for BingMap.xaml
     /// </summary>
@@ -51,17 +57,36 @@ namespace DiReCTUI.Map
         
         private Location lastTouchLocation;
 
+        private GPSLocation GPS;
         public BingMap()
         {
             InitializeComponent();
             Map.Focus();
 
             //DataContext
-            this.DataContext = new GPSLocation();
+            GPS = new GPSLocation();
+            this.DataContext = GPS;
+            
+            try
+            {
+                // GMapProvider.WebProxy = WebRequest.DefaultWebProxy;
+                // or
+                Random rnd = new Random();
+                int port = rnd.Next(8800, 8900);
+                GMapProvider.WebProxy = new WebProxy("127.0.0.1", 1080);
+                GMapProvider.IsSocksProxy = true;
+                
+                GMaps.Instance.EnableTileHost(port);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("ex: " + ex);
+                
+            }
 
-            GMaps.Instance.EnableTileHost(8845);
+
             // The pushpin to add to the map.
-            Pushpin pin = new Pushpin();
+            DraggablePin pin = new DraggablePin(Map);
             {
                 pin.Location = Map.Center;
 
@@ -70,13 +95,9 @@ namespace DiReCTUI.Map
                     Content = "GMap.NET fusion power! ;}"
                 };
             }
+            
             Map.Children.Add(pin);
 
-        }
-        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            GMaps.Instance.DisableTileHost();
-            GMaps.Instance.CancelTileCaching();
         }
 
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
@@ -107,6 +128,73 @@ namespace DiReCTUI.Map
                 Map.Children.Add(pin);
             }
 
+        }
+
+        public void getCurrentPosition()
+        {
+            if (GPS.Status == "Tracking")
+            {
+                Map.Center = new Location(GPS.Latitude, GPS.Longitude);
+                if (Map.ZoomLevel < 12)
+                {
+                    Map.ZoomLevel = 12;
+                }
+                Pushpin pin = new Pushpin();
+                {
+                    pin.Location = Map.Center;
+
+                    pin.ToolTip = new Label()
+                    {
+                        Content = "Current Position"
+                    };
+                }
+                Map.Children.Add(pin);
+            }
+        }
+
+        public void zoomIntoPosition(Location loc)
+        {
+            Map.Center = new Location(loc);
+            Map.ZoomLevel = 15;
+            Pushpin pin = new Pushpin();
+            {
+                pin.Location = Map.Center;
+
+                pin.ToolTip = new Label()
+                {
+                    Content = "Current Position"
+                };
+            }
+            Map.Children.Add(pin);
+        }
+        public void addRoute(Location loc)
+        {
+            //LocationCollection locs = new LocationCollection();
+            //locs.Add(Map.Center);
+            //locs.Add(loc);
+            //MapPolyline routeLine = new MapPolyline()
+            //{
+            //    Locations = locs,
+            //    Stroke = new SolidColorBrush(Colors.Blue),
+            //    StrokeThickness = 5
+            //};
+
+            //Map.Children.Add(routeLine);
+            MapPolyline polyline = new MapPolyline();
+            polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
+            polyline.StrokeThickness = 5;
+            polyline.Opacity = 0.7;
+            polyline.Locations = new LocationCollection() {
+        new Location(47.6424, -122.3219),
+        new Location(47.8424,-122.1747),
+        new Location(47.67856,-122.130994)};
+
+            Map.Children.Add(polyline);
+            Map.Center = new Location(47.6424, -122.3219);
+        }
+        public Location getPosition()
+        {
+            return Map.Center;
         }
     }
 

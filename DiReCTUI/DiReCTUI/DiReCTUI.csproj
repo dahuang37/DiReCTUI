@@ -92,12 +92,18 @@
     <Compile Include="Map\BingMap.xaml.cs">
       <DependentUpon>BingMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Map\DraggablePin.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\RedMarker.xaml.cs">
       <DependentUpon>RedMarker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ObservationSample.xaml.cs">
-      <DependentUpon>ObservationSample.xaml</DependentUpon>
+    <Compile Include="Model\BackgroundInfo.cs" />
+    <Compile Include="Model\Observations\DebrisFlowRecord.cs" />
+    <Compile Include="Model\Observations\ObservationRecord.cs" />
+    <Compile Include="ViewModel\DebrisFlowViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Views\DebrisFlowPage.xaml.cs">
+      <DependentUpon>DebrisFlowPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tabs\ObservationTab.xaml.cs">
       <DependentUpon>ObservationTab.xaml</DependentUpon>
@@ -133,7 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ObservationSample.xaml">
+    <Page Include="Views\DebrisFlowPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

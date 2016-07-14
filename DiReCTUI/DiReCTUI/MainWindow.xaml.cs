@@ -33,6 +33,7 @@ namespace DiReCTUI
         {
             GMaps.Instance.DisableTileHost();
             GMaps.Instance.CancelTileCaching();
+            
         }
     }
 }

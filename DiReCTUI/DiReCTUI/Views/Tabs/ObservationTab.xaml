@@ -26,8 +26,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
-        
+        <!-- Tiles -->
         <Controls:Tile Name="Debris_Flow" Title="Debris Flows" 
                        TiltFactor="2" Grid.Column="1" Grid.Row="1" 
                        Width="300" Height="200" 
@@ -83,5 +82,14 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Controls:Tile>
+        
+        <!-- Add Object Button (Haven't Implemented) -->
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Column="6" Grid.Row="6">
+            <Rectangle Width="50" Height="50">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_add}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Button>
     </Grid>
 </Page>
