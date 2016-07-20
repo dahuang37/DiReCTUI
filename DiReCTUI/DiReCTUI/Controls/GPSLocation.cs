@@ -77,7 +77,7 @@ namespace DiReCTUI.Controls
 
         #endregion
 
-
+        #region public functions
         public void StartTracking()
         {
             this.watcher = new GeoCoordinateWatcher();
@@ -107,11 +107,16 @@ namespace DiReCTUI.Controls
             status = null;
 
         }
+        #endregion
 
+        #region Constructor
         public GPSLocation()
         {
             StartTracking();
         }
+        #endregion
+
+
 
     }
 }

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 using GMap.NET;
 using Microsoft.Maps.MapControl.WPF;
-
+using DiReCTUI.ViewModel;
 namespace DiReCTUI.Views
 {
     /// <summary>
@@ -24,9 +24,11 @@ namespace DiReCTUI.Views
     public partial class DebrisFlowPage : Page
     {
         
+    
         public DebrisFlowPage()
         {
             InitializeComponent();
+            this.DataContext = new DebrisFlowViewModel();
         }
 
         #region Click Functions For DataTemplate
@@ -69,17 +71,7 @@ namespace DiReCTUI.Views
         }
 
         #region Testing Functions
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            map.getCurrentPosition();
-        }
-
-        private void Button2_Click(object sender, RoutedEventArgs e)
-        {
-            Location loc = map.getPosition();
-            map.addRoute(loc);
-
-        }
+        
         #endregion
     }
 }

@@ -37,7 +37,7 @@ using System.Threading.Tasks;
 
 namespace DiReCTUI.Model
 {
-    class DebrisFlowRecord : ObservationRecord
+    public class DebrisFlowRecord : ObservationRecord
     {
         #region Properties
             /// <summary>

@@ -16,19 +16,25 @@
                TouchDown="BingMap_TouchDown"
                >
             <!--m:Pushpin Location="23.6978, 120.9650"/>-->
-            <local:CustomTileLayer/>
+            <local:CustomTileLayer />
         </m:Map>
         <StackPanel>
             <TextBlock Name="LongitudeTextBlock" Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  FontSize="24"/>
             <TextBlock Name="LatitudeTextBlock" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" FontSize="24"/>
             <TextBlock Name="StatusTextBlock" Text="{Binding Status, StringFormat='Status: {0}'}" FontSize="24" />
         </StackPanel>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Content="+" FontSize="25" Width="80" Click="ZoomIn_Click" Height="40" />
-            <Button Content="-" FontSize="25" Width="80" Click="ZoomOut_Click" Height="40"  />
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" >
+            <Button  FontSize="25" Width="40" Click="ZoomIn_Click" Height="40"  >
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">+</TextBlock>
+            </Button>
+            <Button FontSize="25" Width="40" Click="ZoomOut_Click" Height="40" >
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">-</TextBlock>
+            </Button>
+            <Button FontSize="17" Width="40" Height="40" Click="Add_Marker_Click" >
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">M</TextBlock>
+            </Button>
+            
         </StackPanel>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Content="Add Marker" FontSize="25" Click="Add_Marker_Click" />
-        </StackPanel>
+        
     </Grid>
 </UserControl>

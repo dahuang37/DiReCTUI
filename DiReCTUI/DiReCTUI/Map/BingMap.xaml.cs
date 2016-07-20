@@ -22,7 +22,7 @@ using DiReCTUI.Controls;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-
+using System.Collections.ObjectModel;
 
 namespace DiReCTUI.Map
 {
@@ -53,16 +53,28 @@ namespace DiReCTUI.Map
     }
     public partial class BingMap 
     {
-        //Bing Map properties
-        
-        private Location lastTouchLocation;
 
+        #region Fields
+        //use to save the last point user touch screen to add marker
+        private Location lastTouchLocation;
+        //use to get user's GPS location
         private GPSLocation GPS;
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// This constructor will initialize the Map and GPS location.
+        /// The Map features uses combination of Gmap and Bing WPF control  
+        /// </summary>
+
         public BingMap()
         {
             InitializeComponent();
             Map.Focus();
 
+      
+            
             //DataContext
             GPS = new GPSLocation();
             this.DataContext = GPS;
@@ -86,28 +98,28 @@ namespace DiReCTUI.Map
 
 
             // The pushpin to add to the map.
-            DraggablePin pin = new DraggablePin(Map);
+            Pushpin pin = new Pushpin();
             {
                 pin.Location = Map.Center;
 
                 pin.ToolTip = new Label()
                 {
-                    Content = "GMap.NET fusion power! ;}"
+                    Content = "Current Position"
                 };
             }
-            
+            pin.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(pin);
+            
+            
 
         }
+        #endregion
 
+        #region private helpers
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
-
-
             TouchPoint p = e.GetTouchPoint(this);
-
             lastTouchLocation = Map.ViewportPointToLocation(p.Position);
-
 
         }
         private void ZoomIn_Click(object sender, EventArgs e)
@@ -129,7 +141,9 @@ namespace DiReCTUI.Map
             }
 
         }
+        #endregion
 
+        #region public functions
         public void getCurrentPosition()
         {
             if (GPS.Status == "Tracking")
@@ -151,6 +165,17 @@ namespace DiReCTUI.Map
                 Map.Children.Add(pin);
             }
         }
+        public void addPushPins(double Latitude, double Longitude, string label)
+        {
+            DraggablePin pin = new DraggablePin(Map);
+            {
+                pin.Location = new Location(Latitude, Longitude);
+                pin.ToolTip = new Label()
+                {
+                    Content = label
+                };
+            }
+        }
 
         public void zoomIntoPosition(Location loc)
         {
@@ -165,6 +190,7 @@ namespace DiReCTUI.Map
                     Content = "Current Position"
                 };
             }
+            pin.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(pin);
         }
         public void addRoute(Location loc)
@@ -196,6 +222,10 @@ namespace DiReCTUI.Map
         {
             return Map.Center;
         }
+        #endregion
+
+      
+       
     }
 
 }

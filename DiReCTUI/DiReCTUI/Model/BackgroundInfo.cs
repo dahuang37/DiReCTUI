@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiReCTUI.Model
 {
-    class BackgroundInfo
+    public class BackgroundInfo
     {
         // DebrisFlow
 

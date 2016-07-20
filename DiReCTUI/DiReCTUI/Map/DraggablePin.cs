@@ -29,6 +29,7 @@ namespace DiReCTUI.Map
                 _map.MouseUp += ParentMap_MouseLeftButtonUp;
                 _map.MouseMove += ParentMap_MouseMove;
                 _map.TouchMove += _map_TouchMove;
+                
             }
 
             // Enable Dragging

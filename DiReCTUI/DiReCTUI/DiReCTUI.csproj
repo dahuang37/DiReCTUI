@@ -94,9 +94,6 @@
     </Compile>
     <Compile Include="Map\DraggablePin.cs" />
     <Compile Include="Map\Map.cs" />
-    <Compile Include="Map\RedMarker.xaml.cs">
-      <DependentUpon>RedMarker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\BackgroundInfo.cs" />
     <Compile Include="Model\Observations\DebrisFlowRecord.cs" />
     <Compile Include="Model\Observations\ObservationRecord.cs" />
@@ -124,10 +121,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Map\BingMap.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Map\RedMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

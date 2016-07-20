@@ -12,10 +12,10 @@ namespace DiReCTUI.ViewModel
     public class ViewModelBase : INotifyPropertyChanged
     {
         #region Constructor
-        protected ViewModelBase()
-        {
+        //protected ViewModelBase()
+        //{
 
-        }
+        //}
         #endregion
 
         #region DisplayName

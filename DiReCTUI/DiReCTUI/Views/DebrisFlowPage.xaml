@@ -6,9 +6,11 @@
       xmlns:local="clr-namespace:DiReCTUI.Views"
       xmlns:bingMap="clr-namespace:DiReCTUI.Map"
       mc:Ignorable="d" 
+      xmlns:vm="clr-namespace:DiReCTUI.ViewModel"
       d:DesignHeight="1000" d:DesignWidth="1000"
+      
       Title="DebrisFlowPage">
-<!--
+    <!--
     this page is the prototype for DebrisFlow Page.
     Features: 1) use DataTemplate to switch between different part of Model
               2) Map Control
@@ -22,6 +24,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="12"/>
         </Style>
+       
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
@@ -35,12 +38,13 @@
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
         </Style>
-      
+
         <!-- DataTemplate for General Inforation -->
-        <DataTemplate x:Key="DebrisFlowGeneral">
+        <DataTemplate x:Key="DebrisFlowGeneral" DataType="{x:Type vm:DebrisFlowViewModel}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!--5 -->
+                    <RowDefinition Height="Auto"/>
+                    <!--5 -->
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -54,13 +58,14 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
 
                     <Label Margin="12">Rivulet Name:</Label>
-                    <TextBox  Margin="12" Width="100" ></TextBox>
+                    <TextBox  Margin="12" Width="100"
+                              Text="{Binding Path=RivuletName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     <Label  Margin="12">Rivulet Coordinate:</Label>
                     <TextBox Margin="12" Width="100"></TextBox>
 
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Margin="12">TimeStamp:</Label>
+                    <Label Margin="12" >TimeStamp:</Label>
                     <DatePicker Name="DebrisFlowDate" Margin="12"></DatePicker>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
@@ -77,11 +82,12 @@
         <DataTemplate x:Name="DebrisFLowUpStreamName" x:Key="DebrisFlowUpStream">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!-- 4 -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- 4 -->
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    
+
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Background="AliceBlue">
                     <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
@@ -90,10 +96,10 @@
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-                    <Label>Slope Angle: </Label>
+                    <Label>Slope Angle:</Label>
                     <TextBox></TextBox>
-                    
-                    <Label>Picture: </Label>
+
+                    <Label>Picture:</Label>
                     <Button>Upload</Button>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
@@ -120,10 +126,10 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
                     <Button Margin="12" x:Name="UpStream_Next_Button" Width="Auto" Click="UpStream_Button_Click">
-                    Next
+                        Next
                     </Button>
                     <Button Margin="12" x:Name="UpStream_Back_Button" Click="UpStream_Back_Click">
-                     Back
+                        Back
                     </Button>
                 </StackPanel>
             </Grid>
@@ -139,7 +145,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-               
+
                 <StackPanel Grid.Row="0"  Background="AliceBlue">
                     <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="Catchment"/></TextBlock>
@@ -147,23 +153,23 @@
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" >
-                    <Label>Catchment Area: </Label>
+                    <Label>Catchment Area:</Label>
                     <TextBox></TextBox>
 
                     <Label>Picture:</Label>
                     <Button Height="Auto">Upload</Button>
                 </StackPanel>
-                
+
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-                    <Label>Plantation: </Label>
+                    <Label>Plantation:</Label>
                     <ComboBox x:Name="Plantation_ComboBox" MinWidth="20">
                         <ComboBoxItem x:Name="Plantation_NoPlantation" IsSelected="True">No Plantation</ComboBoxItem>
                         <ComboBoxItem>Small Concerntration of Plantation</ComboBoxItem>
                         <ComboBoxItem>Medium Concerntration of Plantation</ComboBoxItem>
                         <ComboBoxItem>Large Concerntration of Plantation</ComboBoxItem>
                     </ComboBox>
-                    
-                    <Label>Collapse Rate: </Label>
+
+                    <Label>Collapse Rate:</Label>
                     <TextBox></TextBox>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
@@ -178,14 +184,14 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <Label>Plantation Type: </Label>
+                        <Label>Plantation Type:</Label>
                         <ComboBox>
                             <ComboBoxItem>Aritificial Forest</ComboBoxItem>
                             <ComboBoxItem>Natural Forest</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
                 </StackPanel>
-                
+
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4">
                     <Button Margin="12" x:Name="Catchment_Next_Button" Width="Auto" Click="Catchment_Next_Click">
                         Next
@@ -215,7 +221,7 @@
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" >
-                    <Label>Slope Angle: </Label>
+                    <Label>Slope Angle:</Label>
                     <TextBox></TextBox>
 
                     <Label>Picture:</Label>
@@ -223,7 +229,7 @@
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-                    <Label>Rock Type: </Label>
+                    <Label>Rock Type:</Label>
                     <ComboBox x:Name="Rock_ComboBox" MinWidth="20">
                         <ComboBoxItem x:Name="RockType_None" IsSelected="True">None</ComboBoxItem>
                         <ComboBoxItem>礫石</ComboBoxItem>
@@ -242,7 +248,7 @@
 
                             </Style>
                         </Grid.Style>
-                        <Label>Rock Size: </Label>
+                        <Label>Rock Size:</Label>
                         <ComboBox x:Name="RockSize_ComboBox" MinWidth="20">
                             <ComboBoxItem>Small</ComboBoxItem>
                             <ComboBoxItem>Medium</ComboBoxItem>
@@ -263,13 +269,12 @@
         </DataTemplate>
 
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+           
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20" />
@@ -284,14 +289,33 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="Location"/></TextBlock>
             </Border>
         </StackPanel>
-        <!-- Testing Buttons -->
-        <Button Grid.Row="2" Click="Button_Click">Current Position</Button>
-        <Button Grid.Row="3" Click="Button2_Click">Add_Route</Button>
         
-        <bingMap:BingMap x:Name="map" Grid.Row="4" Height="500"/>
-        <StackPanel Grid.Row="5">
+
+        <bingMap:BingMap x:Name="map" Grid.Row="2" Height="700" VerticalAlignment="Stretch"  />
+        <!-- This stack panel is only used for testing purposes -->
+        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Right" Width="250"  >
+            
+            <Grid Background="Black" Opacity="0.5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Foreground="White"  Grid.Column="0" Target="{Binding ElementName=LatTxtBox}"  Content="Latitude:"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=LostFocus}" />
+                <Label Grid.Row="1" Foreground="White" Opacity="1" Grid.Column="0" Target="{Binding ElementName=LongTxtBox}" Content="Longitude:"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=LostFocus}"  />
+                <TextBlock FontSize="25" Grid.Row="2" Foreground="White" >In range: </TextBlock>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="3">
             <ContentPresenter x:Name="CurrentPresenter" ContentTemplate="{StaticResource DebrisFlowGeneral}" />
         </StackPanel>
-        
+
     </Grid>
 </Page>
