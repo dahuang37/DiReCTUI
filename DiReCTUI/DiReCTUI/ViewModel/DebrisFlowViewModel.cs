@@ -8,10 +8,10 @@ using DiReCTUI.Model;
 using DiReCTUI.Map;
 using DiReCTUI.Controls;
 using System.Collections.ObjectModel;
-
+using System.Device.Location;
 namespace DiReCTUI.ViewModel
 {
-    public class DebrisFlowViewModel : ViewModelBase
+    public class DebrisFlowViewModel : ViewModelBase, GPSInterface
     {
         #region Fields
         readonly DebrisFlowRecord _debrisFlowRecord;
@@ -20,9 +20,96 @@ namespace DiReCTUI.ViewModel
         private GPSLocation gps;
         #endregion
 
+        #region GPS properties, fields and functions
+        #region fields
+        private string status;
+        private GeoCoordinateWatcher watcher;
+        private double longitude;
+        private double latitude;
+
+        #endregion
+
+        #region Properties
+        public string Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                if(value != status)
+                {
+                    status = value;
+                    OnPropertyChanged("Status");
+                }
+            }
+        }
+        public double Latitude
+        {
+            get
+            {
+                return latitude;
+            }
+            set
+            {
+                if (value == latitude) return;
+                latitude = value;
+                OnPropertyChanged("Latitude");
+            }
+        }
+        public double Longitude
+        {
+            get
+            {
+                return longitude;
+            }
+            set
+            {
+                if (value == latitude) return;
+                longitude = value;
+                base.OnPropertyChanged("Longitude");
+            }
+        }
+        #endregion
+
+        #region public function
+        public void StartTracking()
+        {
+            this.watcher = new GeoCoordinateWatcher();
+            this.watcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(watcher_PositionChanged);
+            this.watcher.Start();
+
+        }
+
+        public void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        {
+            Longitude = e.Position.Location.Longitude;
+            Latitude = e.Position.Location.Latitude;
+            Status = "Tracking";
+        }
+
+        public void StopTracking()
+        {
+            if (this.watcher == null)
+            {
+                return;
+            }
+            watcher.Stop();
+            watcher.Dispose();
+            watcher = null;
+            latitude = 0;
+            longitude = 0;
+            status = null;
+
+        }
+        #endregion
+        #endregion
+
         #region Constructor
         public DebrisFlowViewModel()
         {
+            StartTracking();
             this._debrisFlowRecord = new DebrisFlowRecord();
             this.gps = new GPSLocation();
             this._backgroundInfo = new BackgroundInfo();
@@ -40,6 +127,7 @@ namespace DiReCTUI.ViewModel
 
         }
         #endregion
+
         #region Properties
         public string RivuletName
         {
@@ -53,33 +141,9 @@ namespace DiReCTUI.ViewModel
             }
         }
         #endregion
+
         #region Display Properties
-        public double Latitude
-        {
-            get
-            {
-                return gps.Latitude;
-            }
-            set
-            {
-                if (value == gps.Latitude) return;
-                gps.Latitude = value;
-                base.OnPropertyChanged("Latitude");
-            }
-        }
-        public double Longitude
-        {
-            get
-            {
-                return gps.Longitude;
-            }
-            set
-            {
-                if (value == gps.Latitude) return;
-                gps.Longitude = value;
-                base.OnPropertyChanged("Longitude");
-            }
-        }
+        
         #endregion
 
         #region private helpers

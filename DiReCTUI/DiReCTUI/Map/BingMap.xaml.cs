@@ -165,6 +165,7 @@ namespace DiReCTUI.Map
                 Map.Children.Add(pin);
             }
         }
+
         public void addPushPins(double Latitude, double Longitude, string label)
         {
             DraggablePin pin = new DraggablePin(Map);
@@ -193,6 +194,7 @@ namespace DiReCTUI.Map
             pin.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(pin);
         }
+
         public void addRoute(Location loc)
         {
             //LocationCollection locs = new LocationCollection();
@@ -222,6 +224,8 @@ namespace DiReCTUI.Map
         {
             return Map.Center;
         }
+        
+       
         #endregion
 
       
