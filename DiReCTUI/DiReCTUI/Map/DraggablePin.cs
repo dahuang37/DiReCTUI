@@ -33,12 +33,13 @@ namespace DiReCTUI.Map
                 _map.TouchMove += _map_TouchMove;
                 
             }
-
             // Enable Dragging
             this.isDragging = true;
 
             base.OnMouseLeftButtonDown(e);
         }
+
+        
 
         void _map_TouchMove(object sender, TouchEventArgs e)
         {

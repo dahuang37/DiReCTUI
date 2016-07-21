@@ -24,7 +24,6 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="12"/>
         </Style>
-       
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
@@ -79,11 +78,11 @@
             </Grid>
         </DataTemplate>
         <!-- DataTemplate for UpStream Data -->
-        <DataTemplate x:Name="DebrisFLowUpStreamName" x:Key="DebrisFlowUpStream">
+        <!--<DataTemplate x:Name="DebrisFLowUpStreamName" x:Key="DebrisFlowUpStream">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- 4 -->
+                    --><!-- 4 --><!--
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -133,12 +132,12 @@
                     </Button>
                 </StackPanel>
             </Grid>
-        </DataTemplate>
+        </DataTemplate>-->
         <!-- DataTemplate for Catchment -->
-        <DataTemplate x:Name="DebrisFLowCatchmentName" x:Key="DebrisFlowCatchment">
+        <!--<DataTemplate x:Name="DebrisFLowCatchmentName" x:Key="DebrisFlowCatchment">
             <Grid>
                 <Grid.RowDefinitions>
-                    <!-- 4 -->
+                    --><!-- 4 --><!--
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -201,12 +200,12 @@
                     </Button>
                 </StackPanel>
             </Grid>
-        </DataTemplate>
+        </DataTemplate>-->
         <!-- DataTemplate for Flow Track Data -->
-        <DataTemplate x:Name="DebrisFLowFlowTrackName" x:Key="DebrisFlowFlowTrack">
+        <!--<DataTemplate x:Name="DebrisFLowFlowTrackName" x:Key="DebrisFlowFlowTrack">
             <Grid>
                 <Grid.RowDefinitions>
-                    <!-- 5 -->
+                    --><!-- 5 --><!--
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -266,7 +265,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-        </DataTemplate>
+        </DataTemplate>-->
 
     </Page.Resources>
 
@@ -307,10 +306,10 @@
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Foreground="White"  Grid.Column="0" Target="{Binding ElementName=LatTxtBox}"  Content="Latitude:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <Label Grid.Row="1" Foreground="White" Opacity="1" Grid.Column="0" Target="{Binding ElementName=LongTxtBox}" Content="Longitude:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"  />
-                <TextBlock FontSize="25" Grid.Row="2" Foreground="White" Text="{Binding Status}"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                <TextBlock Margin="15" FontSize="18" Grid.Row="2" Foreground="White" Text="{Binding Status}"></TextBlock>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="3">

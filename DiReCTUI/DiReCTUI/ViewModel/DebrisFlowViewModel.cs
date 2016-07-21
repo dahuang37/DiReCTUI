@@ -19,7 +19,7 @@ namespace DiReCTUI.ViewModel
     {
         #region Fields
         readonly DebrisFlowRecord _debrisFlowRecord;
-         BackgroundInfo _backgroundInfo;
+        BackgroundInfo _backgroundInfo;
         private ObservableCollection<DraggablePin> _Pushpins;
         private BingMap map;
         private ObservableCollection<Location> SOPLocations;
@@ -152,8 +152,8 @@ namespace DiReCTUI.ViewModel
             Status = "init";
             currentLocation = new Location(Latitude, Longitude);
             this.currentMarker = map.getCurrentMarker();
-            //currentMarker.MouseMove += new MouseEventHandler(setCurrentMarkerPosition);
-
+            this.currentMarker.TouchMove += new EventHandler<TouchEventArgs>(setCurrentMarkerPosition);
+            
             //Sop
             setSOPpins();
 
@@ -177,19 +177,7 @@ namespace DiReCTUI.ViewModel
         #endregion
 
         #region Properties
-        public Visibility TemplateVisibility
-        {
-            get { return this.templateVisibility; }
-            set
-            {
-                if(value != this.templateVisibility)
-                {
-                    templateVisibility = value;
-                    OnPropertyChanged("TemplateVisibility");
-                    
-                }
-            }
-        }
+        
 
         public string RivuletName
         {
@@ -205,15 +193,29 @@ namespace DiReCTUI.ViewModel
         #endregion
 
         #region Display Properties
+        public Visibility TemplateVisibility
+        {
+            get { return this.templateVisibility; }
+            set
+            {
+                if (value != this.templateVisibility)
+                {
+                    templateVisibility = value;
+                    OnPropertyChanged("TemplateVisibility");
 
+                }
+            }
+        }
         #endregion
 
         #region private helpers
         void setCurrentMarkerPosition(object s, EventArgs e)
         {
-            DraggablePin pin = (DraggablePin)s;
+            Latitude = 345;
+            DraggablePin pin = s as DraggablePin;
             Latitude = pin.Location.Latitude;
             Longitude = pin.Location.Longitude;
+            Latitude = 123;
         }
 
         private void detectCurrentMarker()
@@ -233,18 +235,13 @@ namespace DiReCTUI.ViewModel
                         this._backgroundInfo.RivuletName = "Success";
                         TemplateVisibility = Visibility.Visible;
                         
-                        
-
-
-
                     }
                 }
             }
             
         }
         #endregion
-
-
+        
         #region SOP pins
         void setSOPpins()
         {
@@ -261,6 +258,7 @@ namespace DiReCTUI.ViewModel
         }
 
         #endregion
+
         #region pins functions and properties
 
         public ObservableCollection<DraggablePin> Pushpins
