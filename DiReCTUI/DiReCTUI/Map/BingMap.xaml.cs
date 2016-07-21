@@ -59,6 +59,8 @@ namespace DiReCTUI.Map
         private Location lastTouchLocation;
         //use to get user's GPS location
         private GPSLocation GPS;
+        //current marker indicates user location
+        private DraggablePin currentMarker;
         #endregion
 
         #region Constructor
@@ -72,8 +74,6 @@ namespace DiReCTUI.Map
         {
             InitializeComponent();
             Map.Focus();
-
-      
             
             //DataContext
             GPS = new GPSLocation();
@@ -98,17 +98,18 @@ namespace DiReCTUI.Map
 
 
             // The pushpin to add to the map.
-            Pushpin pin = new Pushpin();
+            currentMarker = new DraggablePin(Map);
             {
-                pin.Location = Map.Center;
+                currentMarker.Location = new Location(25.04133, 121.6133);
 
-                pin.ToolTip = new Label()
+                currentMarker.ToolTip = new Label()
                 {
                     Content = "Current Position"
                 };
             }
-            pin.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
-            Map.Children.Add(pin);
+            
+            currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
+            Map.Children.Add(currentMarker);
             
             
 
@@ -144,6 +145,22 @@ namespace DiReCTUI.Map
         #endregion
 
         #region public functions
+        public DraggablePin getCurrentMarker()
+        {
+            if(currentMarker == null)
+            {
+                currentMarker = new DraggablePin(Map);
+            }
+            return currentMarker;
+        }
+        public void setCurrentMarkerPosition(Location loc)
+        {
+            if(currentMarker != null)
+            {
+                currentMarker.Location = loc;
+            }
+        }
+
         public void getCurrentPosition()
         {
             if (GPS.Status == "Tracking")
@@ -168,6 +185,19 @@ namespace DiReCTUI.Map
 
         public void addPushPins(double Latitude, double Longitude, string label)
         {
+            Pushpin pin = new Pushpin();
+            {
+                pin.Location = new Location(Latitude, Longitude);
+                pin.ToolTip = new Label()
+                {
+                    Content = label
+                };
+            }
+            Map.Children.Add(pin);
+        }
+
+        public void addDraggablePins(double Latitude, double Longitude, string label)
+        {
             DraggablePin pin = new DraggablePin(Map);
             {
                 pin.Location = new Location(Latitude, Longitude);
@@ -176,6 +206,7 @@ namespace DiReCTUI.Map
                     Content = label
                 };
             }
+            Map.Children.Add(pin);
         }
 
         public void zoomIntoPosition(Location loc)
@@ -191,7 +222,7 @@ namespace DiReCTUI.Map
                     Content = "Current Position"
                 };
             }
-            pin.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
+            
             Map.Children.Add(pin);
         }
 

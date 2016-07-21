@@ -19,6 +19,8 @@ namespace DiReCTUI.Map
             _map = map;
         }
 
+
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (_map != null)

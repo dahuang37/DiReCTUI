@@ -12,7 +12,7 @@
     
     <Grid>
         <m:Map x:Name="Map" CredentialsProvider="AhNqGR0mz68gFtWvoV3hXQno5_QkAG-3W-vOl96zKr60BxQv49GJbzeOJud_YoXi" 
-               Mode="Road" Center="23.6978, 120.9650" ZoomLevel="7"
+               Mode="Road" Center="25.04133, 121.6133" ZoomLevel="16"
                TouchDown="BingMap_TouchDown"
                >
             <!--m:Pushpin Location="23.6978, 120.9650"/>-->

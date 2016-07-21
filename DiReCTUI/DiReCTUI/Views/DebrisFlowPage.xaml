@@ -40,7 +40,7 @@
         </Style>
 
         <!-- DataTemplate for General Inforation -->
-        <DataTemplate x:Key="DebrisFlowGeneral" DataType="{x:Type vm:DebrisFlowViewModel}">
+        <DataTemplate x:Key="DebrisFlowGeneral" x:Name="General" DataType="{x:Type vm:DebrisFlowViewModel}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -307,14 +307,14 @@
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Foreground="White"  Grid.Column="0" Target="{Binding ElementName=LatTxtBox}"  Content="Latitude:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=LostFocus}" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" />
                 <Label Grid.Row="1" Foreground="White" Opacity="1" Grid.Column="0" Target="{Binding ElementName=LongTxtBox}" Content="Longitude:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=LostFocus}"  />
-                <TextBlock FontSize="25" Grid.Row="2" Foreground="White" >In range: </TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"  />
+                <TextBlock FontSize="25" Grid.Row="2" Foreground="White" Text="{Binding Status}"></TextBlock>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="3">
-            <ContentPresenter x:Name="CurrentPresenter" ContentTemplate="{StaticResource DebrisFlowGeneral}" />
+            <ContentPresenter Visibility="{Binding TemplateVisibility}" x:Name="CurrentPresenter" Content="{Binding }" ContentTemplate="{StaticResource DebrisFlowGeneral}" />
         </StackPanel>
 
     </Grid>
