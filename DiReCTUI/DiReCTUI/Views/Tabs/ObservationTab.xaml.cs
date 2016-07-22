@@ -29,10 +29,14 @@ namespace DiReCTUI.Views.Tabs
             InitializeComponent();
             
         }
-
+        private DebrisFlowPage db;
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new DebrisFlowPage());
+            if(db == null)
+            {
+                db = new DebrisFlowPage();
+            }
+            this.NavigationService.Navigate(db);
         }
 
         private void Fire_Click(object sender, RoutedEventArgs e)

@@ -26,6 +26,7 @@ namespace DiReCTUI.ViewModel
         private Location currentLocation;
         private DraggablePin currentMarker;
         private Visibility templateVisibility;
+        private double radius;
         #endregion
 
         #region GPS properties, fields and functions
@@ -133,7 +134,7 @@ namespace DiReCTUI.ViewModel
         }
         #endregion
         #endregion
-
+        
         #region Constructor
         public DebrisFlowViewModel(BingMap map)
         {
@@ -141,6 +142,7 @@ namespace DiReCTUI.ViewModel
             this._debrisFlowRecord = new DebrisFlowRecord();
             this._backgroundInfo = new BackgroundInfo();
             this._backgroundInfo.RivuletName = "test";
+            this.radius = 150;
 
             //map and gps
             //StartTracking();
@@ -152,13 +154,13 @@ namespace DiReCTUI.ViewModel
             Status = "init";
             currentLocation = new Location(Latitude, Longitude);
             this.currentMarker = map.getCurrentMarker();
-            //this.currentMarker.MouseLeave+= new MouseEventHandler(setCurrentMarkerPosition);
-            
+            //this.currentMarker.PreviewMouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
+            this.map.MouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
+
             //Sop
             setSOPpins();
 
             //template
-            Template = "StatisResource DebrisFlowGeneral";
             TemplateVisibility = Visibility.Collapsed;
 
         }
@@ -204,14 +206,33 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
+        private bool popUpBool;
+        public bool PopUpBool
+        {
+            get
+            {
+                return this.popUpBool;
+            }
+            set
+            {
+                if(value != popUpBool)
+                {
+                    popUpBool = value;
+                    OnPropertyChanged("PopUpBool")
+                }
+            }
+        }
+            
         #endregion
 
         #region private helpers
-        void setCurrentMarkerPosition(object s, EventArgs e)
+        void setCurrentMarkerPosition(object s, MouseEventArgs e)
         {
-            DraggablePin pin = s as DraggablePin;
-            Latitude = pin.Location.Latitude;
-            Longitude = pin.Location.Longitude;
+            
+            var mouseMapPosition = e.GetPosition(map);
+            var mouseGeocode = map.ViewPortToLocation(mouseMapPosition);
+            Longitude = mouseGeocode.Longitude;
+            Latitude = mouseGeocode.Latitude;
             
         }
 
@@ -226,15 +247,16 @@ namespace DiReCTUI.ViewModel
                 foreach(Location loc in SOPLocations)
                 { 
                     if (checkInRange(loc.Latitude, loc.Longitude)){
-                        //Status = "In range";
+                        Status = "In range";
                         //this._backgroundInfo = new BackgroundInfo();
                         //this._backgroundInfo.RivuletName = "Success";
                         TemplateVisibility = Visibility.Visible;
-                        
                         return;
-                    }else
+
+                    }
+                    else
                     {
-                        //Status = "not in range";
+                        Status = "not in range";
                         TemplateVisibility = Visibility.Collapsed;
                     }
                    

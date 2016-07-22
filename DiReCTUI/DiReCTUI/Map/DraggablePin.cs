@@ -19,8 +19,6 @@ namespace DiReCTUI.Map
             _map = map;
         }
 
-
-
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (_map != null)
@@ -37,6 +35,22 @@ namespace DiReCTUI.Map
             this.isDragging = true;
 
             base.OnMouseLeftButtonDown(e);
+        }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            if(_map != null)
+            {
+                _center = _map.Center;
+
+                _map.ViewChangeOnFrame -= _map_ViewChangeOnFrame;
+                _map.MouseUp -= ParentMap_MouseLeftButtonUp;
+                _map.MouseMove -= ParentMap_MouseMove;
+                _map.TouchMove -= _map_TouchMove;
+            }
+            this.isDragging = false;
+            
+            base.OnMouseLeftButtonUp(e);
         }
 
         
@@ -76,6 +90,7 @@ namespace DiReCTUI.Map
             }
 
             this.isDragging = false;
+            
         }
 
         void ParentMap_MouseMove(object sender, MouseEventArgs e)

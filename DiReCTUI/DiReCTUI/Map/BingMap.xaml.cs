@@ -34,7 +34,7 @@ namespace DiReCTUI.Map
     public class CustomTileSource : TileSource
     {
         readonly string UrlFormat = "http://localhost:8844/{0}/{1}/{2}/{3}";
-        readonly int DbId = GMapProviders.GoogleMap.DbId;
+        readonly int DbId = GMapProviders.BingMap.DbId;
 
         // keep in mind that bing only supports mercator based maps
 
@@ -106,13 +106,13 @@ namespace DiReCTUI.Map
                     Content = "Current Position"
                 };
             }
-            
             currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(currentMarker);
 
-           
 
-            
+
+
+
 
 
         }
@@ -164,6 +164,7 @@ namespace DiReCTUI.Map
         }
 
         #endregion
+        
         #region private helpers
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
@@ -218,6 +219,7 @@ namespace DiReCTUI.Map
                 if (Map.ZoomLevel < 12)
                 {
                     Map.ZoomLevel = 12;
+                    
                 }
                 Pushpin pin = new Pushpin();
                 {
@@ -231,9 +233,14 @@ namespace DiReCTUI.Map
                 Map.Children.Add(pin);
             }
         }
+        public Location ViewPortToLocation(Point point) {
+            return this.Map.ViewportPointToLocation(point);
+        }
+            
 
         public void addPushPins(double Latitude, double Longitude, string label)
         {
+           
             Pushpin pin = new Pushpin();
             {
                 pin.Location = new Location(Latitude, Longitude);
