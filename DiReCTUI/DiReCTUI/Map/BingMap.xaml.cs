@@ -96,7 +96,6 @@ namespace DiReCTUI.Map
                 
             }
 
-
             // The pushpin to add to the map.
             currentMarker = new DraggablePin(Map);
             {
@@ -110,12 +109,61 @@ namespace DiReCTUI.Map
             
             currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(currentMarker);
+
+           
+
             
-            
+
 
         }
         #endregion
 
+        #region circle
+        private double ToRadian(double degrees)
+        {
+            return degrees * (Math.PI / 180);
+        }
+
+        private double ToDegrees(double radians)
+        {
+            return radians * (180 / Math.PI);
+        }
+        
+        private const double EarthRadiusInKilometers = 6367.0;
+
+        public void drawCircle(Location center, double radius)
+        {
+            // Add Red Polyline to the Map
+            var poly = new MapPolyline();
+            var locations = CreateCircle(center, radius);
+            poly.Locations = locations;
+            poly.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+            poly.StrokeThickness = 2;
+            Map.Children.Add(poly);
+
+        }
+
+        private LocationCollection CreateCircle(Location center, double radius)
+        {
+            var earthRadius = EarthRadiusInKilometers;
+            var lat = ToRadian(center.Latitude); //radians
+            var lng = ToRadian(center.Longitude); //radians
+            var d = radius / earthRadius; // d = angular distance covered on earth's surface
+            var locations = new LocationCollection();
+
+            for (var x = 0; x <= 360; x++)
+            {
+                var brng = ToRadian(x);
+                var latRadians = Math.Asin(Math.Sin(lat) * Math.Cos(d) + Math.Cos(lat) * Math.Sin(d) * Math.Cos(brng));
+                var lngRadians = lng + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(lat), Math.Cos(d) - Math.Sin(lat) * Math.Sin(latRadians));
+
+                locations.Add(new Location(ToDegrees(latRadians), ToDegrees(lngRadians)));
+            }
+
+            return locations;
+        }
+
+        #endregion
         #region private helpers
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
@@ -139,6 +187,7 @@ namespace DiReCTUI.Map
                 Pushpin pin = new Pushpin();
                 pin.Location = lastTouchLocation;
                 Map.Children.Add(pin);
+                
             }
 
         }

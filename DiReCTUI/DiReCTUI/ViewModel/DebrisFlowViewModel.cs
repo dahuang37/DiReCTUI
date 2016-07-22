@@ -147,7 +147,7 @@ namespace DiReCTUI.ViewModel
             Pushpins = new ObservableCollection<DraggablePin>();
             SOPLocations = new ObservableCollection<Location>();
             this.map = map;
-            Latitude = 25.04133;
+            Latitude = 25.04;
             Longitude = 121.612;
             Status = "init";
             currentLocation = new Location(Latitude, Longitude);
@@ -159,11 +159,9 @@ namespace DiReCTUI.ViewModel
 
             //template
             Template = "StatisResource DebrisFlowGeneral";
-            TemplateVisibility = Visibility.Hidden;
+            TemplateVisibility = Visibility.Collapsed;
 
         }
-
-        
 
         //not being used 
         //public DebrisFlowViewModel(DebrisFlowRecord dbr, BackgroundInfo bgi)
@@ -211,7 +209,6 @@ namespace DiReCTUI.ViewModel
         #region private helpers
         void setCurrentMarkerPosition(object s, EventArgs e)
         {
-           
             DraggablePin pin = s as DraggablePin;
             Latitude = pin.Location.Latitude;
             Longitude = pin.Location.Longitude;
@@ -227,15 +224,17 @@ namespace DiReCTUI.ViewModel
                 map.setCurrentMarkerPosition(location);
                 currentLocation = location;
                 foreach(Location loc in SOPLocations)
-                {
+                { 
                     if (checkInRange(loc.Latitude, loc.Longitude)){
-                        Status = "In range";
+                        //Status = "In range";
                         //this._backgroundInfo = new BackgroundInfo();
                         //this._backgroundInfo.RivuletName = "Success";
                         TemplateVisibility = Visibility.Visible;
+                        
+                        return;
                     }else
                     {
-                        Status = "not in range";
+                        //Status = "not in range";
                         TemplateVisibility = Visibility.Collapsed;
                     }
                    
@@ -246,17 +245,39 @@ namespace DiReCTUI.ViewModel
         //check if the loc is in rnage of any SOP pins
         private bool checkInRange(double lat, double lon)
         {
-            double diffLat = Math.Abs(lat - this.Latitude);
-            double diffLon = Math.Abs(lon - this.Longitude);
-            double length = Math.Sqrt(Math.Pow(diffLat, 2) + Math.Pow(diffLon, 2));
-            if(length < 0.01)
+             
+            double result = RangeLength(Latitude, lat, Longitude, lon);
+            Status = result + "" ;
+            if (result < 150)
             {
                 return true;
             }
             return false;
         }
+
+        private double RangeLength(double lat1, double lat2, double lon1, double lon2)
+        {
+            var R = 6371e3; // metres
+            var φ1 = ConvertToRadians(lat1);
+            var φ2 = ConvertToRadians(lat2);
+            var Δφ = ConvertToRadians(lat2 - lat1);
+            var Δλ = ConvertToRadians(lon2 - lon1);
+
+            var a = Math.Sin(Δφ / 2) * Math.Sin(Δφ / 2) +
+                    Math.Cos(φ1) * Math.Cos(φ2) *
+                    Math.Sin(Δλ / 2) * Math.Sin(Δλ / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            var d = R * c;
+
+            return d;
+        }
+        private double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
         #endregion
-        
+
         #region SOP pins
         void setSOPpins()
         {
@@ -264,10 +285,13 @@ namespace DiReCTUI.ViewModel
             SOPLocations.Add(new Location(25.043, 121.611));
             SOPLocations.Add(new Location(25.0400233, 121.614));
             char c = 'A';
+            double radius = 0.15;
             foreach(Location location in SOPLocations)
             {
                 string label = Char.ToString(c);
+                label += ", " + location.ToString();
                 map.addPushPins(location.Latitude, location.Longitude, label);
+                map.drawCircle(location, radius);
                 c++;
             }
         }

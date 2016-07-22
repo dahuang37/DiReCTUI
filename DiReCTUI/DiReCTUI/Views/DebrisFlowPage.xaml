@@ -306,9 +306,9 @@
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Foreground="White"  Grid.Column="0" Target="{Binding ElementName=LatTxtBox}"  Content="Latitude:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="LatTxtBox" Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged, StringFormat=N5, Mode=TwoWay}" />
                 <Label Grid.Row="1" Foreground="White" Opacity="1" Grid.Column="0" Target="{Binding ElementName=LongTxtBox}" Content="Longitude:"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="LongTxtBox" Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged, StringFormat=N5, Mode=TwoWay}"  />
                 <TextBlock Margin="15" FontSize="18" Grid.Row="2" Foreground="White" Text="{Binding Status}"></TextBlock>
             </Grid>
         </StackPanel>
