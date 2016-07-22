@@ -148,11 +148,11 @@ namespace DiReCTUI.ViewModel
             SOPLocations = new ObservableCollection<Location>();
             this.map = map;
             Latitude = 25.04133;
-            Longitude = 121.6133;
+            Longitude = 121.612;
             Status = "init";
             currentLocation = new Location(Latitude, Longitude);
             this.currentMarker = map.getCurrentMarker();
-            this.currentMarker.TouchMove += new EventHandler<TouchEventArgs>(setCurrentMarkerPosition);
+            //this.currentMarker.MouseLeave+= new MouseEventHandler(setCurrentMarkerPosition);
             
             //Sop
             setSOPpins();
@@ -211,11 +211,11 @@ namespace DiReCTUI.ViewModel
         #region private helpers
         void setCurrentMarkerPosition(object s, EventArgs e)
         {
-            Latitude = 345;
+           
             DraggablePin pin = s as DraggablePin;
             Latitude = pin.Location.Latitude;
             Longitude = pin.Location.Longitude;
-            Latitude = 123;
+            
         }
 
         private void detectCurrentMarker()
@@ -228,17 +228,32 @@ namespace DiReCTUI.ViewModel
                 currentLocation = location;
                 foreach(Location loc in SOPLocations)
                 {
-                    if(Math.Abs(loc.Longitude - currentLocation.Longitude) < 0.1)
-                    {
-                        Status = "yes";
-                        this._backgroundInfo = new BackgroundInfo();
-                        this._backgroundInfo.RivuletName = "Success";
+                    if (checkInRange(loc.Latitude, loc.Longitude)){
+                        Status = "In range";
+                        //this._backgroundInfo = new BackgroundInfo();
+                        //this._backgroundInfo.RivuletName = "Success";
                         TemplateVisibility = Visibility.Visible;
-                        
+                    }else
+                    {
+                        Status = "not in range";
+                        TemplateVisibility = Visibility.Collapsed;
                     }
+                   
                 }
             }
             
+        }
+        //check if the loc is in rnage of any SOP pins
+        private bool checkInRange(double lat, double lon)
+        {
+            double diffLat = Math.Abs(lat - this.Latitude);
+            double diffLon = Math.Abs(lon - this.Longitude);
+            double length = Math.Sqrt(Math.Pow(diffLat, 2) + Math.Pow(diffLon, 2));
+            if(length < 0.01)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
         

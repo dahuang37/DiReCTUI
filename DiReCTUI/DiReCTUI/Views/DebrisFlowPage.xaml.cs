@@ -24,12 +24,13 @@ namespace DiReCTUI.Views
     /// </summary>
     public partial class DebrisFlowPage : Page
     {
-        
-    
+
+        private DebrisFlowViewModel dfvm;
         public DebrisFlowPage()
         {
             InitializeComponent();
-            DebrisFlowViewModel dfvm = new DebrisFlowViewModel(map);
+            if(dfvm == null)
+                dfvm = new DebrisFlowViewModel(map);
             this.DataContext = dfvm;
             
         }
