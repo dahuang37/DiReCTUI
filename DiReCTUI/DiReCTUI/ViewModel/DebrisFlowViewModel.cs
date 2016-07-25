@@ -12,6 +12,7 @@ using System.Device.Location;
 using Microsoft.Maps.MapControl.WPF;
 using System.Windows;
 using System.Windows.Input;
+using static DiReCTUI.Controls.SOP;
 
 namespace DiReCTUI.ViewModel
 {
@@ -22,7 +23,7 @@ namespace DiReCTUI.ViewModel
         BackgroundInfo _backgroundInfo;
         private ObservableCollection<DraggablePin> _Pushpins;
         private BingMap map;
-        private ObservableCollection<Location> SOPLocations;
+        private ObservableCollection<LocationSOP> LocationSOPs;
         private Location currentLocation;
         private DraggablePin currentMarker;
         private Visibility templateVisibility;
@@ -142,26 +143,31 @@ namespace DiReCTUI.ViewModel
             this._debrisFlowRecord = new DebrisFlowRecord();
             this._backgroundInfo = new BackgroundInfo();
             this._backgroundInfo.RivuletName = "test";
-            this.radius = 150;
+            this.LocationSOPs = new ObservableCollection<LocationSOP>();
+            this.radius = 0.150;
 
             //map and gps
             //StartTracking();
             Pushpins = new ObservableCollection<DraggablePin>();
-            SOPLocations = new ObservableCollection<Location>();
+            
             this.map = map;
             Latitude = 25.04;
             Longitude = 121.612;
-            Status = "init";
+            //Status = "init";
             currentLocation = new Location(Latitude, Longitude);
             this.currentMarker = map.getCurrentMarker();
-            //this.currentMarker.PreviewMouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
+            
             this.map.MouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
 
             //Sop
-            setSOPpins();
+            FakeSOP sop = new FakeSOP();
+            LocationSOPs = sop.getFakeSOP().getLocationSOP();
+            setUpSOP();
 
             //template
             TemplateVisibility = Visibility.Collapsed;
+
+            detectCurrentMarker();
 
         }
 
@@ -218,7 +224,7 @@ namespace DiReCTUI.ViewModel
                 if(value != popUpBool)
                 {
                     popUpBool = value;
-                    OnPropertyChanged("PopUpBool")
+                    OnPropertyChanged("PopUpBool");
                 }
             }
         }
@@ -244,8 +250,14 @@ namespace DiReCTUI.ViewModel
                 Location location = new Location(this.Latitude, this.Longitude);
                 map.setCurrentMarkerPosition(location);
                 currentLocation = location;
-                foreach(Location loc in SOPLocations)
-                { 
+                if(LocationSOPs.Count == 0)
+                {
+                    Status = "not in range";
+                    TemplateVisibility = Visibility.Collapsed;
+                }
+                foreach(LocationSOP locSop in LocationSOPs)
+                {
+                    var loc = locSop.location;
                     if (checkInRange(loc.Latitude, loc.Longitude)){
                         Status = "In range";
                         //this._backgroundInfo = new BackgroundInfo();
@@ -301,21 +313,17 @@ namespace DiReCTUI.ViewModel
         #endregion
 
         #region SOP pins
-        void setSOPpins()
+        public void setUpSOP()
         {
-            SOPLocations.Add(new Location(25.040, 121.6101));
-            SOPLocations.Add(new Location(25.043, 121.611));
-            SOPLocations.Add(new Location(25.0400233, 121.614));
-            char c = 'A';
-            double radius = 0.15;
-            foreach(Location location in SOPLocations)
+            if(this.LocationSOPs != null)
             {
-                string label = Char.ToString(c);
-                label += ", " + location.ToString();
-                map.addPushPins(location.Latitude, location.Longitude, label);
-                map.drawCircle(location, radius);
-                c++;
+                foreach(LocationSOP item in LocationSOPs)
+                {
+                    string label = "Task: "+ item.SOPTask + ", ID: " + item.ID;
+                    map.addSOPPushPin(item.location.Latitude, item.location.Longitude, label, this.radius);
+                }
             }
+
         }
 
         #endregion

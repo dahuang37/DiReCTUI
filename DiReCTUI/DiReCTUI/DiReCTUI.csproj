@@ -88,8 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\FakeSOP.cs" />
     <Compile Include="Controls\GPSInterface.cs" />
     <Compile Include="Controls\GPSLocation.cs" />
+    <Compile Include="Controls\SOP.cs" />
     <Compile Include="Map\BingMap.xaml.cs">
       <DependentUpon>BingMap.xaml</DependentUpon>
     </Compile>

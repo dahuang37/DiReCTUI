@@ -237,7 +237,13 @@ namespace DiReCTUI.Map
             return this.Map.ViewportPointToLocation(point);
         }
             
+        public void addSOPPushPin(double Lat, double Lon, string label, double radius)
+        {
+            addPushPins(Lat, Lon, label);
+            Location loc = new Location(Lat, Lon);
+            drawCircle(loc, radius);
 
+        }
         public void addPushPins(double Latitude, double Longitude, string label)
         {
            
