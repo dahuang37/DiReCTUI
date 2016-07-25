@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Credential Files
+DiReCTUI/DiReCTUI/Map/Credential.cs

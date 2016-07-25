@@ -73,6 +73,7 @@ namespace DiReCTUI.Map
         public BingMap()
         {
             InitializeComponent();
+            Map.CredentialsProvider = new Credential().getCredential();
             Map.Focus();
             
             //DataContext

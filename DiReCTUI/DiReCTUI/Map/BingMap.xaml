@@ -11,7 +11,8 @@
 
     
     <Grid>
-        <m:Map x:Name="Map" CredentialsProvider="AhNqGR0mz68gFtWvoV3hXQno5_QkAG-3W-vOl96zKr60BxQv49GJbzeOJud_YoXi" 
+        <!-- Initialize Map -->
+        <m:Map x:Name="Map" 
                Mode="Road" Center="25.04133, 121.6133" ZoomLevel="16"
                TouchDown="BingMap_TouchDown"
                >

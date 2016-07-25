@@ -95,6 +95,7 @@
     <Compile Include="Map\BingMap.xaml.cs">
       <DependentUpon>BingMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Map\Credential.cs" />
     <Compile Include="Map\DraggablePin.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Model\BackgroundInfo.cs" />
