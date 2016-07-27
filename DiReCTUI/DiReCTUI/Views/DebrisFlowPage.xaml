@@ -8,32 +8,31 @@
       mc:Ignorable="d" 
       xmlns:vm="clr-namespace:DiReCTUI.ViewModel"
       d:DesignHeight="1000" d:DesignWidth="1000"
-      
+      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+      Dialog:DialogParticipation.Register="{Binding}"
       Title="DebrisFlowPage">
     <!--
     this page is the prototype for DebrisFlow Page.
     Features: 1) use DataTemplate to switch between different part of Model
               2) Map Control
-    TODO: 1) Binding with MVVM
-          2) Elaborate on Map features
 -->
     <!-- Includes Styles for FontSize and Margin, and dataTemplates-->
     <Page.Resources>
         <!-- Setting FontSize and Margin of Elements to be bigger-->
-        <Style TargetType="Label">
+        <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Margin" Value="12"/>
         </Style>
-        <Style TargetType="TextBox">
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
             <Setter Property="Width" Value="100" />
         </Style>
-        <Style TargetType="DatePicker">
+        <Style TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
         </Style>
-        <Style TargetType="ComboBox">
+        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
         </Style>
@@ -43,17 +42,18 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!--5 -->
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                
                 <StackPanel Grid.Row="0" Background="AliceBlue">
                     <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="General"/></TextBlock>
                     </Border>
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
 
                     <Label Margin="12">Rivulet Name:</Label>
@@ -67,8 +67,11 @@
                     <Label Margin="12" >TimeStamp:</Label>
                     <DatePicker Name="DebrisFlowDate" Margin="12"></DatePicker>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
-                    <Button Margin="12" x:Name="General_Next_Button" Width="50" Click="General_Button_Click">
+                
+                <ComboBox Grid.Row="3" Height="23" HorizontalAlignment="Center" Name="comboBox1" ItemsSource="{Binding Path=TestEnum, Mode=OneWay}" VerticalAlignment="Top" Width="120" />
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4">
+                    <Button Margin="12" x:Name="General_Next_Button" Width="50" >
                         Next
                     </Button>
                     <Button Margin="12" IsEnabled="False">
@@ -77,220 +80,41 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        <!-- DataTemplate for UpStream Data -->
-        <!--<DataTemplate x:Name="DebrisFLowUpStreamName" x:Key="DebrisFlowUpStream">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    --><!-- 4 --><!--
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Background="AliceBlue">
-                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="UpStream"/></TextBlock>
-                    </Border>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-                    <Label>Slope Angle:</Label>
-                    <TextBox></TextBox>
-
-                    <Label>Picture:</Label>
-                    <Button>Upload</Button>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-                    <Label>Deposition:</Label>
-                    <ComboBox x:Name="Deposition_ComboBox" MinWidth="20">
-                        <ComboBoxItem x:Name="Deposition_Yes">Yes</ComboBoxItem>
-                        <ComboBoxItem>No</ComboBoxItem>
-                        <ComboBoxItem>Don't know</ComboBoxItem>
-                    </ComboBox>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=Deposition_Yes, Path=IsSelected}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <Label>Deposition Area</Label>
-                        <TextBox></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
-                    <Button Margin="12" x:Name="UpStream_Next_Button" Width="Auto" Click="UpStream_Button_Click">
-                        Next
-                    </Button>
-                    <Button Margin="12" x:Name="UpStream_Back_Button" Click="UpStream_Back_Click">
-                        Back
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>-->
-        <!-- DataTemplate for Catchment -->
-        <!--<DataTemplate x:Name="DebrisFLowCatchmentName" x:Key="DebrisFlowCatchment">
-            <Grid>
-                <Grid.RowDefinitions>
-                    --><!-- 4 --><!--
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0"  Background="AliceBlue">
-                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="Catchment"/></TextBlock>
-                    </Border>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" >
-                    <Label>Catchment Area:</Label>
-                    <TextBox></TextBox>
-
-                    <Label>Picture:</Label>
-                    <Button Height="Auto">Upload</Button>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-                    <Label>Plantation:</Label>
-                    <ComboBox x:Name="Plantation_ComboBox" MinWidth="20">
-                        <ComboBoxItem x:Name="Plantation_NoPlantation" IsSelected="True">No Plantation</ComboBoxItem>
-                        <ComboBoxItem>Small Concerntration of Plantation</ComboBoxItem>
-                        <ComboBoxItem>Medium Concerntration of Plantation</ComboBoxItem>
-                        <ComboBoxItem>Large Concerntration of Plantation</ComboBoxItem>
-                    </ComboBox>
-
-                    <Label>Collapse Rate:</Label>
-                    <TextBox></TextBox>
-                </StackPanel>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3">
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=Plantation_NoPlantation, Path=IsSelected}" Value="False">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <Label>Plantation Type:</Label>
-                        <ComboBox>
-                            <ComboBoxItem>Aritificial Forest</ComboBoxItem>
-                            <ComboBoxItem>Natural Forest</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4">
-                    <Button Margin="12" x:Name="Catchment_Next_Button" Width="Auto" Click="Catchment_Next_Click">
-                        Next
-                    </Button>
-                    <Button Margin="12" x:Name="Catchment_Back_Button" Click="Catchment_Back_Click">
-                        Back
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>-->
-        <!-- DataTemplate for Flow Track Data -->
-        <!--<DataTemplate x:Name="DebrisFLowFlowTrackName" x:Key="DebrisFlowFlowTrack">
-            <Grid>
-                <Grid.RowDefinitions>
-                    --><!-- 5 --><!--
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0"  Background="AliceBlue">
-                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="Flow Track"/></TextBlock>
-                    </Border>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" >
-                    <Label>Slope Angle:</Label>
-                    <TextBox></TextBox>
-
-                    <Label>Picture:</Label>
-                    <Button Height="Auto">Upload</Button>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-                    <Label>Rock Type:</Label>
-                    <ComboBox x:Name="Rock_ComboBox" MinWidth="20">
-                        <ComboBoxItem x:Name="RockType_None" IsSelected="True">None</ComboBoxItem>
-                        <ComboBoxItem>礫石</ComboBoxItem>
-                        <ComboBoxItem>Rock Type 2</ComboBoxItem>
-                        <ComboBoxItem>Rock Type 3</ComboBoxItem>
-                    </ComboBox>
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=Rocktype_None, Path=IsSelected}" Value="False">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-
-                            </Style>
-                        </Grid.Style>
-                        <Label>Rock Size:</Label>
-                        <ComboBox x:Name="RockSize_ComboBox" MinWidth="20">
-                            <ComboBoxItem>Small</ComboBoxItem>
-                            <ComboBoxItem>Medium</ComboBoxItem>
-                            <ComboBoxItem>Large</ComboBoxItem>
-                        </ComboBox>
-                    </Grid>
-                </StackPanel>
-
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4">
-                    <Button Margin="12" x:Name="FlowTrack_Next_Button" Width="Auto" Click="FlowTrack_Next_Click">
-                        Next
-                    </Button>
-                    <Button Margin="12" x:Name="FlowTrack_Back_Button" Click="FlowTrack_Back_Click">
-                        Back
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>-->
-
     </Page.Resources>
 
-    <Grid>
+    <Grid Name="MyGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
-           
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
+        
         <!-- Back Button -->
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Name="Back_Button" Click="Back_Button_Click">Go Back</Button>
-        </StackPanel>
-        <!-- Location Header -->
-        <StackPanel Grid.Row="1" Background="AliceBlue">
-            <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="Location"/></TextBlock>
-            </Border>
+            <Button HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Name="Back_Button" 
+                    Click="Back_Button_Click"
+                    Style="{DynamicResource SquareButtonStyle}">Go Back</Button>
         </StackPanel>
         
+        <!-- Location Header -->
+        <StackPanel Grid.Row="1" 
+                    Background="AliceBlue">
+            <Border HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           FontSize="24"><Run Text="Location"/></TextBlock>
+            </Border>
+        </StackPanel>
 
-        <bingMap:BingMap x:Name="map" Grid.Row="2" Height="700" VerticalAlignment="Stretch"  />
+
+        <bingMap:BingMap x:Name="map" Grid.Row="2" Height="{Binding ActualHeight, ElementName=MyGrid}" VerticalAlignment="Stretch"  />
+        
         <!-- This stack panel is only used for testing purposes -->
         <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Right" Width="250"  >
             

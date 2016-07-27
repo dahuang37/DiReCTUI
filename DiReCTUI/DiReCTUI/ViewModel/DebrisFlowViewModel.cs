@@ -13,14 +13,18 @@ using Microsoft.Maps.MapControl.WPF;
 using System.Windows;
 using System.Windows.Input;
 using static DiReCTUI.Controls.SOP;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Controls;
+using System.Windows.Controls;
 
 namespace DiReCTUI.ViewModel
 {
     public class DebrisFlowViewModel : ViewModelBase, GPSInterface
     {
         #region Fields
-        readonly DebrisFlowRecord _debrisFlowRecord;
-        BackgroundInfo _backgroundInfo;
+        DebrisFlowRecord _debrisFlowRecord;
+        BackgroundInfo.DebrisFlowRelated _backgroundInfo;
+        
         private ObservableCollection<DraggablePin> _Pushpins;
         private BingMap map;
         private ObservableCollection<LocationSOP> LocationSOPs;
@@ -28,6 +32,8 @@ namespace DiReCTUI.ViewModel
         private DraggablePin currentMarker;
         private Visibility templateVisibility;
         private double radius;
+        //private ContentPresenter content;
+        
         #endregion
 
         #region GPS properties, fields and functions
@@ -137,11 +143,12 @@ namespace DiReCTUI.ViewModel
         #endregion
         
         #region Constructor
-        public DebrisFlowViewModel(BingMap map)
+        
+        public DebrisFlowViewModel(BingMap map, DebrisFlowRecord dbRecord, BackgroundInfo.DebrisFlowRelated bgInfo)
         {
-
-            this._debrisFlowRecord = new DebrisFlowRecord();
-            this._backgroundInfo = new BackgroundInfo();
+            this._debrisFlowRecord = dbRecord;
+            this._backgroundInfo = bgInfo;
+            
             this._backgroundInfo.RivuletName = "test";
             this.LocationSOPs = new ObservableCollection<LocationSOP>();
             this.radius = 0.150;
@@ -168,23 +175,14 @@ namespace DiReCTUI.ViewModel
             TemplateVisibility = Visibility.Collapsed;
 
             detectCurrentMarker();
+            
 
         }
-
-        //not being used 
-        //public DebrisFlowViewModel(DebrisFlowRecord dbr, BackgroundInfo bgi)
-        //{
-        //    this._debrisFlowRecord = dbr;
-
-        //    this._backgroundInfo = new BackgroundInfo();
-        //    this._backgroundInfo.RivuletName = "Test";
-
-        //}
         #endregion
 
         #region Properties
         
-
+        // Background Infos
         public string RivuletName
         {
             get { return this._backgroundInfo.RivuletName;  }
@@ -196,6 +194,35 @@ namespace DiReCTUI.ViewModel
                 base.OnPropertyChanged("RivuletName");
             }
         }
+        public string RivuletCode
+        {
+            get { return this._backgroundInfo.RivuletCode; }
+            set
+            {
+                if(value == _backgroundInfo.RivuletCode)
+                {
+                    return;
+                }
+                _backgroundInfo.RivuletCode = value;
+                base.OnPropertyChanged("RivuletCode");
+            }
+        }
+        public string AdministrativeArea
+        {
+            get { return this._backgroundInfo.AdministrativeArea; }
+            set
+            {
+                if(value != this._backgroundInfo.AdministrativeArea)
+                {
+                    this._backgroundInfo.AdministrativeArea = value;
+                    OnPropertyChanged("AdministrativeArea");
+                }
+            }
+        }
+
+        // DebrisFlow Model
+
+
         #endregion
 
         #region Display Properties
@@ -228,6 +255,20 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
+
+        private IEnumerable<BackgroundInfo.DebrisFlowRelated.test> testEnum;
+        public IEnumerable<BackgroundInfo.DebrisFlowRelated.test> TestEnum
+        {
+            get
+            {
+                return Enum.GetValues(typeof(BackgroundInfo.DebrisFlowRelated.test)).Cast<BackgroundInfo.DebrisFlowRelated.test>();
+            }
+            set
+            {
+                testEnum = value;
+                OnPropertyChanged("TestEnum");
+            }
+        }
             
         #endregion
 
@@ -242,7 +283,7 @@ namespace DiReCTUI.ViewModel
             
         }
 
-        private void detectCurrentMarker()
+        private async void detectCurrentMarker()
         {
 
             if (map != null)
@@ -260,9 +301,13 @@ namespace DiReCTUI.ViewModel
                     var loc = locSop.location;
                     if (checkInRange(loc.Latitude, loc.Longitude)){
                         Status = "In range";
-                        //this._backgroundInfo = new BackgroundInfo();
-                        //this._backgroundInfo.RivuletName = "Success";
+                        //var test = new BackgroundInfo().DebrisBackgroundInfo;
+                        //test.RivuletName = "hey";
+                        //this.content.Content = test;
+
                         TemplateVisibility = Visibility.Visible;
+                       
+
                         return;
 
                     }
@@ -320,7 +365,7 @@ namespace DiReCTUI.ViewModel
                 foreach(LocationSOP item in LocationSOPs)
                 {
                     string label = "Task: "+ item.SOPTask + ", ID: " + item.ID;
-                    map.addSOPPushPin(item.location.Latitude, item.location.Longitude, label, this.radius);
+                    map.addSOPPushPin(item.location, label, this.radius);
                 }
             }
 

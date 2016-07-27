@@ -25,46 +25,43 @@ namespace DiReCTUI.Views
     public partial class DebrisFlowPage : Page
     {
 
-        private DebrisFlowViewModel dfvm;
         public DebrisFlowPage()
         {
             InitializeComponent();
-            if(dfvm == null)
-                dfvm = new DebrisFlowViewModel(map);
-            this.DataContext = dfvm;
+            
             
         }
 
-        #region Click Functions For DataTemplate
-        private void General_Button_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowUpStream");   
-        }
-        private void UpStream_Button_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowCatchment");
-        }
-        private void UpStream_Back_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowGeneral");
-        }
-        private void Catchment_Next_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowFlowTrack");
-        }
-        private void Catchment_Back_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowUpStream");
-        }
-        private void FlowTrack_Next_Click(object sender, RoutedEventArgs e)
-        {
+        //#region Click Functions For DataTemplate
+        //private void General_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowUpStream");   
+        //}
+        //private void UpStream_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowCatchment");
+        //}
+        //private void UpStream_Back_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowGeneral");
+        //}
+        //private void Catchment_Next_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowFlowTrack");
+        //}
+        //private void Catchment_Back_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowUpStream");
+        //}
+        //private void FlowTrack_Next_Click(object sender, RoutedEventArgs e)
+        //{
             
-        }
-        private void FlowTrack_Back_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowCatchment");
-        }
-        #endregion 
+        //}
+        //private void FlowTrack_Back_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentPresenter.ContentTemplate = (DataTemplate)this.FindResource("DebrisFlowCatchment");
+        //}
+        //#endregion 
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -73,12 +70,6 @@ namespace DiReCTUI.Views
                 this.NavigationService.GoBack();
             }
         }
-
-        #region Testing Functions
-        public BingMap getMap()
-        {
-            return map;
-        }
-        #endregion
+        
     }
 }

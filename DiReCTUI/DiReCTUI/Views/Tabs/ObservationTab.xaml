@@ -7,6 +7,8 @@
       mc:Ignorable="d"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       d:DesignHeight="300" d:DesignWidth="300"
+      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+      Dialog:DialogParticipation.Register="{Binding}"
       Title="ObservationTab">
 
     <Grid>

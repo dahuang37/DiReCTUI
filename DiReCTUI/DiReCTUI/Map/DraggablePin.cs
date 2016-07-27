@@ -1,9 +1,4 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DiReCTUI.Map
@@ -52,9 +47,7 @@ namespace DiReCTUI.Map
             
             base.OnMouseLeftButtonUp(e);
         }
-
         
-
         void _map_TouchMove(object sender, TouchEventArgs e)
         {
             var map = sender as Microsoft.Maps.MapControl.WPF.Map;
@@ -90,6 +83,7 @@ namespace DiReCTUI.Map
             }
 
             this.isDragging = false;
+            
             
         }
 

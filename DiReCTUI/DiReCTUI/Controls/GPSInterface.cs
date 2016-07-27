@@ -18,13 +18,13 @@ namespace DiReCTUI.Controls
             get;
             set;
         }
+
         double Longitude
         {
             get;
-
             set;
-            
         }
+
         string Status
         {
             get;
@@ -35,11 +35,9 @@ namespace DiReCTUI.Controls
 
         #region public functions
         void StartTracking();
-
-
+        
         void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e);
-
-
+        
         void StopTracking();
         #endregion
     }

@@ -5,16 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DiReCTUI.Views;
 
-
+using DiReCTUI.ViewModel;
+using DiReCTUI.Model;
+using MahApps.Metro.Controls.Dialogs;
 
 
 namespace DiReCTUI.Views.Tabs
@@ -29,13 +23,21 @@ namespace DiReCTUI.Views.Tabs
             InitializeComponent();
             
         }
-        private DebrisFlowPage db;
+
+        
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
         {
-            if(db == null)
-            {
-                db = new DebrisFlowPage();
-            }
+       
+            var db = new DebrisFlowPage();
+            var map = db.map;
+            var dbRecord = new DebrisFlowRecord();
+            var bgInfo = new BackgroundInfo().DebrisBackgroundInfo;
+           
+            
+
+            var dbvm = new DebrisFlowViewModel(map, dbRecord, bgInfo);
+            dbvm.RivuletName = "te3st"; 
+            db.DataContext = dbvm;
             this.NavigationService.Navigate(db);
         }
 

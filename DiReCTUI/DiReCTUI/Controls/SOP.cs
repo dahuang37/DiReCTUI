@@ -24,8 +24,6 @@ namespace DiReCTUI.Controls
                 this.SOPTask = SOPTask;
             }
 
-            
-
         }
         
         private ObservableCollection<LocationSOP> LocationSOPCollection;
@@ -34,6 +32,7 @@ namespace DiReCTUI.Controls
         public SOP()
         {
             LocationSOPCollection = new ObservableCollection<LocationSOP>();
+
         }
         #endregion
 

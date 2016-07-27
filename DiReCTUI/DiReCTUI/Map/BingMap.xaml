@@ -9,33 +9,47 @@
       d:DesignHeight="300" d:DesignWidth="300"
       >
 
-    
     <Grid>
         <!-- Initialize Map -->
         <m:Map x:Name="Map" 
-               Mode="Road" Center="25.04133, 121.6133" ZoomLevel="16"
+               Mode="Road" 
+               Center="25.04133, 121.6133" 
+               ZoomLevel="16"
                TouchDown="BingMap_TouchDown"
                >
-            <!--m:Pushpin Location="23.6978, 120.9650"/>-->
             <local:CustomTileLayer />
         </m:Map>
-        <StackPanel>
-            <TextBlock Name="LongitudeTextBlock" Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  FontSize="24"/>
-            <TextBlock Name="LatitudeTextBlock" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" FontSize="24"/>
-            <TextBlock Name="StatusTextBlock" Text="{Binding Status, StringFormat='Status: {0}'}" FontSize="24" />
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" >
-            <Button  FontSize="25" Width="40" Click="ZoomIn_Click" Height="40"  >
+        
+        
+        <!-- Map Controls : ZoomIn, ZoomOut, Add Marker -->
+        <StackPanel HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    Margin="10" >
+
+            <Button  Name="ZoomIn"
+                     FontSize="25" 
+                     Width="40"
+                     Height="40"
+                     Click="ZoomIn_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">+</TextBlock>
             </Button>
-            <Button FontSize="25" Width="40" Click="ZoomOut_Click" Height="40" >
+
+            <Button Name="ZoomOut"
+                    FontSize="25" 
+                    Width="40"
+                    Height="40"
+                    Click="ZoomOut_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">-</TextBlock>
             </Button>
-            <Button FontSize="17" Width="40" Height="40" Click="Add_Marker_Click" >
+
+            <Button Name="AddMarker"
+                    FontSize="17" 
+                    Width="40" 
+                    Height="40" 
+                    Click="Add_Marker_Click" >
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">M</TextBlock>
             </Button>
-            
+
         </StackPanel>
-        
     </Grid>
 </UserControl>

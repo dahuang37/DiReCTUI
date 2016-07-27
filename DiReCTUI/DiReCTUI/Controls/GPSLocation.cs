@@ -9,6 +9,10 @@ using System.ComponentModel;
 
 namespace DiReCTUI.Controls
 {
+    /// <summary>
+    /// This class is an example on how to use GPSLocation Interface
+    /// These functions can be used in ViewModels
+    /// </summary>
     public class GPSLocation : INotifyPropertyChanged
     {
 
@@ -77,10 +81,13 @@ namespace DiReCTUI.Controls
 
         #endregion
 
-        #region public functions
+        #region Public functions
         public void StartTracking()
         {
             this.watcher = new GeoCoordinateWatcher();
+            ///The distance that must be moved, in meters, relative to the coordinate 
+            ///from the last PositionChanged event, before the location provider raises another PositionChanged event.
+            //this.watcher.MovementThreshold = 0.5;
             this.watcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(watcher_PositionChanged);
             this.watcher.Start();
             
@@ -115,8 +122,6 @@ namespace DiReCTUI.Controls
             StartTracking();
         }
         #endregion
-
-
-
+        
     }
 }

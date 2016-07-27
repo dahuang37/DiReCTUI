@@ -97,7 +97,6 @@
     </Compile>
     <Compile Include="Map\Credential.cs" />
     <Compile Include="Map\DraggablePin.cs" />
-    <Compile Include="Map\Map.cs" />
     <Compile Include="Model\BackgroundInfo.cs" />
     <Compile Include="Model\Observations\DebrisFlowRecord.cs" />
     <Compile Include="Model\Observations\ObservationRecord.cs" />

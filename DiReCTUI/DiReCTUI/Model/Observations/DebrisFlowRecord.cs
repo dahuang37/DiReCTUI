@@ -40,31 +40,161 @@ namespace DiReCTUI.Model
     public class DebrisFlowRecord : ObservationRecord
     {
         #region Properties
+        public struct RockLithology
+        {
             /// <summary>
-            /// 集水區面積
-            /// Area of the watershed.
+            /// 沉積岩
+            /// Types of Sedimetary Rock.
             /// </summary>
-            public int WatershedArea { get; set; }
-
-            /// <summary>
-            /// 溪流災害類型
-            /// Type of torrent disaster.
-            /// </summary>
-            public enum TorrentDisasterType
+            enum SedimetaryRock
             {
-                DebrisFlow,
-                DebrisSlump,
-                GullyErosion,
-                ShallowSlide,
-                Others
+                Conglomerate,
+                Sandstone,
+                Siltstone,
+                Shale,
+                Mudstone,
+                Limestone,
+                IDoNotKnow
             }
 
             /// <summary>
-            /// 溪流災害類型-其他描述
-            /// Other discriptions of torrent disaster.
+            /// 變質岩
+            /// Types of Metamorphic Rock.
             /// </summary>
-            public string TorrentDisasterTypeDiscription { get; set; }
+            enum MetamorphicRock
+            {
+                Quartzite,
+                Marble,
+                Amphibolite,
+                Gneiss,
+                GraniticGneiss,
+                Schist,
+                Phyllite,
+                Slate,
+                Hornfels,
+                Greywacke,
+                Argillite,
+                IDoNotKnow
+            }
 
+            /// <summary>
+            /// 火成岩
+            /// Types of Igneous Rock.
+            /// </summary>
+            enum IgneousRock
+            {
+                Peridotite,
+                Gabbro,
+                Diorite,
+                Granite,
+                Granodiorite,
+                Basalt,
+                Andesite,
+                Rhyolite,
+                VolcanicGlass,
+                QuartzVein,
+                Agglomerate,
+                Ignimbrite,
+                Tuff,
+                Lahar,
+                IDoNotKnow
+            }
+
+            /// <summary>
+            /// 堆積物
+            /// Types of Sedoment Rock.
+            /// </summary>
+            enum SedimentRock
+            {
+                GarvelTerrace,
+                Sandstone,
+                ClayLayer,
+                Peat,
+                Agglomerate,
+                Lapilli,
+                VolcanicAsh,
+                IDoNotKnow
+            }
+
+            /// <summary>
+            /// 土石粒徑
+            /// Diameter of the rock.(CM)
+            /// </summary>
+            public int RockDiameter { get; set; }
+
+            /// <summary>
+            /// 土石濕度
+            /// Moisture percent of the soil.
+            /// </summary>
+            public int SoilMoisturePercentage { get; set; }
+
+            /// <summary>
+            /// 土石照片
+            /// Piture of the rock lithology.
+            /// </summary>
+            public string RockPicturePath { get; set; }
+
+        }
+
+        /// <summary>
+        /// This dictionary stores the rock lithology photos' file of paths.
+        /// </summary>
+        public Dictionary<string, string> RockPhotoPaths { get; set; }
+
+        /// <summary>
+        /// 集水區相關
+        /// Catchment relative.
+        /// </summary>
+        public struct Catchment
+        {
+            /// <summary>
+            /// 集水區面積
+            /// Area of the catchment.
+            /// </summary>
+            public int CatchmentArea { get; set; }
+
+            /// <summary>
+            /// 集水區內崩塌率
+            /// The Landslide rate in catchment.
+            /// </summary>
+            public enum CatchmentLandslideRate
+            {
+                UnderOnePercent,
+                OneToFivePercent,
+                AboveFivePercent,
+                IDoNotKnow
+            }
+
+            /// <summary>
+            /// 集水區內崩塌規模
+            /// Landslide scale in catchment.
+            /// </summary>
+            public enum CatchmentLandslideScale
+            {
+                NoObviousLandslide,
+                SmallScaleLandslide,
+                ObviousBigRegionLandslide,
+                IDoNotKnow
+            }
+
+            /// <summary>
+            /// 集水區照片
+            /// Piture of the catchment.
+            /// </summary>
+            public string CatchmentpicturePath { get; set; }
+        }
+
+        /// <summary>
+        /// This dictionary stores the catchment photos' file of paths.
+        /// </summary>
+        public Dictionary<string, string> CatchmentPhotoPaths { get; set; }
+
+        /// <summary>
+        /// 坡地相關
+        /// Slope relative.
+        /// </summary>
+        public struct Slope
+        {
             /// <summary>
             /// 發生區上游坡度
             /// The Slope of upstream.
@@ -73,89 +203,123 @@ namespace DiReCTUI.Model
             {
                 AboveFiftyDegrees,
                 ThirtyToFiftyDegrees,
-                UnderThirtyDegrees
+                UnderThirtyDegrees,
+                IDoNotKnow
             }
 
             /// <summary>
-            /// 集水區內崩塌率
-            /// The Landslide rate in watershed.
+            /// 坡地角度
+            /// Angels of the slope.
             /// </summary>
-            public enum WatershedLandslideRate
-            {
-                UnderOnePercent,
-                OneToFivePercent,
-                AboveFivePercent
-            }
+            public int SlopeAngle { get; set; }
 
             /// <summary>
-            /// 集水區內崩塌規模
-            /// Landslide scale in watershed.
+            /// 坡地方向
+            /// Directions of the slope.
             /// </summary>
-            public enum WatershedLandslideScale
-            {
-                NoObviousLandslide,
-                SmallScaleLandslide,
-                ObviousBigRegionLandslide
-            }
+            public string SlopeDirection { get; set; }
 
             /// <summary>
-            /// 堆積區土石粒徑情形
-            /// The diameter of rock in aggradation.
+            /// 坡地照片
+            /// Piture of the slope.
             /// </summary>
-            public enum AggradationRockDiameter
-            {
-                AboveThirtyCM,
-                EightToThirtyCM,
-                UnderEightCM,
-                NoObviousRock
-            }
+            public string SlopePicturePath { get; set; }
+        }
 
+        /// <summary>
+        /// This dictionary stores the slope photos' file of paths.
+        /// </summary>
+        public Dictionary<string, string> SlopePhotoPaths { get; set; }
+
+        /// <summary>
+        /// 植生相關
+        /// Plantation relative.
+        /// </summary>
+        public struct Plantation
+        {
             /// <summary>
             /// 集水區內主要植生生長種類
-            /// The main vegetation category in watershed.
+            /// The main plantation category in catchment.
             /// </summary>
-            public enum MainVegetationCategory
+            public enum MainPlantationCategory
             {
                 Naked,
                 Meadow,
                 ArtificialForest,
-                NaturalForest
+                NaturalForest,
+                IDoNotKnow
             }
 
             /// <summary>
             /// 集水區內主要植生生長狀況
-            /// The main vegetations grow situation in watershed. 
+            /// The main plantation growing situation in catchment. 
             /// </summary>
-            public enum MainVegetationGrowthSituation
+            public enum MainPlantationSituation
             {
                 BareLend,
                 UnderTenPercent,
                 TenToThirtyPercent,
                 ThirtyToEightyPercent,
-                AboveEightyPercent
+                AboveEightyPercent,
+                IDoNotKnow
             }
 
             /// <summary>
-            /// 現場初估發生潛勢因子
-            /// Estimate the potential factor. 
+            /// 植生照片
+            /// Piture of the plantation.
             /// </summary>
-            public enum LocationPotentialFactor
-            {
-                High,
-                Medium,
-                Low
-            }
+            public string PlantationPicturePath { get; set; }
+        }
 
-            /// <summary>
-            /// 現場初估風險潛勢等級
-            /// Level of potential risk.
-            /// </summary>
-            public enum RiskPotentialLevel
-            {
-                High,
-                Medium,
-                Low
-            }
+        /// <summary>
+        /// This dictionary stores the plantation photos' file of paths.
+        /// </summary>
+        public Dictionary<string, string> PlantationPhotoPaths { get; set; }
+
+        /// <summary>
+        /// 溪流災害類型-其他描述
+        /// Other discriptions of torrent disaster.
+        /// </summary>
+        public string TorrentDisasterTypeDiscription { get; set; }
+
+        /// <summary>
+        /// 溪流災害類型
+        /// Type of the torrent disaster.
+        /// </summary>
+        public enum TorrentDisasterType
+        {
+            DebrisFlow,
+            DebrisSlump,
+            GullyErosion,
+            ShallowSlide,
+            Others,
+            IDoNotKnow
+        }
+
+        /// <summary>
+        /// 堆積區土石粒徑情形
+        /// The diameter of rock in aggradation.
+        /// </summary>
+        public enum AggradationRockDiameter
+        {
+            AboveThirtyCM,
+            EightToThirtyCM,
+            UnderEightCM,
+            NoObviousRock,
+            IDoNotKnow
+        }
+
+        /// <summary>
+        /// 現場初估風險潛勢等級
+        /// Level of potential risk.
+        /// </summary>
+        public enum RiskPotentialLevel
+        {
+            High,
+            Medium,
+            Low,
+            IDoNotKnow
+        }
         #endregion
 
     }
