@@ -8,6 +8,8 @@ using GMap.NET.MapProviders;
 using Microsoft.Maps.MapControl.WPF;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using GMap.NET;
+using System.Diagnostics;
 
 namespace DiReCTUI.Map
 {
@@ -23,7 +25,7 @@ namespace DiReCTUI.Map
     public class CustomTileSource : TileSource
     {
         readonly string UrlFormat = "http://localhost:8844/{0}/{1}/{2}/{3}";
-        readonly int DbId = GMapProviders.GoogleMap.DbId;
+        readonly int DbId = GMapProviders.BingSatelliteMap.DbId;
 
         // keep in mind that bing only supports mercator based maps
         public override Uri GetUri(int x, int y, int zoomLevel)
@@ -73,19 +75,19 @@ namespace DiReCTUI.Map
             #region demo part
             ///this part was in the demo, but I found that removing this part
             ///does not affect the functionality of the map
-            //try
-            //{
-            //Random rnd = new Random();
-            //int port = rnd.Next(8800, 8900);
-            ////    GMapProvider.WebProxy = new WebProxy("127.0.0.1", 1080);
-            ////    GMapProvider.IsSocksProxy = true;
+            try
+            {
+                Random rnd = new Random();
+                int port = rnd.Next(8800, 8900);
+                //    GMapProvider.WebProxy = new WebProxy("127.0.0.1", 1080);
+                //    GMapProvider.IsSocksProxy = true;
 
-            //GMaps.Instance.EnableTileHost(port);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("ex: " + ex);
-            //}
+                GMaps.Instance.EnableTileHost(port);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("ex: " + ex);
+            }
             #endregion
 
             // Initialize currentMarker to be at IIS
@@ -100,6 +102,11 @@ namespace DiReCTUI.Map
             }
             currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(currentMarker);
+
+            //test
+            test.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
+            test.Position = new PointLatLng(23.6, 120.9);
+
         }
 
 
@@ -166,11 +173,14 @@ namespace DiReCTUI.Map
         }
         private void ZoomIn_Click(object sender, EventArgs e)
         {
+            test.Zoom++;
             Map.ZoomLevel++;
+            
         }
         private void ZoomOut_Click(object sender, EventArgs e)
         {
             Map.ZoomLevel--;
+            test.Zoom--;
         }
         private async void Add_Marker_Click(object sender, EventArgs e)
         {
@@ -180,8 +190,18 @@ namespace DiReCTUI.Map
             //    pin.Location = lastTouchLocation;
             //    Map.Children.Add(pin);
             //}
-            var metroWindow = (Application.Current.MainWindow as MetroWindow);
-            await metroWindow.ShowMessageAsync("Title", "Body");
+            //var metroWindow = (Application.Current.MainWindow as MetroWindow);
+            //await metroWindow.ShowMessageAsync("Title", "Body");
+            if (test.Visibility == Visibility.Collapsed)
+            {
+                Map.Visibility = Visibility.Collapsed;
+                test.Visibility = Visibility.Visible;
+            }else
+            {
+                test.Visibility = Visibility.Collapsed;
+                Map.Visibility = Visibility.Visible;
+            }
+
 
         }
         #endregion

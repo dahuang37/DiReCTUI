@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DiReCTUI.Map"
       xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+      xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       >
@@ -20,7 +21,8 @@
             <local:CustomTileLayer />
         </m:Map>
         
-        
+        <gmap:GMapControl x:Name="test" Zoom="16" Visibility="Collapsed" />
+
         <!-- Map Controls : ZoomIn, ZoomOut, Add Marker -->
         <StackPanel HorizontalAlignment="Right" 
                     VerticalAlignment="Center" 
