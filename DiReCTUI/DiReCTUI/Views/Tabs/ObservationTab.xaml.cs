@@ -32,11 +32,9 @@ namespace DiReCTUI.Views.Tabs
             var map = db.map;
             var dbRecord = new DebrisFlowRecord();
             var bgInfo = new BackgroundInfo().DebrisBackgroundInfo;
-           
-            
-
+          
             var dbvm = new DebrisFlowViewModel(map, dbRecord, bgInfo);
-            dbvm.RivuletName = "te3st"; 
+            
             db.DataContext = dbvm;
             this.NavigationService.Navigate(db);
         }

@@ -119,6 +119,7 @@ namespace DiReCTUI.Map
             var locations = CreateCircle(center, radius);
             poly.Locations = locations;
             poly.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+            poly.Fill = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0));
             poly.StrokeThickness = 2;
             Map.Children.Add(poly);
         }
@@ -230,8 +231,9 @@ namespace DiReCTUI.Map
         /// <param name="radius"></param>
         public void addSOPPushPin(Location loc, string label, double radius)
         {
-            addPushPins(loc , label);
+            
             drawCircle(loc, radius);
+            addPushPins(loc, label);
         }
 
         /// <summary>
