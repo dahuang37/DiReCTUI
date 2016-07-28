@@ -91,7 +91,7 @@ namespace DiReCTUI.ViewModel
                 if (value == latitude) return;
                 latitude = value;
                 
-                detectCurrentMarker();
+                //detectCurrentMarker();
                 OnPropertyChanged("Latitude");
             }
         }
@@ -106,8 +106,21 @@ namespace DiReCTUI.ViewModel
                 if (value == latitude) return;
                 longitude = value;
                 
-                detectCurrentMarker();
+                //detectCurrentMarker();
                 base.OnPropertyChanged("Longitude");
+            }
+        }
+        private Location location;
+        public Location Location
+        {
+            get { return location; }
+            set
+            {
+                if (value == location) return;
+                location = value;
+
+                detectCurrentMarker(value);
+                base.OnPropertyChanged("Location");
             }
         }
         #endregion
@@ -123,8 +136,9 @@ namespace DiReCTUI.ViewModel
 
         public void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
-            Longitude = e.Position.Location.Longitude;
-            Latitude = e.Position.Location.Latitude;
+            var lon = e.Position.Location.Longitude;
+            var lat = e.Position.Location.Latitude;
+            this.Location = new Location(lat, lon);
             //Status = "Tracking";
         }
 
@@ -162,10 +176,10 @@ namespace DiReCTUI.ViewModel
             Pushpins = new ObservableCollection<DraggablePin>();
             
             this.map = map;
-            Latitude = 25.04;
-            Longitude = 121.612;
+            this.Location = new Location(25.04, 121.612);
+            
             //Status = "init";
-            currentLocation = new Location(Latitude, Longitude);
+            currentLocation = this.Location;
             this.currentMarker = map.getCurrentMarker();
             
             this.map.MouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
@@ -178,7 +192,7 @@ namespace DiReCTUI.ViewModel
             //template
             TemplateVisibility = Visibility.Collapsed;
 
-            detectCurrentMarker();
+            detectCurrentMarker(this.Location);
             
             
         }
@@ -292,37 +306,38 @@ namespace DiReCTUI.ViewModel
             
             var mouseMapPosition = e.GetPosition(map);
             var mouseGeocode = map.ViewPortToLocation(mouseMapPosition);
-            Longitude = mouseGeocode.Longitude;
-            Latitude = mouseGeocode.Latitude;
+            Location loc = new Location(mouseGeocode.Latitude, mouseGeocode.Longitude);
+            this.Location = loc;
             
         }
 
-        private async void detectCurrentMarker()
+        private async void detectCurrentMarker(Location loc)
         {
 
             if (map != null)
             {
-                Location location = new Location(this.Latitude, this.Longitude);
-                map.setCurrentMarkerPosition(location);
-                currentLocation = location;
+                Location new_location = loc;
+                map.setCurrentMarkerPosition(new_location);
+                currentLocation = new_location;
                 if(LocationSOPs.Count == 0)
                 {
                     Status = "not in range";
                     TemplateVisibility = Visibility.Collapsed;
+                    return;
                 }
                 foreach(LocationSOP locSop in LocationSOPs)
                 {
-                    var loc = locSop.location;
-                    if (checkInRange(loc.Latitude, loc.Longitude) == true){
-                        //if (Status != "In range")
-                        //{
-                        //}
-                        
+                    var sopLoc = locSop.location;
+                    double result = RangeLength(this.Location.Latitude, sopLoc.Latitude, this.Location.Longitude, sopLoc.Longitude);
+                    Status = result.ToString();
+                    if (checkInRange(sopLoc.Latitude, sopLoc.Longitude) == true){
+                       
                         Status = "In range";
-                         
+
                         
+
                         var metroWindow = (Application.Current.MainWindow as MetroWindow);
-                        await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask );
+                        await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask + " " + result );
 
                         //var test = new BackgroundInfo().DebrisBackgroundInfo;
                         //test.RivuletName = "hey";
@@ -332,6 +347,7 @@ namespace DiReCTUI.ViewModel
                         return;
 
                     }
+                    
                     
                    
                 }
@@ -343,7 +359,7 @@ namespace DiReCTUI.ViewModel
         private bool checkInRange(double lat, double lon)
         {
              
-            double result = RangeLength(Latitude, lat, Longitude, lon);
+            double result = RangeLength(this.Location.Latitude, lat, this.Location.Longitude, lon);
             
             if (result < 150.0)
             {
