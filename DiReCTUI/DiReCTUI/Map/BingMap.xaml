@@ -17,11 +17,12 @@
                Center="25.04133, 121.6133" 
                ZoomLevel="16"
                TouchDown="BingMap_TouchDown"
+               Visibility="Visible"
                >
             <local:CustomTileLayer />
         </m:Map>
-        
-        <gmap:GMapControl x:Name="test" Zoom="16" Visibility="Collapsed" />
+
+        <gmap:GMapControl x:Name="test" Zoom="13" Visibility="Hidden" MaxZoom="24" MinZoom="1" />
 
         <!-- Map Controls : ZoomIn, ZoomOut, Add Marker -->
         <StackPanel HorizontalAlignment="Right" 
@@ -32,7 +33,8 @@
                      FontSize="25" 
                      Width="40"
                      Height="40"
-                     Click="ZoomIn_Click">
+                     Click="ZoomIn_Click"
+                     BorderThickness="0">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">+</TextBlock>
             </Button>
 
@@ -40,7 +42,8 @@
                     FontSize="25" 
                     Width="40"
                     Height="40"
-                    Click="ZoomOut_Click">
+                    Click="ZoomOut_Click"
+                    BorderThickness="0">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">-</TextBlock>
             </Button>
 
@@ -48,7 +51,8 @@
                     FontSize="17" 
                     Width="40" 
                     Height="40" 
-                    Click="Add_Marker_Click" >
+                    Click="Add_Marker_Click"
+                    BorderThickness="0">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">M</TextBlock>
             </Button>
 

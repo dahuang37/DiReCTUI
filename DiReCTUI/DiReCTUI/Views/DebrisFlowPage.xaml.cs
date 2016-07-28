@@ -28,8 +28,22 @@ namespace DiReCTUI.Views
         public DebrisFlowPage()
         {
             InitializeComponent();
-            
-            
+            //test
+            //List<TodoItem> items = new List<TodoItem>();
+            //items.Add(new TodoItem() { Title = "Rock" });
+            //items.Add(new TodoItem() { Title = "Plantation"});
+            //items.Add(new TodoItem() { Title = "Slope" });
+
+            //SOPList.ItemsSource = items;
+
+
+        }
+
+        //test
+        public class TodoItem
+        {
+            public string Title { get; set; }
+            public int Completion { get; set; }
         }
 
         //#region Click Functions For DataTemplate
@@ -55,7 +69,7 @@ namespace DiReCTUI.Views
         //}
         //private void FlowTrack_Next_Click(object sender, RoutedEventArgs e)
         //{
-            
+
         //}
         //private void FlowTrack_Back_Click(object sender, RoutedEventArgs e)
         //{
@@ -70,6 +84,10 @@ namespace DiReCTUI.Views
                 this.NavigationService.GoBack();
             }
         }
-        
+
+        private void Expander_Click(object sender, RoutedEventArgs e)
+        {
+            HideStack.Visibility = (HideStack.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

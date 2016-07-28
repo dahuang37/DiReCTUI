@@ -32,6 +32,7 @@ namespace DiReCTUI.ViewModel
         private DraggablePin currentMarker;
         private Visibility templateVisibility;
         private double radius;
+        
         //private ContentPresenter content;
         
         #endregion
@@ -89,6 +90,7 @@ namespace DiReCTUI.ViewModel
             {
                 if (value == latitude) return;
                 latitude = value;
+                
                 detectCurrentMarker();
                 OnPropertyChanged("Latitude");
             }
@@ -103,6 +105,7 @@ namespace DiReCTUI.ViewModel
             {
                 if (value == latitude) return;
                 longitude = value;
+                
                 detectCurrentMarker();
                 base.OnPropertyChanged("Longitude");
             }
@@ -141,9 +144,10 @@ namespace DiReCTUI.ViewModel
         }
         #endregion
         #endregion
-        
+
         #region Constructor
         
+
         public DebrisFlowViewModel(BingMap map, DebrisFlowRecord dbRecord, BackgroundInfo.DebrisFlowRelated bgInfo)
         {
             this._debrisFlowRecord = dbRecord;
@@ -176,12 +180,35 @@ namespace DiReCTUI.ViewModel
 
             detectCurrentMarker();
             
-
+            
         }
+        //temporary classes
+        ObservableCollection<SOPTypesAndCommand> sopTypes = new ObservableCollection<SOPTypesAndCommand>();
+        public ObservableCollection<SOPTypesAndCommand> SOPTypes
+        {
+            get
+            {
+                
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Rock" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Plantation" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Protected Object" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Slope" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Catchment" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Basic Info" });
+                
+                return sopTypes;
+            }
+        }
+        public class SOPTypesAndCommand
+        {
+            public string Title { get; set; }
+            public ICommand command { get; set; }
+        }
+        
         #endregion
 
         #region Properties
-        
+
         // Background Infos
         public string RivuletName
         {
@@ -256,20 +283,7 @@ namespace DiReCTUI.ViewModel
             }
         }
 
-        private IEnumerable<BackgroundInfo.DebrisFlowRelated.test> testEnum;
-        public IEnumerable<BackgroundInfo.DebrisFlowRelated.test> TestEnum
-        {
-            get
-            {
-                return Enum.GetValues(typeof(BackgroundInfo.DebrisFlowRelated.test)).Cast<BackgroundInfo.DebrisFlowRelated.test>();
-            }
-            set
-            {
-                testEnum = value;
-                OnPropertyChanged("TestEnum");
-            }
-        }
-            
+  
         #endregion
 
         #region private helpers
@@ -300,21 +314,25 @@ namespace DiReCTUI.ViewModel
                 {
                     var loc = locSop.location;
                     if (checkInRange(loc.Latitude, loc.Longitude)){
+                        if (Status != "In range")
+                        {
+                            var metroWindow = (Application.Current.MainWindow as MetroWindow);
+                            await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask);
+                        }
+                        
                         Status = "In range";
                         //var test = new BackgroundInfo().DebrisBackgroundInfo;
                         //test.RivuletName = "hey";
                         //this.content.Content = test;
-
-                        TemplateVisibility = Visibility.Visible;
-                       
-
+                        
+                        //TemplateVisibility = Visibility.Visible;
                         return;
 
                     }
                     else
                     {
                         Status = "not in range";
-                        TemplateVisibility = Visibility.Collapsed;
+                        //TemplateVisibility = Visibility.Collapsed;
                     }
                    
                 }
@@ -326,7 +344,7 @@ namespace DiReCTUI.ViewModel
         {
              
             double result = RangeLength(Latitude, lat, Longitude, lon);
-            Status = result + "" ;
+            
             if (result < 150)
             {
                 return true;

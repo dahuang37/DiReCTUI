@@ -25,6 +25,16 @@ namespace DiReCTUI.Controls
             return this.fakeSOP;
         }
 
+        List<string> SOPTypes = new List<string>
+        {
+            "Rock",
+            "Plantation",
+            "Protected Object",
+            "Slope",
+            "Catchment",
+            "Basic Info"
+        };
+
         
         
     }

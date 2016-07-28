@@ -25,7 +25,7 @@ namespace DiReCTUI.Map
     public class CustomTileSource : TileSource
     {
         readonly string UrlFormat = "http://localhost:8844/{0}/{1}/{2}/{3}";
-        readonly int DbId = GMapProviders.BingSatelliteMap.DbId;
+        readonly int DbId = GMapProviders.BingMap.DbId;
 
         // keep in mind that bing only supports mercator based maps
         public override Uri GetUri(int x, int y, int zoomLevel)
@@ -105,7 +105,9 @@ namespace DiReCTUI.Map
 
             //test
             test.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
-            test.Position = new PointLatLng(23.6, 120.9);
+            test.Position = new PointLatLng(23.6978, 120.9605);
+            test.Zoom = 13;
+            test.CanDragMap = false;
 
         }
 
@@ -173,7 +175,7 @@ namespace DiReCTUI.Map
         }
         private void ZoomIn_Click(object sender, EventArgs e)
         {
-            test.Zoom++;
+            test.Zoom = test.Zoom + 1;
             Map.ZoomLevel++;
             
         }
@@ -192,13 +194,15 @@ namespace DiReCTUI.Map
             //}
             //var metroWindow = (Application.Current.MainWindow as MetroWindow);
             //await metroWindow.ShowMessageAsync("Title", "Body");
-            if (test.Visibility == Visibility.Collapsed)
+            if (test.Visibility == Visibility.Hidden)
             {
-                Map.Visibility = Visibility.Collapsed;
+                Map.Visibility = Visibility.Hidden;
+                test.Zoom = Map.ZoomLevel;
+                test.Position = new PointLatLng(Map.Center.Latitude, Map.Center.Longitude);
                 test.Visibility = Visibility.Visible;
             }else
             {
-                test.Visibility = Visibility.Collapsed;
+                test.Visibility = Visibility.Hidden;
                 Map.Visibility = Visibility.Visible;
             }
 
