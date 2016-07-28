@@ -125,7 +125,7 @@ namespace DiReCTUI.ViewModel
         {
             Longitude = e.Position.Location.Longitude;
             Latitude = e.Position.Location.Latitude;
-            Status = "Tracking";
+            //Status = "Tracking";
         }
 
         public void StopTracking()
@@ -313,29 +313,29 @@ namespace DiReCTUI.ViewModel
                 foreach(LocationSOP locSop in LocationSOPs)
                 {
                     var loc = locSop.location;
-                    if (checkInRange(loc.Latitude, loc.Longitude)){
-                        if (Status != "In range")
-                        {
-                            var metroWindow = (Application.Current.MainWindow as MetroWindow);
-                            await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask);
-                        }
+                    if (checkInRange(loc.Latitude, loc.Longitude) == true){
+                        //if (Status != "In range")
+                        //{
+                        //}
                         
                         Status = "In range";
+                         
+                        
+                        var metroWindow = (Application.Current.MainWindow as MetroWindow);
+                        await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask );
+
                         //var test = new BackgroundInfo().DebrisBackgroundInfo;
                         //test.RivuletName = "hey";
                         //this.content.Content = test;
-                        
+
                         //TemplateVisibility = Visibility.Visible;
                         return;
 
                     }
-                    else
-                    {
-                        Status = "not in range";
-                        //TemplateVisibility = Visibility.Collapsed;
-                    }
+                    
                    
                 }
+                Status = "not in range";
             }
             
         }
@@ -345,10 +345,11 @@ namespace DiReCTUI.ViewModel
              
             double result = RangeLength(Latitude, lat, Longitude, lon);
             
-            if (result < 150)
+            if (result < 150.0)
             {
                 return true;
             }
+
             return false;
         }
 
