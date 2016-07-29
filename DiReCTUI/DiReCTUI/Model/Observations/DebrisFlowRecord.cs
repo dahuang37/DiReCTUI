@@ -325,3 +325,95 @@ namespace DiReCTUI.Model
     }
 }
 
+
+/// <remarks/>
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+public partial class breakfast_menu
+{
+
+    private breakfast_menuFood[] foodField;
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("food")]
+    public breakfast_menuFood[] food
+    {
+        get
+        {
+            return this.foodField;
+        }
+        set
+        {
+            this.foodField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+public partial class breakfast_menuFood
+{
+
+    private string nameField;
+
+    private string priceField;
+
+    private string descriptionField;
+
+    private ushort caloriesField;
+
+    /// <remarks/>
+    public string name
+    {
+        get
+        {
+            return this.nameField;
+        }
+        set
+        {
+            this.nameField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string price
+    {
+        get
+        {
+            return this.priceField;
+        }
+        set
+        {
+            this.priceField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string description
+    {
+        get
+        {
+            return this.descriptionField;
+        }
+        set
+        {
+            this.descriptionField = value;
+        }
+    }
+
+    /// <remarks/>
+    public ushort calories
+    {
+        get
+        {
+            return this.caloriesField;
+        }
+        set
+        {
+            this.caloriesField = value;
+        }
+    }
+}
+
+
+

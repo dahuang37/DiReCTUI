@@ -184,7 +184,7 @@ namespace DiReCTUI.Map
             Map.ZoomLevel--;
             test.Zoom--;
         }
-        private async void Add_Marker_Click(object sender, EventArgs e)
+        private void Add_Marker_Click(object sender, EventArgs e)
         {
             //if (lastTouchLocation != null)
             //{

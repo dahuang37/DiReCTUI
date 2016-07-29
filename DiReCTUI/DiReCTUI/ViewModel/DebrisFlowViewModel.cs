@@ -190,7 +190,7 @@ namespace DiReCTUI.ViewModel
             setUpSOP();
 
             //template
-            TemplateVisibility = Visibility.Collapsed;
+            
 
             detectCurrentMarker(this.Location);
             
@@ -267,35 +267,8 @@ namespace DiReCTUI.ViewModel
         #endregion
 
         #region Display Properties
-        public Visibility TemplateVisibility
-        {
-            get { return this.templateVisibility; }
-            set
-            {
-                if (value != this.templateVisibility)
-                {
-                    templateVisibility = value;
-                    OnPropertyChanged("TemplateVisibility");
-
-                }
-            }
-        }
-        private bool popUpBool;
-        public bool PopUpBool
-        {
-            get
-            {
-                return this.popUpBool;
-            }
-            set
-            {
-                if(value != popUpBool)
-                {
-                    popUpBool = value;
-                    OnPropertyChanged("PopUpBool");
-                }
-            }
-        }
+        
+       
 
   
         #endregion
@@ -310,7 +283,7 @@ namespace DiReCTUI.ViewModel
             this.Location = loc;
             
         }
-
+        
         private async void detectCurrentMarker(Location loc)
         {
 
@@ -322,7 +295,7 @@ namespace DiReCTUI.ViewModel
                 if(LocationSOPs.Count == 0)
                 {
                     Status = "not in range";
-                    TemplateVisibility = Visibility.Collapsed;
+                    
                     return;
                 }
                 foreach(LocationSOP locSop in LocationSOPs)
@@ -338,12 +311,6 @@ namespace DiReCTUI.ViewModel
 
                         var metroWindow = (Application.Current.MainWindow as MetroWindow);
                         await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask + " " + result );
-
-                        //var test = new BackgroundInfo().DebrisBackgroundInfo;
-                        //test.RivuletName = "hey";
-                        //this.content.Content = test;
-
-                        //TemplateVisibility = Visibility.Visible;
                         return;
 
                     }

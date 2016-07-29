@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="huehue"
+    targetNamespace="http://tempuri.org/huehue.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/huehue.xsd"
+    xmlns:mstns="http://tempuri.org/huehue.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="car">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Audi"/>
+        <xs:enumeration value="Golf"/>
+        <xs:enumeration value="BMW"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+</xs:schema>
