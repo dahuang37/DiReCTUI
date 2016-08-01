@@ -15,56 +15,41 @@ using System.Windows.Input;
 using static DiReCTUI.Controls.SOP;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Controls;
+
 using System.Windows.Controls;
+using DiReCTUI.Views;
 
 namespace DiReCTUI.ViewModel
 {
     public class DebrisFlowViewModel : ViewModelBase, GPSInterface
     {
         #region Fields
+
+        
         DebrisFlowRecord _debrisFlowRecord;
         BackgroundInfo.DebrisFlowRelated _backgroundInfo;
+        DebrisFlowCollection _debrisFlowCollection;
+
+        IDialogCoordinator _dialogCoordinator;
         
-        private ObservableCollection<DraggablePin> _Pushpins;
         private BingMap map;
         private ObservableCollection<LocationSOP> LocationSOPs;
         private Location currentLocation;
         private DraggablePin currentMarker;
-        private Visibility templateVisibility;
         private double radius;
-        
-        //private ContentPresenter content;
         
         #endregion
 
         #region GPS properties, fields and functions
         #region fields
         private string status;
-        private string template;
+        private Location location;
         private GeoCoordinateWatcher watcher;
-        private double longitude;
-        private double latitude;
         
-
         #endregion
 
         #region Properties
        
-        public string Template
-        {
-            get
-            {
-                return template;
-            }
-            set
-            {
-                if(value != template)
-                {
-                    template = value;
-                    OnPropertyChanged("Template");
-                }
-            }
-        }
         public string Status
         {
             get
@@ -80,37 +65,7 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
-        public double Latitude
-        {
-            get
-            {
-                return latitude;
-            }
-            set
-            {
-                if (value == latitude) return;
-                latitude = value;
-                
-                //detectCurrentMarker();
-                OnPropertyChanged("Latitude");
-            }
-        }
-        public double Longitude
-        {
-            get
-            {
-                return longitude;
-            }
-            set
-            {
-                if (value == latitude) return;
-                longitude = value;
-                
-                //detectCurrentMarker();
-                base.OnPropertyChanged("Longitude");
-            }
-        }
-        private Location location;
+        
         public Location Location
         {
             get { return location; }
@@ -119,13 +74,18 @@ namespace DiReCTUI.ViewModel
                 if (value == location) return;
                 location = value;
 
-                detectCurrentMarker(value);
+                detectCurrentMarkerIsInRange(value);
                 base.OnPropertyChanged("Location");
             }
         }
         #endregion
 
         #region public function
+
+        /// <summary>
+        /// initialize the watcher
+        /// and add eventhandler such that when user's GPS location changed, our app will detect 
+        /// </summary>
         public void StartTracking()
         {
             this.watcher = new GeoCoordinateWatcher();
@@ -150,10 +110,6 @@ namespace DiReCTUI.ViewModel
             }
             watcher.Stop();
             watcher.Dispose();
-            watcher = null;
-            latitude = 0;
-            longitude = 0;
-            status = null;
 
         }
         #endregion
@@ -161,54 +117,49 @@ namespace DiReCTUI.ViewModel
 
         #region Constructor
         
-
-        public DebrisFlowViewModel(BingMap map, DebrisFlowRecord dbRecord, BackgroundInfo.DebrisFlowRelated bgInfo)
+        public DebrisFlowViewModel(BingMap map, DebrisFlowRecord dbRecord, BackgroundInfo.DebrisFlowRelated bgInfo, DebrisFlowCollection dbCollection)
         {
             this._debrisFlowRecord = dbRecord;
             this._backgroundInfo = bgInfo;
-            
-            this._backgroundInfo.RivuletName = "test";
-            this.LocationSOPs = new ObservableCollection<LocationSOP>();
-            this.radius = 0.150;
+            this._debrisFlowCollection = dbCollection;
 
+            this._dialogCoordinator = new DialogCoordinator();
+
+            this.LocationSOPs = new ObservableCollection<LocationSOP>();
+            this.radius = 150.0;
+            
             //map and gps
             //StartTracking();
-            Pushpins = new ObservableCollection<DraggablePin>();
-            
             this.map = map;
             this.Location = new Location(25.04, 121.612);
-            
-            //Status = "init";
             currentLocation = this.Location;
             this.currentMarker = map.getCurrentMarker();
-            
             this.map.MouseUp += new MouseButtonEventHandler(setCurrentMarkerPosition);
 
             //Sop
             FakeSOP sop = new FakeSOP();
             LocationSOPs = sop.getFakeSOP().getLocationSOP();
             setUpSOP();
-
-            //template
             
-
-            detectCurrentMarker(this.Location);
-            
+            //detect if user is already in range
+            detectCurrentMarkerIsInRange(this.Location);
             
         }
-        //temporary classes
+
+        //temporary classes to store different type of SOP
+        //TODO:
+        // add this part to the SOP class, so it's more dynamic
         ObservableCollection<SOPTypesAndCommand> sopTypes = new ObservableCollection<SOPTypesAndCommand>();
         public ObservableCollection<SOPTypesAndCommand> SOPTypes
         {
             get
             {
-                
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Rock" });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Plantation" });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Protected Object" });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Slope" });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Catchment" });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Basic Info" });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Rock", Command = this.AddWindow });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Plantation", Command=this.AddWindow });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Protected Object", Command = this.AddWindow });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Slope", Command = this.AddWindow });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Catchment", Command = this.AddWindow });
+                sopTypes.Add(new SOPTypesAndCommand() { Title = "Basic Info", Command = this.AddWindow });
                 
                 return sopTypes;
             }
@@ -216,7 +167,8 @@ namespace DiReCTUI.ViewModel
         public class SOPTypesAndCommand
         {
             public string Title { get; set; }
-            public ICommand command { get; set; }
+            public ICommand Command { get; set; }
+            
         }
         
         #endregion
@@ -261,22 +213,106 @@ namespace DiReCTUI.ViewModel
             }
         }
 
-        // DebrisFlow Model
-
-
+        public int CollectionSize
+        {
+            get { return this._debrisFlowCollection.Size(); }
+        }
         #endregion
 
         #region Display Properties
+        // Variable for showing and hiding the add button 
+        Visibility addButtonContent = Visibility.Collapsed;
+        public Visibility AddButtonContent
+        {
+            get { return addButtonContent; }
+            set
+            {
+                if (value != addButtonContent)
+                {
+                    addButtonContent = value;
+                    OnPropertyChanged("AddButtonContent");
+                }
+            }
+        }
+        // command to trigger toggling the add button 
+        RelayCommand toggleAddButton;
+        public ICommand ToggleAddButton
+        {
+            get
+            {
+                if(toggleAddButton == null)
+                {
+                    toggleAddButton = new RelayCommand(
+                        param => this.ChangeView());
+                }
+                return this.toggleAddButton;
+            }
+        }
+        
+        //helper to change the visibility of add button content
+        void ChangeView()
+        {
+            AddButtonContent = (AddButtonContent == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        RelayCommand addWindow;
+        public ICommand AddWindow
+        {
+            get
+            {
+                if(addWindow == null)
+                {
+                    addWindow = new RelayCommand(p => CreateWindow(p) );
+                 
+                }
+                return this.addWindow;
+            }
+        }
         
        
 
-  
+        private async void CreateWindow(object parameter)
+        {
+            var str = parameter as string;
+            this.ChangeView();
+            switch (str)
+            {
+                case "Rock":
+                    custom = new CustomDialog() { Title = str };
+                    var RockViewModel = new RockViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom), _debrisFlowCollection, new DebrisFlowRecord.Rock());
+                    custom.Content = new test { DataContext = RockViewModel };
+                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
+                    break;
+                case "Slope":
+                    break;
+                case "Plantation":
+                    break;
+                case "Protected Object":
+                    break;
+                case "Basic Info":
+                    break;
+                case "Catchment":
+                    break;
+            }
+            
+            
+        }
+        private CustomDialog custom;
+       
+        
         #endregion
 
         #region private helpers
+        /// <summary>
+        /// this functioned is called whenever user's location has changed
+        /// right now the change is detected by the MouseUp trigger,
+        /// later it should be added to the GeocoordinateWatcher position change event
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
         void setCurrentMarkerPosition(object s, MouseEventArgs e)
         {
-            
+
             var mouseMapPosition = e.GetPosition(map);
             var mouseGeocode = map.ViewPortToLocation(mouseMapPosition);
             Location loc = new Location(mouseGeocode.Latitude, mouseGeocode.Longitude);
@@ -284,9 +320,12 @@ namespace DiReCTUI.ViewModel
             
         }
         
-        private async void detectCurrentMarker(Location loc)
+        /// <summary>
+        /// check if the user has get in range of one of the SOPlocations 
+        /// </summary>
+        /// <param name="loc"></param>
+        private async void detectCurrentMarkerIsInRange(Location loc)
         {
-
             if (map != null)
             {
                 Location new_location = loc;
@@ -295,7 +334,6 @@ namespace DiReCTUI.ViewModel
                 if(LocationSOPs.Count == 0)
                 {
                     Status = "not in range";
-                    
                     return;
                 }
                 foreach(LocationSOP locSop in LocationSOPs)
@@ -303,36 +341,31 @@ namespace DiReCTUI.ViewModel
                     var sopLoc = locSop.location;
                     double result = RangeLength(this.Location.Latitude, sopLoc.Latitude, this.Location.Longitude, sopLoc.Longitude);
                     Status = result.ToString();
-                    if (checkInRange(sopLoc.Latitude, sopLoc.Longitude) == true){
-                       
+                    if (checkInRange(sopLoc.Latitude, sopLoc.Longitude) == true)
+                    {
+
                         Status = "In range";
-
                         
-
+                        //pop up the dialog when user's in range
                         var metroWindow = (Application.Current.MainWindow as MetroWindow);
-                        await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask + " " + result );
+                        await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locSop.SOPTask + " " + result);
                         return;
 
                     }
-                    
-                    
                    
                 }
                 Status = "not in range";
             }
             
         }
-        //check if the loc is in rnage of any SOP pins
+        // helper functions for "detectCurrentMarker
+        // Check if Range is less than radius
         private bool checkInRange(double lat, double lon)
         {
              
             double result = RangeLength(this.Location.Latitude, lat, this.Location.Longitude, lon);
-            
-            if (result < 150.0)
-            {
+            if (result < this.radius)   
                 return true;
-            }
-
             return false;
         }
 
@@ -360,6 +393,7 @@ namespace DiReCTUI.ViewModel
         #endregion
 
         #region SOP pins
+        
         public void setUpSOP()
         {
             if(this.LocationSOPs != null)
@@ -367,7 +401,7 @@ namespace DiReCTUI.ViewModel
                 foreach(LocationSOP item in LocationSOPs)
                 {
                     string label = "Task: "+ item.SOPTask + ", ID: " + item.ID;
-                    map.addSOPPushPin(item.location, label, this.radius);
+                    map.addSOPPushPin(item.location, label, this.radius/1000);
                 }
             }
 
@@ -375,18 +409,5 @@ namespace DiReCTUI.ViewModel
 
         #endregion
 
-        #region pins functions and properties
-
-        public ObservableCollection<DraggablePin> Pushpins
-        {
-            get { return _Pushpins; }
-            set
-            {
-                _Pushpins = value;
-                base.OnPropertyChanged("Pushpins");
-            }
-        }
-
-        #endregion
     }
 }

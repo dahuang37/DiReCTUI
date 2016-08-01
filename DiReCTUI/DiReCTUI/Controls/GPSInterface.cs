@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.Device.Location;
 using System.ComponentModel;
+using Microsoft.Maps.MapControl.WPF;
+
 namespace DiReCTUI.Controls
 {
     public interface GPSInterface
@@ -13,13 +15,7 @@ namespace DiReCTUI.Controls
 
         #region Properties
         
-        double Latitude
-        {
-            get;
-            set;
-        }
-
-        double Longitude
+        Location Location
         {
             get;
             set;

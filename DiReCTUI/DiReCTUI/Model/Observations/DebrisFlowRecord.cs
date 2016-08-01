@@ -1,9 +1,9 @@
 ﻿/**
- * Copyright(c) 2016 DRBoaST
-*
-* Project Name:
+ * Copyright (c) 2016 DRBoaST
  *
- * DiReCT(Disaster Record Capture Tool)
+ * Project Name:
+ *
+ * 		DiReCT(Disaster Record Capture Tool)
  *
  * Version:
  *
@@ -11,58 +11,53 @@
  *
  * File Name:
  *
- * DebrisFlowRecord.cs
+ * 		DebrisFlowRecord.cs
  *
  * Abstract:
  *
- * 		DebrisFlowRecord is a subclass inherited ObservationRecord.
+ * 		DebrisFlowRecord is a subclass inherited ObservationRecord.     
  *
  * Authors:
  *
- * 		Johnson Su, johnsonsu @iis.sinica.edu.tw
- * Jeff Chen, jeff @iis.sinica.edu.tw
+ * 		Johnson Su, johnsonsu@iis.sinica.edu.tw
+ *      Jeff Chen, jeff@iis.sinica.edu.tw
  *
  * License:
  *
  * 		GPL 3.0 This file is subject to the terms and conditions defined
- *      in file 'COPYING.txt', which is part of this source code package.
+ * 		in file 'COPYING.txt', which is part of this source code package.
  *
  */
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Device.Location;
 
 namespace DiReCTUI.Model
 {
     public class DebrisFlowRecord : ObservationRecord
     {
-        #region Properties
-        public struct RockLithology
+        /// <summary>
+        /// 岩石紀錄
+        /// The Rock struct is used to store "Rock" relative properties 
+        /// that is the professionals record in a debris flow event.
+        /// </summary>
+        public struct Rock
         {
             /// <summary>
-            /// 沉積岩
-            /// Types of Sedimetary Rock.
+            /// 土石種類
+            /// This enumeration includes four types of rock.
             /// </summary>
-            enum SedimetaryRock
+            public enum RockTypes
             {
+                DoNotKnow,
+                // Types of Sedimetary Rock.
                 Conglomerate,
                 Sandstone,
                 Siltstone,
                 Shale,
                 Mudstone,
                 Limestone,
-                IDoNotKnow
-            }
-
-            /// <summary>
-            /// 變質岩
-            /// Types of Metamorphic Rock.
-            /// </summary>
-            enum MetamorphicRock
-            {
+                // Types of Metamorphic Rock.
                 Quartzite,
                 Marble,
                 Amphibolite,
@@ -74,15 +69,7 @@ namespace DiReCTUI.Model
                 Hornfels,
                 Greywacke,
                 Argillite,
-                IDoNotKnow
-            }
-
-            /// <summary>
-            /// 火成岩
-            /// Types of Igneous Rock.
-            /// </summary>
-            enum IgneousRock
-            {
+                // Types of Igneous Rock.
                 Peridotite,
                 Gabbro,
                 Diorite,
@@ -97,323 +84,235 @@ namespace DiReCTUI.Model
                 Ignimbrite,
                 Tuff,
                 Lahar,
-                IDoNotKnow
-            }
-
-            /// <summary>
-            /// 堆積物
-            /// Types of Sedoment Rock.
-            /// </summary>
-            enum SedimentRock
-            {
+                // Types of Sedoment Rock.
                 GarvelTerrace,
-                Sandstone,
                 ClayLayer,
                 Peat,
-                Agglomerate,
                 Lapilli,
                 VolcanicAsh,
-                IDoNotKnow
             }
 
             /// <summary>
-            /// 土石粒徑
-            /// Diameter of the rock.(CM)
+            /// 紀錄土石種類
+            /// RockTypes is a List collection which is used to store 
+            /// multiple rock types in a rock record.
             /// </summary>
-            public int RockDiameter { get; set; }
+            public List<int> RecordedRockTypes { get; set; }
 
             /// <summary>
-            /// 土石濕度
-            /// Moisture percent of the soil.
+            /// 平均土石粒徑
+            /// AverageRockDiameter property is to store
+            /// average diameter of the rock.
+            /// Recorder uses ruler to measure the rock at the scene.
             /// </summary>
-            public int SoilMoisturePercentage { get; set; }
+            public int AverageRockDiameter { get; set; }
 
             /// <summary>
             /// 土石照片
-            /// Piture of the rock lithology.
+            /// RockPicturePath property is to store the 
+            /// rock picture path.
             /// </summary>
             public string RockPicturePath { get; set; }
+
+            /// <summary>
+            /// 土石照片方位
+            /// RockPictureDirection property is to store
+            /// direction of the picture taken.
+            /// </summary>
+            public string RockPictureDirection { get; set; }
+
+            /// <summary>
+            /// 土石註釋
+            /// RockNotes is used for additional comments related to 
+            /// rock.
+            /// </summary>
+            public string RockNotes { get; set; }
 
         }
 
         /// <summary>
-        /// This dictionary stores the rock lithology photos' file of paths.
+        /// This dictionary stores all of the debris flow rock records
+        /// in a event.
         /// </summary>
-        public Dictionary<string, string> RockPhotoPaths { get; set; }
+        public Dictionary<string, Rock> RockRecords { get; set; }
 
         /// <summary>
         /// 集水區相關
-        /// Catchment relative.
+        /// The Catchment struct is used to store "Catchment" relative 
+        /// properties that is the professionals record in a debris flow event.
         /// </summary>
         public struct Catchment
         {
             /// <summary>
-            /// 集水區面積
-            /// Area of the catchment.
+            /// 集水區內崩塌規模類型 (專家現場判斷)
+            /// Types of landslide scale in catchment.
             /// </summary>
-            public int CatchmentArea { get; set; }
-
-            /// <summary>
-            /// 集水區內崩塌率
-            /// The Landslide rate in catchment.
-            /// </summary>
-            public enum CatchmentLandslideRate
+            public enum CatchmentLandslideScaleTypes
             {
-                UnderOnePercent,
-                OneToFivePercent,
-                AboveFivePercent,
-                IDoNotKnow
+                DoNotKnow,
+                NoObviousLandslide,
+                SmallScaleLandslide,
+                ObviousBigRegionLandslide,
             }
 
             /// <summary>
             /// 集水區內崩塌規模
             /// Landslide scale in catchment.
             /// </summary>
-            public enum CatchmentLandslideScale
-            {
-                NoObviousLandslide,
-                SmallScaleLandslide,
-                ObviousBigRegionLandslide,
-                IDoNotKnow
-            }
+            public string CatchmentLandslideScale { get; set; }
 
             /// <summary>
             /// 集水區照片
-            /// Piture of the catchment.
+            /// CatchmentPicturePath property is to store the 
+            /// catchment picture path.
             /// </summary>
-            public string CatchmentpicturePath { get; set; }
+            public string CatchmentPicturePath { get; set; }
+
+            /// <summary>
+            /// 集水區照片方位
+            /// CatchmentPictureDirection property is to store
+            /// direction of the picture taken.
+            /// </summary>
+            public string CatchmentPictureDirection { get; set; }
+
+            /// <summary>
+            /// 集水區註釋
+            /// CatchmentNotes is used for additional comments related to 
+            /// catchment.
+            /// </summary>
+            public string CatchmentNotes { get; set; }
         }
 
         /// <summary>
-        /// This dictionary stores the catchment photos' file of paths.
+        /// This dictionary stores all of the debris flow catchment records
+        /// in a event.
         /// </summary>
-        public Dictionary<string, string> CatchmentPhotoPaths { get; set; }
+        public Dictionary<string, Catchment> CatchmentRecords { get; set; }
 
         /// <summary>
         /// 坡地相關
-        /// Slope relative.
+        /// The Slope struct is used to store "Slope" relative properties 
+        /// that is the professionals record in a debris flow event.
         /// </summary>
         public struct Slope
         {
             /// <summary>
-            /// 發生區上游坡度
-            /// The Slope of upstream.
-            /// </summary>
-            public enum OccurRegionUpstreamSlope
-            {
-                AboveFiftyDegrees,
-                ThirtyToFiftyDegrees,
-                UnderThirtyDegrees,
-                IDoNotKnow
-            }
-
-            /// <summary>
             /// 坡地角度
-            /// Angels of the slope.
+            /// This property is to store an angle value at the scene.
+            /// Recorder will record multiple angle values and calculate
+            /// the average values of the debris flow slope.
             /// </summary>
-            public int SlopeAngle { get; set; }
+            public int SlopeAngles { get; set; }
 
             /// <summary>
             /// 坡地方向
-            /// Directions of the slope.
+            /// Direction of the slope.
             /// </summary>
             public string SlopeDirection { get; set; }
 
             /// <summary>
             /// 坡地照片
-            /// Piture of the slope.
+            /// SlopePicturePath property is to store the 
+            /// slope picture path.
             /// </summary>
             public string SlopePicturePath { get; set; }
+
+            /// <summary>
+            /// 坡地照片方位
+            /// SlopePictureDirection property is to store
+            /// direction of the picture taken.
+            /// </summary>
+            public string SlopePictureDirection { get; set; }
+
+            /// <summary>
+            /// 坡地註釋
+            /// SlopeNotes is used for additional comments related to 
+            /// slope.
+            /// </summary>
+            public string SlopeNotes { get; set; }
         }
 
         /// <summary>
-        /// This dictionary stores the slope photos' file of paths.
+        /// This dictionary stores all of the debris flow slope records
+        /// in a event.
         /// </summary>
-        public Dictionary<string, string> SlopePhotoPaths { get; set; }
+        public Dictionary<string, Slope> SlopeRecords { get; set; }
 
         /// <summary>
         /// 植生相關
-        /// Plantation relative.
+        /// The Plantation struct is used to store "Plantation"
+        /// relative properties that is the professionals 
+        /// record in a debris flow event.
         /// </summary>
         public struct Plantation
         {
             /// <summary>
-            /// 集水區內主要植生生長種類
-            /// The main plantation category in catchment.
+            /// 植生生長種類
+            /// The possible plantation category.
             /// </summary>
-            public enum MainPlantationCategory
+            public enum PlantationCategory
             {
+                DoNotKnow,
                 Naked,
                 Meadow,
                 ArtificialForest,
-                NaturalForest,
-                IDoNotKnow
+                NaturalForest
             }
 
             /// <summary>
-            /// 集水區內主要植生生長狀況
-            /// The main plantation growing situation in catchment. 
+            /// 主要植生生長種類
+            /// PlantationCategories is a List collection which is used to 
+            /// store multiple plantation types in a plantation record.
             /// </summary>
-            public enum MainPlantationSituation
+            public List<int> PlantationCategories { get; set; }
+
+            /// <summary>
+            /// 植生生長狀態類型
+            /// The possible plantation growing situation. 
+            /// </summary>
+            public enum PlantationSituation
             {
+                DoNotKnow,
                 BareLend,
                 UnderTenPercent,
                 TenToThirtyPercent,
                 ThirtyToEightyPercent,
                 AboveEightyPercent,
-                IDoNotKnow
             }
 
             /// <summary>
+            /// 主要植生生長狀態類型
+            /// PlantationSituations is a List collection which is used to 
+            /// store multiple plantation situations in a plantation record.
+            /// </summary>
+            public List<int> PlantationSituations { get; set; }
+
+            /// <summary>
             /// 植生照片
-            /// Piture of the plantation.
+            /// PlantationPicturePath property is to store the 
+            /// plantation picture path.
             /// </summary>
             public string PlantationPicturePath { get; set; }
+
+            /// <summary>
+            /// 植生照片方位
+            /// PlantationPictureDirection property is to store
+            /// direction of the picture taken.
+            /// </summary>
+            public string PlantationPictureDirection { get; set; }
+
+            /// <summary>
+            /// 植生註釋
+            /// PlantationNotes is used for additional comments related to 
+            /// plantation.
+            /// </summary>
+            public string PlantationNotes { get; set; }
         }
 
         /// <summary>
-        /// This dictionary stores the plantation photos' file of paths.
+        /// This dictionary stores all of the debris flow plantation records
+        /// in a event.
         /// </summary>
-        public Dictionary<string, string> PlantationPhotoPaths { get; set; }
-
-        /// <summary>
-        /// 溪流災害類型-其他描述
-        /// Other discriptions of torrent disaster.
-        /// </summary>
-        public string TorrentDisasterTypeDiscription { get; set; }
-
-        /// <summary>
-        /// 溪流災害類型
-        /// Type of the torrent disaster.
-        /// </summary>
-        public enum TorrentDisasterType
-        {
-            DebrisFlow,
-            DebrisSlump,
-            GullyErosion,
-            ShallowSlide,
-            Others,
-            IDoNotKnow
-        }
-
-        /// <summary>
-        /// 堆積區土石粒徑情形
-        /// The diameter of rock in aggradation.
-        /// </summary>
-        public enum AggradationRockDiameter
-        {
-            AboveThirtyCM,
-            EightToThirtyCM,
-            UnderEightCM,
-            NoObviousRock,
-            IDoNotKnow
-        }
-
-        /// <summary>
-        /// 現場初估風險潛勢等級
-        /// Level of potential risk.
-        /// </summary>
-        public enum RiskPotentialLevel
-        {
-            High,
-            Medium,
-            Low,
-            IDoNotKnow
-        }
-        #endregion
-
+        public Dictionary<string, Plantation> PlantationRecords { get; set; }
     }
 }
-
-
-/// <remarks/>
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-public partial class breakfast_menu
-{
-
-    private breakfast_menuFood[] foodField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("food")]
-    public breakfast_menuFood[] food
-    {
-        get
-        {
-            return this.foodField;
-        }
-        set
-        {
-            this.foodField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class breakfast_menuFood
-{
-
-    private string nameField;
-
-    private string priceField;
-
-    private string descriptionField;
-
-    private ushort caloriesField;
-
-    /// <remarks/>
-    public string name
-    {
-        get
-        {
-            return this.nameField;
-        }
-        set
-        {
-            this.nameField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string price
-    {
-        get
-        {
-            return this.priceField;
-        }
-        set
-        {
-            this.priceField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string description
-    {
-        get
-        {
-            return this.descriptionField;
-        }
-        set
-        {
-            this.descriptionField = value;
-        }
-    }
-
-    /// <remarks/>
-    public ushort calories
-    {
-        get
-        {
-            return this.caloriesField;
-        }
-        set
-        {
-            this.caloriesField = value;
-        }
-    }
-}
-
-
-

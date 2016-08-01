@@ -72,9 +72,10 @@ namespace DiReCTUI.Map
             Map.CredentialsProvider = new Credential().getCredential();
             Map.Focus();
 
-            #region demo part
+
             ///this part was in the demo, but I found that removing this part
             ///does not affect the functionality of the map
+            #region demo part
             try
             {
                 Random rnd = new Random();
@@ -104,6 +105,7 @@ namespace DiReCTUI.Map
             Map.Children.Add(currentMarker);
 
             //test
+            //initialize the satellite map
             test.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
             test.Position = new PointLatLng(23.6978, 120.9605);
             test.Zoom = 13;
@@ -117,7 +119,8 @@ namespace DiReCTUI.Map
         #region Draw Circle / Radius
         
         /// <summary>
-        /// main function to be called
+        /// draw the circle around the center, given the Location (Latitude and Longitude)
+        /// this function would convert the Location type to radian and draw circle of radius in meters
         /// </summary>
         /// <param name="center"></param>
         /// <param name="radius"></param>
@@ -133,19 +136,35 @@ namespace DiReCTUI.Map
             Map.Children.Add(poly);
         }
 
-        // private helpers
+        // private helpers for draw circle
+        /// <summary>
+        /// convert degree to radian
+        /// </summary>
+        /// <param name="degrees"></param>
+        /// <returns></returns>
         private double ToRadian(double degrees)
         {
             return degrees * (Math.PI / 180);
         }
 
+        /// <summary>
+        /// radian to degree
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
         private double ToDegrees(double radians)
         {
             return radians * (180 / Math.PI);
         }
         
         private const double EarthRadiusInKilometers = 6367.0;
-      
+        
+        /// <summary>
+        /// formula from online to convert from Location type to meters
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
         private LocationCollection CreateCircle(Location center, double radius)
         {
             var earthRadius = EarthRadiusInKilometers;
@@ -168,32 +187,49 @@ namespace DiReCTUI.Map
         #endregion
         
         #region Buttons private helpers
+        /// <summary>
+        /// Use to store the last touchpoint by user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
             TouchPoint p = e.GetTouchPoint(this);
             lastTouchLocation = Map.ViewportPointToLocation(p.Position);
         }
+
+        /// <summary>
+        /// Button that zooms in the map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ZoomIn_Click(object sender, EventArgs e)
         {
             test.Zoom = test.Zoom + 1;
             Map.ZoomLevel++;
             
         }
+
+        /// <summary>
+        /// Button that zoomout out the map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ZoomOut_Click(object sender, EventArgs e)
         {
             Map.ZoomLevel--;
             test.Zoom--;
         }
+
+        /// <summary>
+        /// testing button
+        /// currently it switches from the Mecrator map (googleMap) to Satellite map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Add_Marker_Click(object sender, EventArgs e)
         {
-            //if (lastTouchLocation != null)
-            //{
-            //    Pushpin pin = new Pushpin();
-            //    pin.Location = lastTouchLocation;
-            //    Map.Children.Add(pin);
-            //}
-            //var metroWindow = (Application.Current.MainWindow as MetroWindow);
-            //await metroWindow.ShowMessageAsync("Title", "Body");
+            
             if (test.Visibility == Visibility.Hidden)
             {
                 Map.Visibility = Visibility.Hidden;
@@ -255,7 +291,6 @@ namespace DiReCTUI.Map
         /// <param name="radius"></param>
         public void addSOPPushPin(Location loc, string label, double radius)
         {
-            
             drawCircle(loc, radius);
             addPushPins(loc, label);
         }

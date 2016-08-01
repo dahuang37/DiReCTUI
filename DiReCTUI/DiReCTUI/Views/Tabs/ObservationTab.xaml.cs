@@ -24,16 +24,19 @@ namespace DiReCTUI.Views.Tabs
             
         }
 
-        
+        /// <summary>
+        /// initialize map and viewmodel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
-        {
-       
+        {      
             var db = new DebrisFlowPage();
-            var map = db.map;
+            var map = db.MapPage.map;
             var dbRecord = new DebrisFlowRecord();
             var bgInfo = new BackgroundInfo().DebrisBackgroundInfo;
-          
-            var dbvm = new DebrisFlowViewModel(map, dbRecord, bgInfo);
+            var dbCollection = new DebrisFlowCollection();
+            var dbvm = new DebrisFlowViewModel(map, dbRecord, bgInfo, dbCollection);
             
             db.DataContext = dbvm;
             this.NavigationService.Navigate(db);

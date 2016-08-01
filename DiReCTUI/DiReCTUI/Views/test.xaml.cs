@@ -13,33 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using GMap.NET;
-using Microsoft.Maps.MapControl.WPF;
-using DiReCTUI.ViewModel;
-using DiReCTUI.Map;
+using MahApps.Metro.Controls.Dialogs;
+
 namespace DiReCTUI.Views
 {
     /// <summary>
-    /// Interaction logic for DebrisFlowPage.xaml
+    /// Interaction logic for test.xaml
     /// </summary>
-    public partial class DebrisFlowPage : Page
+    public partial class test 
     {
-
-        public DebrisFlowPage()
+        public test()
         {
             InitializeComponent();
-            
         }
 
-       
-
-        private void Back_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.NavigationService.CanGoBack)
-            {
-                this.NavigationService.GoBack();
-            }
-        }
         
     }
 }
