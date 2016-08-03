@@ -1,15 +1,12 @@
-﻿<UserControl x:Class="DiReCTUI.Views.test"
+﻿<UserControl x:Class="DiReCTUI.Views.DebrisFlowRecordDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DiReCTUI.Views"
-             xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-
     <Grid>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -21,12 +18,12 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+
         <TextBlock 
             Grid.Row="0" 
             Grid.Column="0"
             Margin="0 8 0 0">
-            Rock Types: 
+            Rock Types:
         </TextBlock>
         <ComboBox 
             Grid.Column="1"
@@ -34,7 +31,7 @@
             Margin="0 8 0 0"
             SelectedItem="{Binding SelectedRockType}" 
             ItemsSource="{Binding RockTypeValues}"></ComboBox>
-        
+
         <TextBlock 
             Grid.Row="1"
             Grid.Column="0"
@@ -46,7 +43,7 @@
             Margin="0 8 0 0"
             Grid.Row="1"
             Grid.Column="1"/>
-        
+
         <TextBlock 
             Grid.Row="2"
             Grid.Column="0"
@@ -80,13 +77,15 @@
             <Button 
                 Margin="10"
                 HorizontalAlignment="Right"
+                Style="{DynamicResource SquareButtonStyle}"
                 Command="{Binding Save}">Save</Button>
             <Button  
                 Margin="10"
                 HorizontalAlignment="Right"
+                Style="{DynamicResource SquareButtonStyle}"
                 Command="{Binding CloseCommand}">Canel</Button>
         </StackPanel>
-        
-    </Grid>
 
+    </Grid>
+    
 </UserControl>

@@ -21,43 +21,58 @@ using DiReCTUI.Views;
 
 namespace DiReCTUI.ViewModel
 {
-    public class DebrisFlowViewModel : ViewModelBase
+    public class DebrisFlowMapViewModel : ViewModelBase
     {
        
-        //these three are supposed to be readonly but then I can't set the value
+        // these two are supposed to be readonly but then I can't set the value
         DebrisFlowRecord _debrisFlowRecord;
         DebrisFlowCollection _debrisFlowCollection;
 
+        // might be removed to another later
         private IDialogCoordinator _dialogCoordinator;
-        
         private CustomDialog custom;
+        private SOP sop;
+
         private Visibility addButtonContent = Visibility.Collapsed;
         private RelayCommand toggleAddButton;
         private RelayCommand addWindow;
-
         private MapController mapController;
 
-        public DebrisFlowViewModel(BingMap map, DebrisFlowRecord debrisFlowRecord, DebrisFlowCollection debrisFlowCollection) 
+        public DebrisFlowMapViewModel(MainMap map, DebrisFlowRecord debrisFlowRecord, DebrisFlowCollection debrisFlowCollection) 
         {
             this._debrisFlowRecord = debrisFlowRecord;
             this._debrisFlowCollection = debrisFlowCollection;
 
             this._dialogCoordinator = new DialogCoordinator();
-            
-            //Sop
-            var sop = new FakeSOP();
-            //LocationSOPs = sop.GetFakeSOP().GetLocationSOP();
-            //SetUpSOP();
-            mapController = new MapController(map);
 
+            //set up map controller
+            mapController = new MapController(map);
             mapController.LocationChanged += OnLocationChanged;
+
+            //Set up SOP 
+            var debrisflowsop = new DebrisFlowSOP();
+            this.sop = debrisflowsop.GetSOP();
+            AddSOPTypesAndCommand(debrisflowsop);
+            SetUpSOPLocation(sop);
+           
         }
-        
+
         async void OnLocationChanged(object s, LocationChangedEventArgs e)
         {
-            var metroWindow = (Application.Current.MainWindow as MetroWindow);
-            await metroWindow.ShowMessageAsync("Title","mesg");
-
+            var locationSOP = sop.GetLocationSOP();
+            foreach (SOP sop in locationSOP)
+            {
+                if (mapController.LocationIsInRange(sop.Location))
+                {
+                    custom = new CustomDialog() { Title = "Please Record" };
+                    List<string> sopTask = sop.SOPTask;
+                    var ReminderViewModel = new DebrisFlowReminderViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom),
+                        sopTask);
+                    custom.Content = new DebrisFlowReminderDialog { DataContext = ReminderViewModel };
+                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
+                    return;
+                }
+            }
         }
 
         public int CollectionSize
@@ -65,7 +80,7 @@ namespace DiReCTUI.ViewModel
             get { return this._debrisFlowCollection.Count(); }
         }
         
-        
+        // Controls the Add Button's content visibility
         public Visibility AddButtonContent
         {
             get { return addButtonContent; }
@@ -78,7 +93,7 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
-        
+        // Command to toggle the visibility of Add Button's content visibility
         public ICommand ToggleAddButton
         {
             get
@@ -97,7 +112,7 @@ namespace DiReCTUI.ViewModel
             AddButtonContent = (AddButtonContent == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        
+        // Add dialog for user to input
         public ICommand AddWindow
         {
             get
@@ -105,11 +120,11 @@ namespace DiReCTUI.ViewModel
                 if(addWindow == null)
                 {
                     addWindow = new RelayCommand(p => CreateWindow(p) );
-                 
                 }
                 return this.addWindow;
             }
         }
+
         private async void CreateWindow(object parameter)
         {
             var str = parameter as string;
@@ -120,7 +135,7 @@ namespace DiReCTUI.ViewModel
                     custom = new CustomDialog() { Title = str };
                     var RockViewModel = new RockViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom), 
                         _debrisFlowCollection, new DebrisFlowRecord.Rock());
-                    custom.Content = new test { DataContext = RockViewModel };
+                    custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
                     await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
                     break;
                 case "Slope":
@@ -135,43 +150,45 @@ namespace DiReCTUI.ViewModel
                     break;
             }
         }
-        
-        //public void SetUpSOP()
-        //{
-        //    if(this.LocationSOPs != null)
-        //    {
-        //        foreach(LocationSOP item in LocationSOPs)
-        //        {
-        //            string label = "Task: "+ item.SOPTask + ", ID: " + item.Id;
-        //            map.AddSOPPushPin(item.Location, label, radius/1000);
-        //        }
-        //    }
-        //}
 
+       
+        // hope to move the part below to a new class
+        // to control the list of SOP Tasks according to the SOP class
+        
         //temporary classes to store different type of SOP
         //TODO:
         // add this part to the SOP class, so it's more dynamic
         ObservableCollection<SOPTypesAndCommand> sopTypes = new ObservableCollection<SOPTypesAndCommand>();
         public ObservableCollection<SOPTypesAndCommand> SOPTypes
         {
-            get
-            {
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Rock", Command = this.AddWindow });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Plantation", Command = this.AddWindow });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Protected Object", Command = this.AddWindow });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Slope", Command = this.AddWindow });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Catchment", Command = this.AddWindow });
-                sopTypes.Add(new SOPTypesAndCommand() { Title = "Basic Info", Command = this.AddWindow });
-
-                return sopTypes;
-            }
+            get{ return sopTypes; }
         }
         public class SOPTypesAndCommand
         {
             public string Title { get; set; }
             public ICommand Command { get; set; }
-
         }
+        void AddSOPTypesAndCommand(DebrisFlowSOP sop)
+        {
+            List<string> titleList = sop.SOPTypes;
+            foreach(string title in titleList)
+            {
+                sopTypes.Add(new SOPTypesAndCommand() { Title = title, Command = AddWindow });
+            }
+        }
+
+        void SetUpSOPLocation(SOP sop)
+        {
+            if (mapController != null)
+            {
+                var locationSOP = sop.GetLocationSOP();
+                foreach (SOP s in locationSOP)
+                {
+                    mapController.AddPushPinWithCircle(s.Location, s.SOPTask);
+                }
+            }
+        }
+
 
     }
 }

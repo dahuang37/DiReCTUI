@@ -23,7 +23,7 @@ namespace DiReCTUI.ViewModel
         {
             this.closeHandler = closeHandler;
             _rock = Rock;
-
+            
             RockPicture = "Heyhy";
             _debrisFlowCollection = debrisFlowCollection;
             
@@ -56,6 +56,7 @@ namespace DiReCTUI.ViewModel
             set
             {
                 selectedRockType = value;
+                //_rock.RecordedRockTypes.Add(selectedRockType.ToString());
                 OnPropertyChanged("SelectedRockType");
             }
         }

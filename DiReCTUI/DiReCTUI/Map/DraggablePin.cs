@@ -69,7 +69,6 @@ namespace DiReCTUI.Map
             }
         }
 
-        #region "Mouse Event Handler Methods"
 
         void ParentMap_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -97,7 +96,7 @@ namespace DiReCTUI.Map
                 this.Location = mouseGeocode;
             }
         }
-        #endregion
+    
     }
 }
 

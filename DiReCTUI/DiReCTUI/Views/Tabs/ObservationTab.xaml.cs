@@ -34,7 +34,7 @@ namespace DiReCTUI.Views.Tabs
             var map = debrisFlowPage.MapPage.map;
             var debrisFlowRecord = new DebrisFlowRecord();
             var debrisFlowCollection = new DebrisFlowCollection();
-            var debrisFlowViewModel = new DebrisFlowViewModel(map, debrisFlowRecord, debrisFlowCollection);
+            var debrisFlowViewModel = new DebrisFlowMapViewModel(map, debrisFlowRecord, debrisFlowCollection);
             
             debrisFlowPage.DataContext = debrisFlowViewModel;
             this.NavigationService.Navigate(debrisFlowPage);

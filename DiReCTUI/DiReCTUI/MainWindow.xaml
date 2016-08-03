@@ -31,7 +31,7 @@
             <TabItem Margin="0" Height="60" Header="MAP" >
                 <ScrollViewer PanningMode="Both">
                     <!--<Frame x:Name="MapFrame" Source="Map/BingMap.xaml" NavigationUIVisibility="Hidden" />-->
-                    <map:BingMap/>
+                    <map:MainMap/>
                 </ScrollViewer>
             </TabItem>
 

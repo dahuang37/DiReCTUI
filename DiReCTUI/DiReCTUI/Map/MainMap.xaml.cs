@@ -1,13 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 using GMap.NET.MapProviders;
 using Microsoft.Maps.MapControl.WPF;
 using GMap.NET;
-using System.Diagnostics;
 
 namespace DiReCTUI.Map
 {
@@ -38,11 +46,13 @@ namespace DiReCTUI.Map
             TileSource = new CustomTileSource();
         }
     }
-    
-    public partial class BingMap 
+
+    /// <summary>
+    /// Interaction logic for MainMap.xaml
+    /// </summary>
+    public partial class MainMap : UserControl
     {
 
-        
         /// <summary>
         /// use to save the last point user touch screen to add marker
         /// </summary>
@@ -59,12 +69,13 @@ namespace DiReCTUI.Map
         /// <summary>
         /// This constructor initializes the Map and currentMarker
         /// </summary>
-
-        public BingMap()
+        /// 
+        public MainMap()
         {
             InitializeComponent();
-            Map.CredentialsProvider = new Credential().getCredential();
-            Map.Focus();
+
+            map.CredentialsProvider = new Credential().getCredential();
+            map.Focus();
 
             ///this part was in the demo, but I found that removing this part
             ///does not affect the functionality of the map
@@ -85,7 +96,7 @@ namespace DiReCTUI.Map
             #endregion
 
             // Initialize currentMarker to be at IIS
-            currentMarker = new DraggablePin(Map);
+            currentMarker = new DraggablePin(map);
             {
                 currentMarker.Location = new Location(25.04133, 121.6133);
                 currentMarker.ToolTip = new Label()
@@ -94,13 +105,87 @@ namespace DiReCTUI.Map
                 };
             }
             currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
-            Map.Children.Add(currentMarker);
+            map.Children.Add(currentMarker);
 
             //initialize the satellite map
-            test.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
-            test.Position = new PointLatLng(23.6978, 120.9605);
-            test.Zoom = 13;
-            test.CanDragMap = false;
+            stalliteMap.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
+            stalliteMap.Position = new PointLatLng(23.6978, 120.9605);
+            stalliteMap.Zoom = 13;
+            stalliteMap.CanDragMap = false;
+        }
+
+        /// <summary>
+        /// return currentMarker for other class to manipulate
+        /// </summary>
+        /// <returns></returns>
+        public DraggablePin GetCurrentMarker()
+        {
+            if (currentMarker == null)
+            {
+                currentMarker = new DraggablePin(map);
+            }
+            return currentMarker;
+        }
+
+        /// <summary>
+        /// set currentMarker's position
+        /// </summary>
+        /// <param name="loc"></param>
+        public void SetCurrentMarkerPosition(Location location)
+        {
+            if (currentMarker != null)
+            {
+                currentMarker.Location = location;
+            }
+        }
+
+        /// <summary>
+        /// return the map's ViewPortPointToLocation Function
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public Location ViewPortToLocation(Point point)
+        {
+            return this.map.ViewportPointToLocation(point);
+        }
+
+        
+        /// <summary>
+        /// add immutable pushpins to the map
+        /// </summary>
+        /// <param name="loc"></param>
+        /// <param name="label"></param>
+        public void AddPushPins(Location loc, string label)
+        {
+
+            var pin = new Pushpin();
+            {
+                pin.Location = new Location(loc);
+                pin.ToolTip = new Label()
+                {
+                    Content = label
+                };
+            }
+            map.Children.Add(pin);
+        }
+
+        /// <summary>
+        /// add draggable pushpin to the map
+        /// </summary>
+        /// <param name="Latitude"></param>
+        /// <param name="Longitude"></param>
+        /// <param name="label"></param>
+        public void AddDraggablePins(Location loc, string label)
+        {
+            var pin = new DraggablePin(map);
+            {
+                pin.Location = new Location(loc);
+                pin.ToolTip = new Label()
+                {
+                    Content = label
+                };
+            }
+            map.Children.Add(pin);
         }
 
         /// <summary>
@@ -118,10 +203,36 @@ namespace DiReCTUI.Map
             poly.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
             poly.Fill = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0));
             poly.StrokeThickness = 2;
-            Map.Children.Add(poly);
+            map.Children.Add(poly);
         }
 
         // private helpers for draw circle
+        /// <summary>
+        /// formula from online to convert from Location type to meters
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private LocationCollection CreateCircleLocations(Location center, double radius)
+        {
+            var earthRadius = earthRadiusInKilometers;
+            var latitude = ToRadian(center.Latitude); //radians
+            var longitude = ToRadian(center.Longitude); //radians
+            var d = radius / earthRadius; // d = angular distance covered on earth's surface
+            var locations = new LocationCollection();
+
+            for (var x = 0; x <= 360; x++)
+            {
+                var range = ToRadian(x);
+                var latitudeRadians = Math.Asin(Math.Sin(latitude) * Math.Cos(d) + Math.Cos(latitude) * Math.Sin(d) * Math.Cos(range));
+                var longitudeRadians = longitude + Math.Atan2(Math.Sin(range) * Math.Sin(d) * Math.Cos(latitude), Math.Cos(d) - Math.Sin(latitude) *
+                    Math.Sin(latitudeRadians));
+
+                locations.Add(new Location(ToDegrees(latitudeRadians), ToDegrees(longitudeRadians)));
+            }
+
+            return locations;
+        }
         /// <summary>
         /// convert degree to radian
         /// </summary>
@@ -141,36 +252,8 @@ namespace DiReCTUI.Map
         {
             return radians * (180 / Math.PI);
         }
-        
 
-        /// <summary>
-        /// formula from online to convert from Location type to meters
-        /// </summary>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        /// <returns></returns>
-        private LocationCollection CreateCircleLocations(Location center, double radius)
-        {
-            var earthRadius = earthRadiusInKilometers;
-            var latitude = ToRadian(center.Latitude); //radians
-            var longitude = ToRadian(center.Longitude); //radians
-            var d = radius / earthRadius; // d = angular distance covered on earth's surface
-            var locations = new LocationCollection();
 
-            for (var x = 0; x <= 360; x++)
-            {
-                var range = ToRadian(x);
-                var latitudeRadians = Math.Asin(Math.Sin(latitude) * Math.Cos(d) + Math.Cos(latitude) * Math.Sin(d) * Math.Cos(range));
-                var longitudeRadians = longitude + Math.Atan2(Math.Sin(range) * Math.Sin(d) * Math.Cos(latitude), Math.Cos(d) - Math.Sin(latitude) * 
-                    Math.Sin(latitudeRadians));
-
-                locations.Add(new Location(ToDegrees(latitudeRadians), ToDegrees(longitudeRadians)));
-            }
-
-            return locations;
-        }
-       
-        
         /// <summary>
         /// Use to store the last touchpoint by user
         /// </summary>
@@ -179,7 +262,7 @@ namespace DiReCTUI.Map
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
             var touchPoint = e.GetTouchPoint(this);
-            lastTouchLocation = Map.ViewportPointToLocation(touchPoint.Position);
+            lastTouchLocation = map.ViewportPointToLocation(touchPoint.Position);
         }
 
         /// <summary>
@@ -189,9 +272,9 @@ namespace DiReCTUI.Map
         /// <param name="e"></param>
         private void ZoomIn_Click(object sender, EventArgs e)
         {
-            test.Zoom = test.Zoom + 1;
-            Map.ZoomLevel++;
-            
+            stalliteMap.Zoom = stalliteMap.Zoom + 1;
+            map.ZoomLevel++;
+
         }
 
         /// <summary>
@@ -201,8 +284,8 @@ namespace DiReCTUI.Map
         /// <param name="e"></param>
         private void ZoomOut_Click(object sender, EventArgs e)
         {
-            Map.ZoomLevel--;
-            test.Zoom--;
+            map.ZoomLevel--;
+            stalliteMap.Zoom--;
         }
 
         /// <summary>
@@ -213,110 +296,23 @@ namespace DiReCTUI.Map
         /// <param name="e"></param>
         private void Add_Marker_Click(object sender, EventArgs e)
         {
-            
-            if (test.Visibility == Visibility.Hidden)
+
+            if (stalliteMap.Visibility == Visibility.Hidden)
             {
-                Map.Visibility = Visibility.Hidden;
-                test.Zoom = Map.ZoomLevel;
-                test.Position = new PointLatLng(Map.Center.Latitude, Map.Center.Longitude);
-                test.Visibility = Visibility.Visible;
-            }else
+                map.Visibility = Visibility.Hidden;
+                stalliteMap.Zoom = map.ZoomLevel;
+                stalliteMap.Position = new PointLatLng(map.Center.Latitude, map.Center.Longitude);
+                stalliteMap.Visibility = Visibility.Visible;
+            }
+            else
             {
-                test.Visibility = Visibility.Hidden;
-                Map.Visibility = Visibility.Visible;
+                stalliteMap.Visibility = Visibility.Hidden;
+                map.Visibility = Visibility.Visible;
             }
 
 
-        }
-       
-        
-        /// <summary>
-        /// return currentMarker for other class to manipulate
-        /// </summary>
-        /// <returns></returns>
-        public DraggablePin GetCurrentMarker()
-        {
-            if(currentMarker == null)
-            {
-                currentMarker = new DraggablePin(Map);
-            }
-            return currentMarker;
-        }
-
-        /// <summary>
-        /// set currentMarker's position
-        /// </summary>
-        /// <param name="loc"></param>
-        public void SetCurrentMarkerPosition(Location loc)
-        {
-            if(currentMarker != null)
-            {
-                currentMarker.Location = loc;
-            }
-        }
-
-        /// <summary>
-        /// return the map's ViewPortPointToLocation Function
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        public Location ViewPortToLocation(Point point) {
-            return this.Map.ViewportPointToLocation(point);
         }
         
-        /// <summary>
-        /// add SOP pushpin, Pushpin with circle around the center
-        /// </summary>
-        /// <param name="Lat"></param>
-        /// <param name="Lon"></param>
-        /// <param name="label"></param>
-        /// <param name="radius"></param>
-        public void AddSOPPushPin(Location location, string label, double radius)
-        {
-            DrawCircle(location, radius);
-            AddPushPins(location, label);
-        }
-
-        /// <summary>
-        /// add immutable pushpins to the map
-        /// </summary>
-        /// <param name="loc"></param>
-        /// <param name="label"></param>
-        public void AddPushPins(Location loc, string label)
-        {
-           
-            var pin = new Pushpin();
-            {
-                pin.Location = new Location(loc);
-                pin.ToolTip = new Label()
-                {
-                    Content = label
-                };
-            }
-            Map.Children.Add(pin);
-        }
-
-        /// <summary>
-        /// add draggable pushpin to the map
-        /// </summary>
-        /// <param name="Latitude"></param>
-        /// <param name="Longitude"></param>
-        /// <param name="label"></param>
-        public void AddDraggablePins(Location loc, string label)
-        {
-            var pin = new DraggablePin(Map);
-            {
-                pin.Location = new Location(loc);
-                pin.ToolTip = new Label()
-                {
-                    Content = label
-                };
-            }
-            Map.Children.Add(pin);
-        }
-        
-       
         
     }
-
 }

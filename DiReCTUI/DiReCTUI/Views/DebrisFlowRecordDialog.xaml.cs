@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MahApps.Metro.Controls.Dialogs;
-
 namespace DiReCTUI.Views
 {
     /// <summary>
-    /// Interaction logic for test.xaml
+    /// Interaction logic for DebrisFlowRecordDialog.xaml
     /// </summary>
-    public partial class test 
+    public partial class DebrisFlowRecordDialog : UserControl
     {
-        public test()
+        public DebrisFlowRecordDialog()
         {
             InitializeComponent();
         }
-
-        
     }
 }

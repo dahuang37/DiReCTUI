@@ -18,24 +18,24 @@ using DiReCTUI.Controls;
 
 namespace DiReCTUI.Map
 {
-    public class MapController : INotifyPropertyChanged, GPSInterface
+    public class MapController : GPSInterface
     {
         private string status;
         private Location location;
         private GeoCoordinateWatcher watcher;
         private DraggablePin currentMarker;
-        private BingMap map;
+        private MainMap map;
 
+        //Event Hanlder for other class to use when the Location has Changed
         public event EventHandler<LocationChangedEventArgs> LocationChanged;
-
         protected virtual void OnLocationChanged(LocationChangedEventArgs e)
         {
+            this.map.SetCurrentMarkerPosition(e.location);
             if (LocationChanged != null)
                 LocationChanged(this, e);
         }
-        
-        public double radius { get; private set; }
-
+ 
+        // For display purpose, can be use to show tracking status or if the current marker is in range
         public string Status
         {
             get
@@ -47,11 +47,12 @@ namespace DiReCTUI.Map
                 if (value != status)
                 {
                     status = value;
-                    OnPropertyChanged("Status");
+                    // Add status to Location Event Args if required
                 }
             }
         }
 
+        // This indicates user's location
         public Location Location
         {
             get { return location; }
@@ -63,17 +64,19 @@ namespace DiReCTUI.Map
             }
         }
 
-        public MapController(BingMap map)
+        // set up the map and marker
+        public MapController(MainMap map)
         {
             this.map = map;
             this.currentMarker = map.GetCurrentMarker();
             if (map != null)
             {
-                map.MouseUp += new MouseButtonEventHandler(SetCurrentMarkerPosition);
+                map.PreviewMouseUp += new MouseButtonEventHandler(SetCurrentPosition);
             }
         }
+
         // set the Location to where the Touch/Mouse Click
-        public void SetCurrentMarkerPosition(object s, MouseEventArgs e)
+        public void SetCurrentPosition(object s, MouseEventArgs e)
         {
             var mouseMapPosition = e.GetPosition(map);
             var mouseGeocode = map.ViewPortToLocation(mouseMapPosition);
@@ -109,56 +112,16 @@ namespace DiReCTUI.Map
         }
 
         
-        //public void OnLocationChanged(Location location)
-        //{
-        //    this.map.SetCurrentMarkerPosition(location);
-        //    //DetectCurrentMarkerIsInRange(location);
-        //}
-
-        /// <summary>
-        /// check if the user has get in range of one of the SOPlocations 
-        /// </summary>
-        /// <param name="loc"></param>
-        //public async void DetectCurrentMarkerIsInRange(Location location)
-        //{
-        //    if (map != null)
-        //    {
-        //        if (LocationSOPs.Count == 0)
-        //        {
-        //            Status = "No location";
-        //            return;
-        //        }
-        //        foreach (LocationSOP locationSOP in LocationSOPs)
-        //        {
-        //            var sopLocation = locationSOP.Location;
-        //            double result = RangeLength(this.Location.Latitude, sopLocation.Latitude, this.Location.Longitude, sopLocation.Longitude);
-        //            Status = result.ToString();
-        //            if (CheckInRange(sopLocation.Latitude, sopLocation.Longitude) == true)
-        //            {
-        //                Status = "In range";
-        //                //pop up the dialog when user's in range
-        //                var metroWindow = (Application.Current.MainWindow as MetroWindow);
-        //                await metroWindow.ShowMessageAsync("In this location, the tasks to complete are: \n", locationSOP.SOPTask + " " + result);
-        //                return;
-        //            }
-
-        //        }
-        //        Status = "not in range";
-        //    }
-
-        //}
-
-        // helper functions for "detectCurrentMarker
         // Check if Range is less than radius
-        private bool CheckInRange(double latitude, double longitude)
+        public bool LocationIsInRange(Location location, double radius = 150)
         {
-            double result = RangeLength(this.Location.Latitude, latitude, this.Location.Longitude, longitude);
-            if (result < this.radius)
+            double result = GetDistance(this.Location.Latitude, location.Latitude, this.Location.Longitude, location.Longitude);
+            if (result < radius)
                 return true;
             return false;
         }
-
-        private double RangeLength(double latitude1, double latitude2, double longitude1, double longitude2)
+        // formula to calculate distance between two Location points
+        private double GetDistance(double latitude1, double latitude2, double longitude1, double longitude2)
         {
             var R = 6371e3; // metres
             var φ1 = ConvertToRadians(latitude1);
@@ -181,47 +144,18 @@ namespace DiReCTUI.Map
             return (Math.PI / 180) * angle;
         }
 
-
-
-        public void VerifyPropertyName(string propertyName)
-        {
-            //Verify that the property is real, public,instance property on this object
-            if (TypeDescriptor.GetProperties(this)[propertyName] == null)
-            {
-                string msg = "INvalid property name: " + propertyName;
-
-                if (this.ThrowOnInvalidPropertyName)
-                {
-                    throw new Exception(msg);
-                }
-                else
-                {
-                    Debug.Fail(msg);
-                }
-            }
-        }
-
-        protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
-        ///<summary>
-        ///Raised when a property on this object has a new value
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        ///<summary>
-        ///Raises this object's PropertyChange Event
-        /// </summary>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            this.VerifyPropertyName(propertyName);
-
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                var e = new PropertyChangedEventArgs(propertyName);
-                handler(this, e);
-            }
-
-        }
        
+        /// add SOP pushpin, Pushpin with circle around the center
+        public void AddPushPinWithCircle(Location location, List<string> label, double radius = 0.15)
+        {
+            map.DrawCircle(location, radius);
+            string result = "";
+            foreach(string str in label)
+            {
+                result += str + ", ";
+            }
+            map.AddPushPins(location, result);
+        }
+
     }
 }

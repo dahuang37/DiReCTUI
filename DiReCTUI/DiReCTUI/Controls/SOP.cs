@@ -11,40 +11,34 @@ namespace DiReCTUI.Controls
     public partial class SOP
     {
 
-        private ObservableCollection<LocationSOP> LocationSOPCollection;
-
-        public struct LocationSOP
-        {
-            public Location Location;
-            public string SOPTask;
-            public string Id;
-            
-            //constructor for LocationSOP
-            public LocationSOP(Location location, string SOPTask, string Id) 
-            {
-                this.Location = location;
-                this.Id = Id;
-                this.SOPTask = SOPTask;
-            }
-        }
-
+        public List<SOP> LocationSOPCollection = new List<SOP>();
+        public Location Location;
+        public List<string> SOPTask;
+        
         public SOP()
         {
-            LocationSOPCollection = new ObservableCollection<LocationSOP>();
 
         }
-       
-        public void AddLocationSOP(Location location, string SOPTask, string Id)
+        public SOP(Location location, List<string> sopTask)
         {
-            LocationSOP locationSOP =  new LocationSOP(location, SOPTask, Id);
-            LocationSOPCollection.Add(locationSOP);
-            return;
+            this.Location = location;
+            this.SOPTask = sopTask;
+            
         }
-        public ObservableCollection<LocationSOP> GetLocationSOP()
+       
+        public void Add(Location location, List<string> sopTask)
+        {
+            LocationSOPCollection.Add(new SOP(location, sopTask));
+        }
+        public void Add(SOP sop)
+        {
+            LocationSOPCollection.Add(sop);
+        }
+        public List<SOP> GetLocationSOP()
         {
             return this.LocationSOPCollection;
         }
-        public void RemoveLocationSOP(LocationSOP locationSOP)
+        public void RemoveLocationSOP(SOP locationSOP)
         {
             LocationSOPCollection.Remove(locationSOP);
         }

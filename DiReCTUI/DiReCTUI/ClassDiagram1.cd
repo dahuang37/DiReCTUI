@@ -23,17 +23,17 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DiReCTUI.Controls.FakeSOP" Collapsed="true">
+  <Class Name="DiReCTUI.Controls.DebrisFlowSOP" Collapsed="true">
     <Position X="6" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Controls\FakeSOP.cs</FileName>
+      <HashCode>gAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Controls\DebrisFlowSOP.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Controls.SOP" Collapsed="true">
     <Position X="7.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAAAAAAAAAAAgAAACBAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <HashCode>AAIAAAEAAAAAAAAAAAoAAACBAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Controls\SOP.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -41,23 +41,17 @@
     <Position X="6" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAABAAA=</HashCode>
-      <FileName>Map\BingMap.xaml.cs</FileName>
+      <FileName>Map\MainMap.xaml.cs</FileName>
+      <NewMemberFileName>Map\BingMap.xaml.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.CustomTileLayer" Collapsed="true">
     <Position X="13" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Map\BingMap.xaml.cs</FileName>
+      <FileName>Map\MainMap.xaml.cs</FileName>
+      <NewMemberFileName>Map\BingMap.xaml.cs</NewMemberFileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="DiReCTUI.Map.BingMap" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQgAgSAgAAEAAAIAoAAAABACAAAAABIIACAACAAAAAA=</HashCode>
-      <FileName>Map\BingMap.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.Map.Credential" Collapsed="true">
     <Position X="11.25" Y="0.5" Width="1.5" />
@@ -113,27 +107,19 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="DiReCTUI.ViewModel.DebrisFlowViewModel" Collapsed="true">
+  <Class Name="DiReCTUI.ViewModel.DebrisFlowMapViewModel" Collapsed="true">
     <Position X="0.5" Y="3.25" Width="1.5" />
     <NestedTypes>
-      <Class Name="DiReCTUI.ViewModel.DebrisFlowViewModel.SOPTypesAndCommand" Collapsed="true">
+      <Class Name="DiReCTUI.ViewModel.DebrisFlowMapViewModel.SOPTypesAndCommand" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>ViewModel\DebrisFlowViewModel.cs</NewMemberFileName>
+          <NewMemberFileName>ViewModel\DebrisFlowMapViewModel.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>gAEKgEAAAAAAIAACAAAQAIAAEAAIAAACQgBAAEAAAAQ=</HashCode>
-      <FileName>ViewModel\DebrisFlowViewModel.cs</FileName>
+      <HashCode>gAEqIEAAAAAAIAACAAAQAIABAAAAAAACQgBAAEAAIAQ=</HashCode>
+      <FileName>ViewModel\DebrisFlowMapViewModel.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="DiReCTUI.ViewModel.MapViewModel" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAEAAECAAAAAARIAIAAAASCBAABQAAAgAEAAAAAAA=</HashCode>
-      <FileName>ViewModel\MapViewModel.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DiReCTUI.ViewModel.RockViewModel" Collapsed="true">
     <Position X="2.75" Y="1.75" Width="1.5" />
@@ -166,14 +152,6 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="DiReCTUI.Views.test" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Views\test.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="DiReCTUI.Views.Tabs.ObservationTab" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="9.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
@@ -192,7 +170,7 @@
   <Class Name="DiReCTUI.Map.MapController" Collapsed="true">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAEAAECAAAAAARIAIAAQASiBAABQAAAgAEAAAAAAA=</HashCode>
+      <HashCode>AAQAsABEAAAAAAACIAIAAABSCAACBAAAAgAEAAAAAAA=</HashCode>
       <FileName>Map\MapController.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

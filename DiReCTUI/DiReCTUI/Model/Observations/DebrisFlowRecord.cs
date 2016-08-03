@@ -97,7 +97,7 @@ namespace DiReCTUI.Model
             /// RockTypes is a List collection which is used to store 
             /// multiple rock types in a rock record.
             /// </summary>
-            public List<int> RecordedRockTypes { get; set; }
+            public List<string> RecordedRockTypes { get; set; }
 
             /// <summary>
             /// 平均土石粒徑
