@@ -5,25 +5,25 @@ namespace DiReCTUI.Map
 {
     public class DraggablePin : Pushpin
     {
-        private Microsoft.Maps.MapControl.WPF.Map _map;
+        private Microsoft.Maps.MapControl.WPF.Map map;
         private bool isDragging = false;
-        Location _center;
+        Location center;
 
         public DraggablePin(Microsoft.Maps.MapControl.WPF.Map map)
         {
-            _map = map;
+            this.map = map;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (_map != null)
+            if (map != null)
             {
-                _center = _map.Center;
+                center = this.map.Center;
 
-                _map.ViewChangeOnFrame += _map_ViewChangeOnFrame;
-                _map.MouseUp += ParentMap_MouseLeftButtonUp;
-                _map.MouseMove += ParentMap_MouseMove;
-                _map.TouchMove += _map_TouchMove;
+                map.ViewChangeOnFrame += Map_ViewChangeOnFrame;
+                map.MouseUp += ParentMap_MouseLeftButtonUp;
+                map.MouseMove += ParentMap_MouseMove;
+                map.TouchMove += Map_TouchMove;
                 
             }
             // Enable Dragging
@@ -34,38 +34,38 @@ namespace DiReCTUI.Map
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            if(_map != null)
+            if(map != null)
             {
-                _center = _map.Center;
+                center = map.Center;
 
-                _map.ViewChangeOnFrame -= _map_ViewChangeOnFrame;
-                _map.MouseUp -= ParentMap_MouseLeftButtonUp;
-                _map.MouseMove -= ParentMap_MouseMove;
-                _map.TouchMove -= _map_TouchMove;
+                map.ViewChangeOnFrame -= Map_ViewChangeOnFrame;
+                map.MouseUp -= ParentMap_MouseLeftButtonUp;
+                map.MouseMove -= ParentMap_MouseMove;
+                map.TouchMove -= Map_TouchMove;
             }
-            this.isDragging = false;
-            
+
+            isDragging = false;
             base.OnMouseLeftButtonUp(e);
         }
         
-        void _map_TouchMove(object sender, TouchEventArgs e)
+        void Map_TouchMove(object sender, TouchEventArgs e)
         {
             var map = sender as Microsoft.Maps.MapControl.WPF.Map;
             // Check if the user is currently dragging the Pushpin
-            if (this.isDragging)
+            if (isDragging)
             {
                 // If so, the Move the Pushpin to where the Mouse is.
                 var mouseMapPosition = e.GetTouchPoint(map);
                 var mouseGeocode = map.ViewportPointToLocation(mouseMapPosition.Position);
-                this.Location = mouseGeocode;
+                Location = mouseGeocode;
             }
         }
 
-        void _map_ViewChangeOnFrame(object sender, MapEventArgs e)
+        void Map_ViewChangeOnFrame(object sender, MapEventArgs e)
         {
             if (isDragging)
             {
-                _map.Center = _center;
+                map.Center = center;
             }
         }
 
@@ -74,16 +74,14 @@ namespace DiReCTUI.Map
         void ParentMap_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             // Left Mouse Button released, stop dragging the Pushpin
-            if (_map != null)
+            if (map != null)
             {
-                _map.ViewChangeOnFrame -= _map_ViewChangeOnFrame;
-                _map.MouseUp -= ParentMap_MouseLeftButtonUp;
-                _map.MouseMove -= ParentMap_MouseMove;
-                _map.TouchMove -= _map_TouchMove;
+                map.ViewChangeOnFrame -= Map_ViewChangeOnFrame;
+                map.MouseUp -= ParentMap_MouseLeftButtonUp;
+                map.MouseMove -= ParentMap_MouseMove;
+                map.TouchMove -= Map_TouchMove;
             }
-
             this.isDragging = false;
-            
             
         }
 

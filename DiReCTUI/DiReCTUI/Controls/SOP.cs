@@ -10,52 +10,49 @@ namespace DiReCTUI.Controls
 {
     public partial class SOP
     {
-        public struct LocationSOP
-        {
-            public Location location;
-            public string SOPTask;
-            public string ID;
-            
-            //constructor for LocationSOP
-            public LocationSOP(Location loc, string SOPTask, string ID) 
-            {
-                this.location = loc;
-                this.ID = ID;
-                this.SOPTask = SOPTask;
-            }
 
-        }
-        
         private ObservableCollection<LocationSOP> LocationSOPCollection;
 
-        #region Constructor
+        public struct LocationSOP
+        {
+            public Location Location;
+            public string SOPTask;
+            public string Id;
+            
+            //constructor for LocationSOP
+            public LocationSOP(Location location, string SOPTask, string Id) 
+            {
+                this.Location = location;
+                this.Id = Id;
+                this.SOPTask = SOPTask;
+            }
+        }
+
         public SOP()
         {
             LocationSOPCollection = new ObservableCollection<LocationSOP>();
 
         }
-        #endregion
-
-        #region public function
-        public void addLocationSOP(Location loc, string SOPTask, string ID)
+       
+        public void AddLocationSOP(Location location, string SOPTask, string Id)
         {
-            LocationSOP locSOP =  new LocationSOP(loc, SOPTask, ID);
-            LocationSOPCollection.Add(locSOP);
+            LocationSOP locationSOP =  new LocationSOP(location, SOPTask, Id);
+            LocationSOPCollection.Add(locationSOP);
             return;
         }
-        public ObservableCollection<LocationSOP> getLocationSOP()
+        public ObservableCollection<LocationSOP> GetLocationSOP()
         {
             return this.LocationSOPCollection;
         }
-        public void removeLocationSOP(LocationSOP locSOP)
+        public void RemoveLocationSOP(LocationSOP locationSOP)
         {
-            LocationSOPCollection.Remove(locSOP);
+            LocationSOPCollection.Remove(locationSOP);
         }
 
-        public void removeAllLocationSOP()
+        public void RemoveAllLocationSOP()
         {
             LocationSOPCollection.Clear();
         }
-        #endregion
+       
     }
 }

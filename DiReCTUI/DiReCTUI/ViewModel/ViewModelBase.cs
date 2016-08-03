@@ -11,22 +11,22 @@ namespace DiReCTUI.ViewModel
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        #region Constructor
+       
         //protected ViewModelBase()
         //{
 
         //}
-        #endregion
+       
 
-        #region DisplayName
+        
         ///<summary>
         ///Returns the user-friendly Name
         ///can be override
         /// </summary>
         public virtual string DisplayName { get; protected set; }
-        #endregion
+        
 
-        #region Debug Aids
+       
         ///<summary>
         ///Warns the developers when the property is not
         ///included in the specific object
@@ -51,11 +51,7 @@ namespace DiReCTUI.ViewModel
         }
 
         protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
-
-        #endregion
-
-        #region INotifyPropertyChanged
-
+        
         ///<summary>
         ///Raised when a property on this object has a new value
         /// </summary>
@@ -76,7 +72,6 @@ namespace DiReCTUI.ViewModel
             }
 
         }
-        #endregion
-
+       
     }
 }

@@ -12,48 +12,67 @@
 
     <Grid>
         <!-- Initialize Map -->
-        <m:Map x:Name="Map" 
-               Mode="Road" 
-               Center="25.04133, 121.6133" 
-               ZoomLevel="16"
-               TouchDown="BingMap_TouchDown"
-               Visibility="Visible"
+        <m:Map 
+            x:Name="Map" 
+            Mode="Road" 
+            Center="25.04133, 121.6133" 
+            ZoomLevel="16"
+            TouchDown="BingMap_TouchDown"
+            Visibility="Visible"
                >
             <local:CustomTileLayer />
         </m:Map>
 
-        <gmap:GMapControl x:Name="test" Zoom="13" Visibility="Hidden" MaxZoom="24" MinZoom="1" />
+        <gmap:GMapControl 
+            x:Name="test" 
+            Zoom="13" 
+            Visibility="Hidden" 
+            MaxZoom="24" 
+            MinZoom="1" />
 
         <!-- Map Controls : ZoomIn, ZoomOut, Add Marker -->
-        <StackPanel HorizontalAlignment="Right" 
+        <StackPanel 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Center" 
+            Margin="10" >
+
+            <Button  
+                x:Name="ZoomIn"
+                FontSize="25" 
+                Width="40"
+                Height="40"
+                Click="ZoomIn_Click"
+                BorderThickness="0">
+                <TextBlock 
                     VerticalAlignment="Center" 
-                    Margin="10" >
-
-            <Button  Name="ZoomIn"
-                     FontSize="25" 
-                     Width="40"
-                     Height="40"
-                     Click="ZoomIn_Click"
-                     BorderThickness="0">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">+</TextBlock>
+                    HorizontalAlignment="Center">+
+                </TextBlock>
             </Button>
 
-            <Button Name="ZoomOut"
-                    FontSize="25" 
-                    Width="40"
-                    Height="40"
-                    Click="ZoomOut_Click"
-                    BorderThickness="0">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">-</TextBlock>
+            <Button 
+                x:Name="ZoomOut"
+                FontSize="25" 
+                Width="40"
+                Height="40"
+                Click="ZoomOut_Click"
+                BorderThickness="0">
+                <TextBlock 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">-
+                </TextBlock>
             </Button>
 
-            <Button Name="AddMarker"
-                    FontSize="17" 
-                    Width="40" 
-                    Height="40" 
-                    Click="Add_Marker_Click"
-                    BorderThickness="0">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">M</TextBlock>
+            <Button 
+                x:Name="AddMarker"
+                FontSize="17" 
+                Width="40" 
+                Height="40" 
+                Click="Add_Marker_Click"
+                BorderThickness="0">
+                <TextBlock 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">M
+                </TextBlock>
             </Button>
 
         </StackPanel>

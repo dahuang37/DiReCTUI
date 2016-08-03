@@ -22,62 +22,68 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
-        <TextBlock Grid.Row="0" 
-                   Grid.Column="0"
-                   Margin="0 8 0 0">
+        <TextBlock 
+            Grid.Row="0" 
+            Grid.Column="0"
+            Margin="0 8 0 0">
             Rock Types: 
         </TextBlock>
-        <ComboBox Grid.Column="1"
-                  Grid.Row="0"
-                  Margin="0 8 0 0"
-                  SelectedItem="{Binding SelectedMyEnumType}" 
-                  ItemsSource="{Binding MyEnumTypeValues}"></ComboBox>
+        <ComboBox 
+            Grid.Column="1"
+            Grid.Row="0"
+            Margin="0 8 0 0"
+            SelectedItem="{Binding SelectedRockType}" 
+            ItemsSource="{Binding RockTypeValues}"></ComboBox>
         
-
-        <TextBlock Grid.Row="1"
-                   Grid.Column="0"
-                   Margin="0 8 0 0"
-            >Rock Avg Diameter</TextBlock>
-        <TextBox Text="{Binding RockDiameter, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="0 8 0 0"
-                 Grid.Row="1"
-                 Grid.Column="1"/>
-
-        <TextBlock Grid.Row="2"
-                   Grid.Column="0"
-                   Margin="0 8 0 0">
+        <TextBlock 
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0 8 0 0">
+            Rock Avg Diameter
+        </TextBlock>
+        <TextBox 
+            Text="{Binding RockDiameter, UpdateSourceTrigger=PropertyChanged}"
+            Margin="0 8 0 0"
+            Grid.Row="1"
+            Grid.Column="1"/>
+        
+        <TextBlock 
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0 8 0 0">
             Rock Picture
         </TextBlock>
-        <TextBox Text="{Binding RockPicture}"
-                 Margin="0 8 0 0"
-                 Grid.Row="2"
-                 Grid.Column="1"
-                />
+        <TextBox 
+            Text="{Binding RockPicture}"
+            Margin="0 8 0 0"
+            Grid.Row="2"
+            Grid.Column="1"/>
 
-        <TextBlock Grid.Row="3"
-                   Grid.Column="0"
-                   Margin="0 8 0 0"
-                   >Rock Note
+        <TextBlock 
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0 8 0 0">
+            Rock Note
         </TextBlock>
-        <TextBox Height="50"
-                 Margin="0 8 0 0"
-                 Grid.Row="3"
-                 Grid.Column="1"
-                 Text="{Binding RockNote}"
-                 >
-            
+        <TextBox 
+            Height="50"
+            Margin="0 8 0 0"
+            Grid.Row="3"
+            Grid.Column="1"
+            Text="{Binding RockNote}">
         </TextBox>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
+        <StackPanel 
+            Orientation="Horizontal" 
+            Grid.Row="4" 
+            Grid.Column="1">
             <Button 
                 Margin="10"
                 HorizontalAlignment="Right"
-                
                 Command="{Binding Save}">Save</Button>
             <Button  
                 Margin="10"
                 HorizontalAlignment="Right"
-                
                 Command="{Binding CloseCommand}">Canel</Button>
         </StackPanel>
         

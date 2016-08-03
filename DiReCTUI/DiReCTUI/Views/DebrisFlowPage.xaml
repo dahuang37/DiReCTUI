@@ -12,11 +12,7 @@
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       Dialog:DialogParticipation.Register="{Binding}"
       Title="DebrisFlowPage">
-    <!--
-    this page is the prototype for DebrisFlow Page.
-    Features: 1) use DataTemplate to switch between different part of Model
-              2) Map Control
--->
+    
     <!-- Includes Styles for FontSize and Margin, and dataTemplates-->
     <Page.Resources>
         <!-- Setting FontSize and Margin of Elements to be bigger-->
@@ -37,51 +33,6 @@
             <Setter Property="FontSize" Value="17" />
             <Setter Property="Margin" Value="12"/>
         </Style>
-
-        <!-- DataTemplate for General Inforation -->
-        <!--
-        <DataTemplate x:Key="DebrisFlowGeneral" x:Name="General" DataType="{x:Type vm:DebrisFlowViewModel}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                
-                <StackPanel Grid.Row="0" Background="AliceBlue">
-                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"><Run Text="General"/></TextBlock>
-                    </Border>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-
-                    <Label Margin="12">Rivulet Name:</Label>
-                    <TextBox  Margin="12" Width="100"
-                              Text="{Binding Path=RivuletName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                    <Label  Margin="12">Rivulet Coordinate:</Label>
-                    <TextBox Margin="12" Width="100"></TextBox>
-
-                </StackPanel>
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Margin="12" >TimeStamp:</Label>
-                    <DatePicker Name="DebrisFlowDate" Margin="12"></DatePicker>
-                </StackPanel>
-                
-                <ComboBox Grid.Row="3" Height="23" HorizontalAlignment="Center" Name="comboBox1" ItemsSource="{Binding Path=TestEnum, Mode=OneWay}" VerticalAlignment="Top" Width="120" />
-                
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="4">
-                    <Button Margin="12" x:Name="General_Next_Button" Width="50" >
-                        Next
-                    </Button>
-                    <Button Margin="12" IsEnabled="False">
-                        Back
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>-->
     </Page.Resources>
 
     <Grid >
@@ -92,19 +43,26 @@
         </Grid.RowDefinitions>
 
         <!-- Back Button -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" 
-                    Name="Back_Button" 
-                    Click="Back_Button_Click"
-                    Style="{DynamicResource SquareButtonStyle}">Go Back</Button>
+        <StackPanel 
+            Orientation="Horizontal" 
+            Grid.Row="0">
+            <Button 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                Name="Back_Button" 
+                Click="Back_Button_Click"
+                Style="{DynamicResource SquareButtonStyle}">
+                Go Back
+            </Button>
         </StackPanel>
-        <Controls:MetroTabControl Grid.Row="1" >
+        
+        <!-- Tabs -->
+        <Controls:MetroTabControl Controls:TabControlHelper.IsUnderlined="True" Grid.Row="1" >
             <Controls:MetroTabItem Header="Map">
                 <local:DebrisFlowMap x:Name="MapPage"/>
             </Controls:MetroTabItem>
             <Controls:MetroTabItem Header="Record List">
-                
+
             </Controls:MetroTabItem>
             <Controls:MetroTabItem Header="Background">
 
@@ -114,7 +72,6 @@
             </Controls:MetroTabItem>
 
         </Controls:MetroTabControl>
-        <!-- Location Header -->
-        
+
     </Grid>
 </Page>

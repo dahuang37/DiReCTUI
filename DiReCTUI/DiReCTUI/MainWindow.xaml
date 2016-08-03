@@ -6,6 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:DiReCTUI"
         xmlns:map="clr-namespace:DiReCTUI.Map"
+        xmlns:view="clr-namespace:DiReCTUI.Views.Tabs"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
 
@@ -24,7 +25,7 @@
             </TabItem>
 
             <TabItem  Margin="0" Height="60" Header="SOP">
-                <Frame x:Name="SOPFrame" Source="Views/Tabs/SOPTab.xaml" NavigationUIVisibility="Hidden"/>
+                
             </TabItem>
 
             <TabItem Margin="0" Height="60" Header="MAP" >

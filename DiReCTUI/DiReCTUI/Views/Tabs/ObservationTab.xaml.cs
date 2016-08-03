@@ -16,12 +16,11 @@ namespace DiReCTUI.Views.Tabs
     /// <summary>
     /// Interaction logic for ObservationTab.xaml
     /// </summary>
-    public partial class ObservationTab : Page
+    public partial class ObservationTab
     {
         public ObservationTab()
         {
             InitializeComponent();
-            
         }
 
         /// <summary>
@@ -31,15 +30,14 @@ namespace DiReCTUI.Views.Tabs
         /// <param name="e"></param>
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
         {      
-            var db = new DebrisFlowPage();
-            var map = db.MapPage.map;
-            var dbRecord = new DebrisFlowRecord();
-            var bgInfo = new BackgroundInfo().DebrisBackgroundInfo;
-            var dbCollection = new DebrisFlowCollection();
-            var dbvm = new DebrisFlowViewModel(map, dbRecord, bgInfo, dbCollection);
+            var debrisFlowPage = new DebrisFlowPage();
+            var map = debrisFlowPage.MapPage.map;
+            var debrisFlowRecord = new DebrisFlowRecord();
+            var debrisFlowCollection = new DebrisFlowCollection();
+            var debrisFlowViewModel = new DebrisFlowViewModel(map, debrisFlowRecord, debrisFlowCollection);
             
-            db.DataContext = dbvm;
-            this.NavigationService.Navigate(db);
+            debrisFlowPage.DataContext = debrisFlowViewModel;
+            this.NavigationService.Navigate(debrisFlowPage);
         }
 
         private void Fire_Click(object sender, RoutedEventArgs e)

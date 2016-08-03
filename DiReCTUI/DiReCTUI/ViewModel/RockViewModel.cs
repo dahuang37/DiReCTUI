@@ -11,25 +11,21 @@ namespace DiReCTUI.ViewModel
 {
     public class RockViewModel : ViewModelBase
     {
-        private ICommand _closeCommand;
-        private ICommand _save;
-        
-        DebrisFlowRecord.Rock _rock;
-        
-        DebrisFlowCollection _dbCollection;
-        private Action<RockViewModel> _closeHandler;
-        
+        private RelayCommand closeCommand;
+        private RelayCommand save;
+        private Action<RockViewModel> closeHandler;
+        private DebrisFlowRecord.Rock.RockTypes selectedRockType;
 
-        public RockViewModel(Action<RockViewModel> closeHandler, DebrisFlowCollection dbCollection, DebrisFlowRecord.Rock Rock)
+        DebrisFlowRecord.Rock _rock;
+        DebrisFlowCollection _debrisFlowCollection;
+       
+        public RockViewModel(Action<RockViewModel> closeHandler, DebrisFlowCollection debrisFlowCollection, DebrisFlowRecord.Rock Rock)
         {
-            _closeHandler = closeHandler;
-           
+            this.closeHandler = closeHandler;
             _rock = Rock;
-            
 
             RockPicture = "Heyhy";
-            _dbCollection = dbCollection;
-
+            _debrisFlowCollection = debrisFlowCollection;
             
         }
 
@@ -40,7 +36,6 @@ namespace DiReCTUI.ViewModel
             {
                 _rock.AverageRockDiameter = value;
                 OnPropertyChanged("RockDiameter");
-
             }
         }
 
@@ -54,18 +49,18 @@ namespace DiReCTUI.ViewModel
             }
         }
 
-        private DebrisFlowRecord.Rock.RockTypes _selectedMyEnumType;
-        public DebrisFlowRecord.Rock.RockTypes SelectedMyEnumType
+       
+        public DebrisFlowRecord.Rock.RockTypes SelectedRockType
         {
-            get { return _selectedMyEnumType; }
+            get { return selectedRockType; }
             set
             {
-                _selectedMyEnumType = value;
-                OnPropertyChanged("SelectedMyEnumType");
+                selectedRockType = value;
+                OnPropertyChanged("SelectedRockType");
             }
         }
 
-        public IEnumerable<DebrisFlowRecord.Rock.RockTypes> MyEnumTypeValues
+        public IEnumerable<DebrisFlowRecord.Rock.RockTypes> RockTypeValues
         {
             get
             {
@@ -86,34 +81,35 @@ namespace DiReCTUI.ViewModel
 
         public ICommand CloseCommand
         {
-            get { if (_closeCommand == null)
+            get { if (closeCommand == null)
                 {
-                    _closeCommand = new RelayCommand(p => this.Close());
+                    closeCommand = new RelayCommand(p => this.Close());
                 }
-                return _closeCommand;
+                return closeCommand;
             }
         }
+
         void Close()
         {
-            this._closeHandler(this);
+            this.closeHandler(this);
         }
 
-        RelayCommand save;
         public ICommand Save
         {
             get
             {
                 if (save == null)
                 {
-                    save = new RelayCommand(p => this.SaveObj());
+                    save = new RelayCommand(p => this.SaveObject());
                 }
                 return save;
             }
         }
-        public void SaveObj()
+
+        private void SaveObject()
         {
-            this._dbCollection.AddRecord(_rock);
-            this._closeHandler(this);
+            this._debrisFlowCollection.AddRecord(_rock);
+            Close();
 
         }
     }

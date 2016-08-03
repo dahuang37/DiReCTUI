@@ -12,8 +12,6 @@ namespace DiReCTUI.Controls
 {
     public interface GPSInterface
     {
-
-        #region Properties
         
         Location Location
         {
@@ -26,15 +24,12 @@ namespace DiReCTUI.Controls
             get;
             set;
         }
-
-        #endregion
-
-        #region public functions
+        
         void StartTracking();
         
-        void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e);
+        void Watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e);
         
         void StopTracking();
-        #endregion
+       
     }
 }

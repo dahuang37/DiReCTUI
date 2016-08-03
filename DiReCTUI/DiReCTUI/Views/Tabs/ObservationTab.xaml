@@ -8,10 +8,20 @@
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       d:DesignHeight="300" d:DesignWidth="300"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-      Dialog:DialogParticipation.Register="{Binding}"
-      Title="ObservationTab">
+      >
 
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Controls:Tile" BasedOn="{StaticResource {x:Type Controls:Tile}}">
+                <Setter Property="TiltFactor" Value="2" />
+                <Setter Property="Height" Value="200" />
+                <Setter Property="Width" Value="300" />
+            </Style>
+            <Style TargetType="Rectangle" >
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Width" Value="50" />
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
@@ -28,70 +38,79 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        
         <!-- Tiles -->
-        <Controls:Tile Name="Debris_Flow" Title="Debris Flows" 
-                       TiltFactor="2" Grid.Column="1" Grid.Row="1" 
-                       Width="300" Height="200" 
-                       Click="Debris_Flow_Click">
-            <Rectangle Width="50" Height="50">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Controls:Tile>
-        <Controls:Tile Name="Fire" Title="Fire" 
-                       TiltFactor="2" Grid.Column="3" Grid.Row="1" 
-                       Width="300" Height="200"
-                       Click="Fire_Click">
-            <Rectangle Width="50" Height="50">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Controls:Tile>
-        <Controls:Tile Name="Flood" Title="Flood" TiltFactor="2" 
-                       Grid.Column="5" Grid.Row="1" 
-                       Width="300" Height="200"
-                       Click="Flood_Click"
-                       >
-            <Rectangle Width="50" Height="50">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Controls:Tile>
-        <Controls:Tile Name="Protected_Objects" Title="Protected Objects" TiltFactor="2" 
-                       Grid.Column="1" Grid.Row="3" 
-                       Width="300" Height="200"
-                       Click="Protected_Objects_Click">
-            <Rectangle Width="50" Height="50">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Controls:Tile>
-        <Controls:Tile Title="LandSlide" TiltFactor="2" Grid.Column="3" Grid.Row="3" Width="300" Height="200">
-            <Rectangle Width="50" Height="50">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Controls:Tile>
-        <Controls:Tile Title="Damaged Buildings" TiltFactor="2" Grid.Column="5" Grid.Row="3" Width="300" Height="200">
-            <Rectangle Width="50" Height="50">
+        <Controls:Tile 
+            x:Name="Debris_Flow" 
+            Title="Debris Flows" 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Click="Debris_Flow_Click">
+            <Rectangle>
                 <Rectangle.Fill>
                     <VisualBrush Visual="{StaticResource appbar_add}" />
                 </Rectangle.Fill>
             </Rectangle>
         </Controls:Tile>
         
-        <!-- Add Object Button (Haven't Implemented) -->
-        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Column="6" Grid.Row="6">
-            <Rectangle Width="50" Height="50">
+        <Controls:Tile 
+            x:Name="Fire" 
+            Title="Fire" 
+            Grid.Column="3" 
+            Grid.Row="1"        
+            Click="Fire_Click">
+            <Rectangle>
                 <Rectangle.Fill>
                     <VisualBrush Visual="{StaticResource appbar_add}" />
                 </Rectangle.Fill>
             </Rectangle>
-        </Button>
+        </Controls:Tile>
+        
+        <Controls:Tile 
+            x:Name="Flood" 
+            Title="Flood" 
+            Grid.Column="5" 
+            Grid.Row="1" 
+            Click="Flood_Click">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_add}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Controls:Tile>
+        
+        <Controls:Tile 
+            x:Name="Protected_Objects" 
+            Title="Protected Objects" 
+            Grid.Column="1" 
+            Grid.Row="3"             
+            Click="Protected_Objects_Click">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_add}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Controls:Tile>
+        
+        <Controls:Tile 
+            Title="LandSlide" 
+            Grid.Column="3" 
+            Grid.Row="3">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_add}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Controls:Tile>
+        <Controls:Tile Title="Damaged Buildings" 
+                       Grid.Column="5" 
+                       Grid.Row="3">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_add}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Controls:Tile>
+        
     </Grid>
 </Page>

@@ -6,15 +6,12 @@ using System.Windows.Media;
 
 using GMap.NET.MapProviders;
 using Microsoft.Maps.MapControl.WPF;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using GMap.NET;
 using System.Diagnostics;
 
 namespace DiReCTUI.Map
 {
 
-    #region GMap Tile Layer
     /// <summary>
     /// Interaction logic for BingMap.xaml
     /// Add Gmap on top of BingMap, allow user to switch between different source of Map
@@ -41,13 +38,11 @@ namespace DiReCTUI.Map
             TileSource = new CustomTileSource();
         }
     }
-    #endregion
-
-
+    
     public partial class BingMap 
     {
 
-        #region Fields
+        
         /// <summary>
         /// use to save the last point user touch screen to add marker
         /// </summary>
@@ -58,9 +53,8 @@ namespace DiReCTUI.Map
         /// </summary>
         private DraggablePin currentMarker;
 
-        #endregion
+        private const double earthRadiusInKilometers = 6367.0;
 
-        #region Constructor
 
         /// <summary>
         /// This constructor initializes the Map and currentMarker
@@ -72,30 +66,28 @@ namespace DiReCTUI.Map
             Map.CredentialsProvider = new Credential().getCredential();
             Map.Focus();
 
-
             ///this part was in the demo, but I found that removing this part
             ///does not affect the functionality of the map
             #region demo part
-            try
-            {
-                Random rnd = new Random();
-                int port = rnd.Next(8800, 8900);
-                //    GMapProvider.WebProxy = new WebProxy("127.0.0.1", 1080);
-                //    GMapProvider.IsSocksProxy = true;
+            //try
+            //{
+            //    Random rnd = new Random();
+            //    int port = rnd.Next(8800, 8900);
+            //    GMapProvider.WebProxy = new WebProxy("127.0.0.1", 1080);
+            //    GMapProvider.IsSocksProxy = true;
 
-                GMaps.Instance.EnableTileHost(port);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("ex: " + ex);
-            }
+            //    GMaps.Instance.EnableTileHost(port);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("ex: " + ex);
+            //}
             #endregion
 
             // Initialize currentMarker to be at IIS
             currentMarker = new DraggablePin(Map);
             {
                 currentMarker.Location = new Location(25.04133, 121.6133);
-
                 currentMarker.ToolTip = new Label()
                 {
                     Content = "Current Position"
@@ -104,31 +96,24 @@ namespace DiReCTUI.Map
             currentMarker.Background = new SolidColorBrush(Color.FromArgb(100, 100, 100, 100));
             Map.Children.Add(currentMarker);
 
-            //test
             //initialize the satellite map
             test.MapProvider = GMap.NET.MapProviders.BingSatelliteMapProvider.Instance;
             test.Position = new PointLatLng(23.6978, 120.9605);
             test.Zoom = 13;
             test.CanDragMap = false;
-
         }
 
-
-        #endregion
-
-        #region Draw Circle / Radius
-        
         /// <summary>
         /// draw the circle around the center, given the Location (Latitude and Longitude)
         /// this function would convert the Location type to radian and draw circle of radius in meters
         /// </summary>
         /// <param name="center"></param>
         /// <param name="radius"></param>
-        public void drawCircle(Location center, double radius)
+        public void DrawCircle(Location center, double radius)
         {
             // Add Red Polyline to the Map
             var poly = new MapPolyline();
-            var locations = CreateCircle(center, radius);
+            var locations = CreateCircleLocations(center, radius);
             poly.Locations = locations;
             poly.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
             poly.Fill = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0));
@@ -157,36 +142,35 @@ namespace DiReCTUI.Map
             return radians * (180 / Math.PI);
         }
         
-        private const double EarthRadiusInKilometers = 6367.0;
-        
+
         /// <summary>
         /// formula from online to convert from Location type to meters
         /// </summary>
         /// <param name="center"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        private LocationCollection CreateCircle(Location center, double radius)
+        private LocationCollection CreateCircleLocations(Location center, double radius)
         {
-            var earthRadius = EarthRadiusInKilometers;
-            var lat = ToRadian(center.Latitude); //radians
-            var lng = ToRadian(center.Longitude); //radians
+            var earthRadius = earthRadiusInKilometers;
+            var latitude = ToRadian(center.Latitude); //radians
+            var longitude = ToRadian(center.Longitude); //radians
             var d = radius / earthRadius; // d = angular distance covered on earth's surface
             var locations = new LocationCollection();
 
             for (var x = 0; x <= 360; x++)
             {
-                var brng = ToRadian(x);
-                var latRadians = Math.Asin(Math.Sin(lat) * Math.Cos(d) + Math.Cos(lat) * Math.Sin(d) * Math.Cos(brng));
-                var lngRadians = lng + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(lat), Math.Cos(d) - Math.Sin(lat) * Math.Sin(latRadians));
+                var range = ToRadian(x);
+                var latitudeRadians = Math.Asin(Math.Sin(latitude) * Math.Cos(d) + Math.Cos(latitude) * Math.Sin(d) * Math.Cos(range));
+                var longitudeRadians = longitude + Math.Atan2(Math.Sin(range) * Math.Sin(d) * Math.Cos(latitude), Math.Cos(d) - Math.Sin(latitude) * 
+                    Math.Sin(latitudeRadians));
 
-                locations.Add(new Location(ToDegrees(latRadians), ToDegrees(lngRadians)));
+                locations.Add(new Location(ToDegrees(latitudeRadians), ToDegrees(longitudeRadians)));
             }
 
             return locations;
         }
-        #endregion
+       
         
-        #region Buttons private helpers
         /// <summary>
         /// Use to store the last touchpoint by user
         /// </summary>
@@ -194,8 +178,8 @@ namespace DiReCTUI.Map
         /// <param name="e"></param>
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
-            TouchPoint p = e.GetTouchPoint(this);
-            lastTouchLocation = Map.ViewportPointToLocation(p.Position);
+            var touchPoint = e.GetTouchPoint(this);
+            lastTouchLocation = Map.ViewportPointToLocation(touchPoint.Position);
         }
 
         /// <summary>
@@ -244,15 +228,13 @@ namespace DiReCTUI.Map
 
 
         }
-        #endregion
-
-        #region Public functions
+       
         
         /// <summary>
         /// return currentMarker for other class to manipulate
         /// </summary>
         /// <returns></returns>
-        public DraggablePin getCurrentMarker()
+        public DraggablePin GetCurrentMarker()
         {
             if(currentMarker == null)
             {
@@ -265,7 +247,7 @@ namespace DiReCTUI.Map
         /// set currentMarker's position
         /// </summary>
         /// <param name="loc"></param>
-        public void setCurrentMarkerPosition(Location loc)
+        public void SetCurrentMarkerPosition(Location loc)
         {
             if(currentMarker != null)
             {
@@ -289,10 +271,10 @@ namespace DiReCTUI.Map
         /// <param name="Lon"></param>
         /// <param name="label"></param>
         /// <param name="radius"></param>
-        public void addSOPPushPin(Location loc, string label, double radius)
+        public void AddSOPPushPin(Location location, string label, double radius)
         {
-            drawCircle(loc, radius);
-            addPushPins(loc, label);
+            DrawCircle(location, radius);
+            AddPushPins(location, label);
         }
 
         /// <summary>
@@ -300,10 +282,10 @@ namespace DiReCTUI.Map
         /// </summary>
         /// <param name="loc"></param>
         /// <param name="label"></param>
-        public void addPushPins(Location loc, string label)
+        public void AddPushPins(Location loc, string label)
         {
            
-            Pushpin pin = new Pushpin();
+            var pin = new Pushpin();
             {
                 pin.Location = new Location(loc);
                 pin.ToolTip = new Label()
@@ -320,9 +302,9 @@ namespace DiReCTUI.Map
         /// <param name="Latitude"></param>
         /// <param name="Longitude"></param>
         /// <param name="label"></param>
-        public void addDraggablePins(Location loc, string label)
+        public void AddDraggablePins(Location loc, string label)
         {
-            DraggablePin pin = new DraggablePin(Map);
+            var pin = new DraggablePin(Map);
             {
                 pin.Location = new Location(loc);
                 pin.ToolTip = new Label()
@@ -333,7 +315,7 @@ namespace DiReCTUI.Map
             Map.Children.Add(pin);
         }
         
-        #endregion
+       
         
     }
 

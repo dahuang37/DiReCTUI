@@ -84,21 +84,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DialogController.cs" />
     <Compile Include="Controls\FakeSOP.cs" />
     <Compile Include="Controls\GPSInterface.cs" />
-    <Compile Include="Controls\GPSLocation.cs" />
     <Compile Include="Controls\SOP.cs" />
     <Compile Include="Map\BingMap.xaml.cs">
       <DependentUpon>BingMap.xaml</DependentUpon>
     </Compile>
     <Compile Include="Map\Credential.cs" />
     <Compile Include="Map\DraggablePin.cs" />
+    <Compile Include="Map\LocationChangedEventArgs.cs" />
+    <Compile Include="Map\MapController.cs" />
     <Compile Include="Model\BackgroundInfo.cs" />
     <Compile Include="Model\DebrisFlowCollection.cs" />
     <Compile Include="Model\Observations\DebrisFlowRecord.cs" />
     <Compile Include="Model\Observations\ObservationRecord.cs" />
     <Compile Include="ReplayCommand.cs" />
     <Compile Include="ViewModel\DebrisFlowViewModel.cs" />
+    <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="ViewModel\RockViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\DebrisFlowMap.xaml.cs">
@@ -109,9 +112,6 @@
     </Compile>
     <Compile Include="Views\Tabs\ObservationTab.xaml.cs">
       <DependentUpon>ObservationTab.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Tabs\SOPTab.xaml.cs">
-      <DependentUpon>SOPTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
@@ -152,10 +152,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Tabs\SOPTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,9 +175,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Model\huehue.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
