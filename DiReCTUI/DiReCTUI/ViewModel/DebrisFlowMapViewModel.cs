@@ -32,12 +32,90 @@ namespace DiReCTUI.ViewModel
         private IDialogCoordinator _dialogCoordinator;
         private CustomDialog custom;
         private SOP sop;
-
+        private SOPDisplay sopDisplay;
+        private ObservableCollection<SOPDisplay> sopTypes = new ObservableCollection<SOPDisplay>();
+       
         private Visibility addButtonContent = Visibility.Collapsed;
         private RelayCommand toggleAddButton;
         private RelayCommand addWindow;
         private MapController mapController;
 
+        public ObservableCollection<SOPDisplay> SOPTypes
+        {
+            get { return sopTypes; }
+        }
+
+        // Controls the Add Button's content visibility
+        public Visibility AddButtonContent
+        {
+            get { return addButtonContent; }
+            set
+            {
+                if (value != addButtonContent)
+                {
+                    addButtonContent = value;
+                    OnPropertyChanged("AddButtonContent");
+                }
+            }
+        }
+        // Command to toggle the visibility of Add Button's content visibility
+        public ICommand ToggleAddButton
+        {
+            get
+            {
+                if (toggleAddButton == null)
+                {
+                    toggleAddButton = new RelayCommand(
+                        param => this.ChangeView());
+                }
+                return this.toggleAddButton;
+            }
+        }
+        //helper to change the visibility of add button content
+        void ChangeView()
+        {
+            AddButtonContent = (AddButtonContent == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        // Add dialog for user to input
+        public ICommand AddWindow
+        {
+            get
+            {
+                if (addWindow == null)
+                {
+                    addWindow = new RelayCommand(p => CreateWindow(p));
+                }
+                return this.addWindow;
+            }
+        }
+
+        private async void CreateWindow(object parameter)
+        {
+            var str = parameter as string;
+            this.ChangeView();
+            switch (str)
+            {
+                case "Rock":
+                    custom = new CustomDialog() { Title = str };
+                    var RockViewModel = new RockViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom),
+                        _debrisFlowCollection, new DebrisFlowRecord.Rock());
+                    custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
+                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
+                    break;
+                case "Slope":
+                    break;
+                case "Plantation":
+                    break;
+                case "Protected Object":
+                    break;
+                case "Basic Info":
+                    break;
+                case "Catchment":
+                    break;
+            }
+        }
+        
         public DebrisFlowMapViewModel(MainMap map, DebrisFlowRecord debrisFlowRecord, DebrisFlowCollection debrisFlowCollection) 
         {
             this._debrisFlowRecord = debrisFlowRecord;
@@ -52,9 +130,33 @@ namespace DiReCTUI.ViewModel
             //Set up SOP 
             var debrisflowsop = new DebrisFlowSOP();
             this.sop = debrisflowsop.GetSOP();
-            AddSOPTypesAndCommand(debrisflowsop);
+            this.sopDisplay = new SOPDisplay();
+            AddSOPTypes(debrisflowsop);
             SetUpSOPLocation(sop);
            
+        }
+
+        // Load SOP Titles for the add buttons on the button right
+        void AddSOPTypes(DebrisFlowSOP sop)
+        {
+            List<string> titleList = sop.SOPTypes;
+            foreach (string title in titleList)
+            {
+                sopTypes.Add(new SOPDisplay() { Title = title, Command = AddWindow });
+            }
+        }
+
+        // Set up SOP Locations on the map 
+        void SetUpSOPLocation(SOP sop)
+        {
+            if (mapController != null)
+            {
+                var locationSOP = sop.GetLocationSOP();
+                foreach (SOP s in locationSOP)
+                {
+                    mapController.AddPushPinWithCircle(s.Location, s.SOPTask);
+                }
+            }
         }
 
         async void OnLocationChanged(object s, LocationChangedEventArgs e)
@@ -74,121 +176,6 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
-
-        public int CollectionSize
-        {
-            get { return this._debrisFlowCollection.Count(); }
-        }
         
-        // Controls the Add Button's content visibility
-        public Visibility AddButtonContent
-        {
-            get { return addButtonContent; }
-            set
-            {
-                if (value != addButtonContent)
-                {
-                    addButtonContent = value;
-                    OnPropertyChanged("AddButtonContent");
-                }
-            }
-        }
-        // Command to toggle the visibility of Add Button's content visibility
-        public ICommand ToggleAddButton
-        {
-            get
-            {
-                if(toggleAddButton == null)
-                {
-                    toggleAddButton = new RelayCommand(
-                        param => this.ChangeView());
-                }
-                return this.toggleAddButton;
-            }
-        }
-        //helper to change the visibility of add button content
-        void ChangeView()
-        {
-            AddButtonContent = (AddButtonContent == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        // Add dialog for user to input
-        public ICommand AddWindow
-        {
-            get
-            {
-                if(addWindow == null)
-                {
-                    addWindow = new RelayCommand(p => CreateWindow(p) );
-                }
-                return this.addWindow;
-            }
-        }
-
-        private async void CreateWindow(object parameter)
-        {
-            var str = parameter as string;
-            this.ChangeView();
-            switch (str)
-            {
-                case "Rock":
-                    custom = new CustomDialog() { Title = str };
-                    var RockViewModel = new RockViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom), 
-                        _debrisFlowCollection, new DebrisFlowRecord.Rock());
-                    custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
-                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
-                    break;
-                case "Slope":
-                    break;
-                case "Plantation":
-                    break;
-                case "Protected Object":
-                    break;
-                case "Basic Info":
-                    break;
-                case "Catchment":
-                    break;
-            }
-        }
-
-       
-        // hope to move the part below to a new class
-        // to control the list of SOP Tasks according to the SOP class
-        
-        //temporary classes to store different type of SOP
-        //TODO:
-        // add this part to the SOP class, so it's more dynamic
-        ObservableCollection<SOPTypesAndCommand> sopTypes = new ObservableCollection<SOPTypesAndCommand>();
-        public ObservableCollection<SOPTypesAndCommand> SOPTypes
-        {
-            get{ return sopTypes; }
-        }
-        public class SOPTypesAndCommand
-        {
-            public string Title { get; set; }
-            public ICommand Command { get; set; }
-        }
-        void AddSOPTypesAndCommand(DebrisFlowSOP sop)
-        {
-            List<string> titleList = sop.SOPTypes;
-            foreach(string title in titleList)
-            {
-                sopTypes.Add(new SOPTypesAndCommand() { Title = title, Command = AddWindow });
-            }
-        }
-
-        void SetUpSOPLocation(SOP sop)
-        {
-            if (mapController != null)
-            {
-                var locationSOP = sop.GetLocationSOP();
-                foreach (SOP s in locationSOP)
-                {
-                    mapController.AddPushPinWithCircle(s.Location, s.SOPTask);
-                }
-            }
-        }
-
-
     }
 }

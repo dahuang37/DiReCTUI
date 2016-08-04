@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DiReCTUI.Views"
-             mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:DiReCTUI.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:DebrisFlowReminderViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -15,6 +17,7 @@
         
         <ListBox
             Grid.Row="0"
+            Margin="10"
             ItemsSource="{Binding RecordList}" 
             Background="Transparent">
             <ListBox.ItemTemplate>
@@ -35,12 +38,13 @@
         <Grid 
             Grid.Row="1"
             VerticalAlignment="Bottom"
-            HorizontalAlignment="Right">
+            HorizontalAlignment="Right" 
+            >
             <StackPanel>
                 <Button 
                     HorizontalAlignment="Right"
                     Style="{DynamicResource SquareButtonStyle}"
-                    Command="{Binding CloseCommand}">Okay</Button>
+                    Command="{Binding CloseCommand}" Width="80" Height="35" BorderThickness="2" FontSize="18" RenderTransformOrigin="0.12,0.529">Okay</Button>
             </StackPanel>
         </Grid>
     </Grid>

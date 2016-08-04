@@ -9,25 +9,13 @@ using DiReCTUI.Model;
 
 namespace DiReCTUI.ViewModel
 {
-    public class RockViewModel : ViewModelBase
+    public class RockViewModel : DialogBase
     {
-        private RelayCommand closeCommand;
+        
         private RelayCommand save;
-        private Action<RockViewModel> closeHandler;
         private DebrisFlowRecord.Rock.RockTypes selectedRockType;
-
-        DebrisFlowRecord.Rock _rock;
-        DebrisFlowCollection _debrisFlowCollection;
-       
-        public RockViewModel(Action<RockViewModel> closeHandler, DebrisFlowCollection debrisFlowCollection, DebrisFlowRecord.Rock Rock)
-        {
-            this.closeHandler = closeHandler;
-            _rock = Rock;
-            
-            RockPicture = "Heyhy";
-            _debrisFlowCollection = debrisFlowCollection;
-            
-        }
+        private DebrisFlowRecord.Rock _rock;
+        private DebrisFlowCollection _debrisFlowCollection;
 
         public int RockDiameter
         {
@@ -48,8 +36,7 @@ namespace DiReCTUI.ViewModel
                 OnPropertyChanged("RockPicture");
             }
         }
-
-       
+        
         public DebrisFlowRecord.Rock.RockTypes SelectedRockType
         {
             get { return selectedRockType; }
@@ -72,27 +59,12 @@ namespace DiReCTUI.ViewModel
 
         public string RockNote
         {
-            get { return _rock.RockNotes;}
+            get { return _rock.RockNotes; }
             set
             {
                 _rock.RockNotes = value;
                 OnPropertyChanged("RockNote");
             }
-        }
-
-        public ICommand CloseCommand
-        {
-            get { if (closeCommand == null)
-                {
-                    closeCommand = new RelayCommand(p => this.Close());
-                }
-                return closeCommand;
-            }
-        }
-
-        void Close()
-        {
-            this.closeHandler(this);
         }
 
         public ICommand Save
@@ -106,12 +78,22 @@ namespace DiReCTUI.ViewModel
                 return save;
             }
         }
-
         private void SaveObject()
         {
             this._debrisFlowCollection.AddRecord(_rock);
             Close();
 
         }
+        
+        public RockViewModel(Action<DialogBase> closeHandler, DebrisFlowCollection debrisFlowCollection, DebrisFlowRecord.Rock Rock) : base(closeHandler)
+        {
+           
+            _rock = Rock;
+            RockPicture = "Heyhy";
+            _debrisFlowCollection = debrisFlowCollection;
+            
+        }
+
+       
     }
 }

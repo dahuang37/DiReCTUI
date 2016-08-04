@@ -90,6 +90,7 @@
     <Compile Include="Controls\DebrisFlowSOP.cs" />
     <Compile Include="Controls\GPSInterface.cs" />
     <Compile Include="Controls\SOP.cs" />
+    <Compile Include="Controls\SOPDisplay.cs" />
     <Compile Include="Map\Credential.cs" />
     <Compile Include="Map\DraggablePin.cs" />
     <Compile Include="Map\LocationChangedEventArgs.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="ReplayCommand.cs" />
     <Compile Include="ViewModel\DebrisFlowMapViewModel.cs" />
     <Compile Include="ViewModel\DebrisFlowReminderViewModel.cs" />
+    <Compile Include="ViewModel\DialogBase.cs" />
     <Compile Include="ViewModel\RockViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\DebrisFlowRecordDialog.xaml.cs">

@@ -12,21 +12,6 @@ namespace DiReCTUI.ViewModel
     public class ViewModelBase : INotifyPropertyChanged
     {
        
-        //protected ViewModelBase()
-        //{
-
-        //}
-       
-
-        
-        ///<summary>
-        ///Returns the user-friendly Name
-        ///can be override
-        /// </summary>
-        public virtual string DisplayName { get; protected set; }
-        
-
-       
         ///<summary>
         ///Warns the developers when the property is not
         ///included in the specific object
@@ -72,6 +57,11 @@ namespace DiReCTUI.ViewModel
             }
 
         }
-       
+
+        protected ViewModelBase()
+        {
+
+        }
+
     }
 }

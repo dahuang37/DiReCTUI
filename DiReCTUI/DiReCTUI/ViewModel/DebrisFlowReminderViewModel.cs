@@ -9,56 +9,28 @@ using System.Windows.Input;
 
 namespace DiReCTUI.ViewModel
 {
-    public class DebrisFlowReminderViewModel
+
+    /// <summary>
+    /// this class binds with the DebrisFlowReminderDialog 
+    /// </summary>
+    public class DebrisFlowReminderViewModel : DialogBase
     {
-        private RelayCommand closeCommand;
-        private Action<DebrisFlowReminderViewModel> closeHandler;
-        private ObservableCollection<DebrisFlowReminderViewModel> recordList = new ObservableCollection<DebrisFlowReminderViewModel>();
         
-        public ObservableCollection<DebrisFlowReminderViewModel> RecordList
+        private ObservableCollection<SOPDisplay> recordList = new ObservableCollection<SOPDisplay>();
+        public ObservableCollection<SOPDisplay> RecordList
         {
             get { return recordList; }
         }
-
-        public string Title { get; set; }
-
-        public ICommand CloseCommand
+        
+        public DebrisFlowReminderViewModel(Action<DialogBase> closeHandler, List<string> sopTask) : base(closeHandler)
         {
-            get
-            {
-                if (closeCommand == null)
-                {
-                    closeCommand = new RelayCommand(p => this.Close());
-                }
-                return closeCommand;
-            }
-        }
 
-        void Close()
-        {
-            this.closeHandler(this);
-        }
-
-        public DebrisFlowReminderViewModel()
-        {
-            
-        }
-
-        public DebrisFlowReminderViewModel(Action<DebrisFlowReminderViewModel> closeHandler, List<string> sopTask)
-        {
-            this.closeHandler = closeHandler;
-            
-            
             foreach(string str in sopTask)
             {
-                recordList.Add(new DebrisFlowReminderViewModel() { Title = str });
+                recordList.Add(new SOPDisplay() { Title = str });
             }
-            
-
         }
 
-        
-       
 
     }
 }
