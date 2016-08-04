@@ -109,29 +109,22 @@
   </Class>
   <Class Name="DiReCTUI.ViewModel.DebrisFlowMapViewModel" Collapsed="true">
     <Position X="0.5" Y="3.25" Width="1.5" />
-    <NestedTypes>
-      <Class Name="DiReCTUI.ViewModel.DebrisFlowMapViewModel.SOPTypesAndCommand" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ViewModel\DebrisFlowMapViewModel.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>gAEqIEAAAAAAIAACAAAQAIABAAAAAAACQgBAAEAAIAQ=</HashCode>
+      <HashCode>gAEgJEAAAAAAIAACAAACAYABAgAQAAACCABAAABAAAQ=</HashCode>
       <FileName>ViewModel\DebrisFlowMapViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.ViewModel.RockViewModel" Collapsed="true">
     <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAACAKAACACAAAAAMCAAAEAAAABAAAAAgAAAAJCAAAA=</HashCode>
+      <HashCode>gAAAAIAACACAAAAAECAAAABAAAAAAAAAgAAAAJBAAAA=</HashCode>
       <FileName>ViewModel\RockViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.ViewModel.ViewModelBase" Collapsed="true">
     <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAAAAAAAAIAAAAQAQgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAQAQgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\ViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -175,11 +168,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="DiReCTUI.Controls.GPSInterface" Collapsed="true">
+  <Interface Name="DiReCTUI.Controls.IGPSTracker" Collapsed="true">
     <Position X="6" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAIAIAAAAAAAAABAAAAAAEAAAAAAA=</HashCode>
-      <FileName>Controls\GPSInterface.cs</FileName>
+      <FileName>Controls\IGPSTracker.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Microsoft JhengHei UI" Size="9" />

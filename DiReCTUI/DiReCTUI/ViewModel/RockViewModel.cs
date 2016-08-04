@@ -14,25 +14,25 @@ namespace DiReCTUI.ViewModel
         
         private RelayCommand save;
         private DebrisFlowRecord.Rock.RockTypes selectedRockType;
-        private DebrisFlowRecord.Rock _rock;
-        private DebrisFlowCollection _debrisFlowCollection;
+        private DebrisFlowRecord.Rock rock;
+        private DebrisFlowCollection debrisFlowCollection;
 
         public int RockDiameter
         {
-            get { return _rock.AverageRockDiameter; }
+            get { return rock.AverageRockDiameter; }
             set
             {
-                _rock.AverageRockDiameter = value;
+                rock.AverageRockDiameter = value;
                 OnPropertyChanged("RockDiameter");
             }
         }
 
         public string RockPicture
         {
-            get { return _rock.RockPicturePath; }
+            get { return rock.RockPicturePath; }
             set
             {
-                _rock.RockPicturePath = value;
+                rock.RockPicturePath = value;
                 OnPropertyChanged("RockPicture");
             }
         }
@@ -59,10 +59,10 @@ namespace DiReCTUI.ViewModel
 
         public string RockNote
         {
-            get { return _rock.RockNotes; }
+            get { return rock.RockNotes; }
             set
             {
-                _rock.RockNotes = value;
+                rock.RockNotes = value;
                 OnPropertyChanged("RockNote");
             }
         }
@@ -80,7 +80,7 @@ namespace DiReCTUI.ViewModel
         }
         private void SaveObject()
         {
-            this._debrisFlowCollection.AddRecord(_rock);
+            this.debrisFlowCollection.AddRecord(rock);
             Close();
 
         }
@@ -88,9 +88,9 @@ namespace DiReCTUI.ViewModel
         public RockViewModel(Action<DialogBase> closeHandler, DebrisFlowCollection debrisFlowCollection, DebrisFlowRecord.Rock Rock) : base(closeHandler)
         {
            
-            _rock = Rock;
+            rock = Rock;
             RockPicture = "Heyhy";
-            _debrisFlowCollection = debrisFlowCollection;
+            debrisFlowCollection = debrisFlowCollection;
             
         }
 

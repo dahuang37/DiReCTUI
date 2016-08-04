@@ -53,23 +53,15 @@ namespace DiReCTUI.Map
     public partial class MainMap : UserControl
     {
 
-        /// <summary>
-        /// use to save the last point user touch screen to add marker
-        /// </summary>
+        // use to save the last point user touch screen to add marker
         private Location lastTouchLocation;
 
-        /// <summary>
-        /// current marker indicates user location
-        /// </summary>
+        // current marker indicates user location
         private DraggablePin currentMarker;
 
         private const double earthRadiusInKilometers = 6367.0;
-
-
-        /// <summary>
-        /// This constructor initializes the Map and currentMarker
-        /// </summary>
-        /// 
+        
+        // This constructor initializes the Map and currentMarker
         public MainMap()
         {
             InitializeComponent();
@@ -114,10 +106,8 @@ namespace DiReCTUI.Map
             stalliteMap.CanDragMap = false;
         }
 
-        /// <summary>
-        /// return currentMarker for other class to manipulate
-        /// </summary>
-        /// <returns></returns>
+     
+        // return currentMarker for other class to manipulate
         public DraggablePin GetCurrentMarker()
         {
             if (currentMarker == null)
@@ -127,10 +117,8 @@ namespace DiReCTUI.Map
             return currentMarker;
         }
 
-        /// <summary>
-        /// set currentMarker's position
-        /// </summary>
-        /// <param name="loc"></param>
+        
+        // set currentMarker's position
         public void SetCurrentMarkerPosition(Location location)
         {
             if (currentMarker != null)
@@ -139,25 +127,18 @@ namespace DiReCTUI.Map
             }
         }
 
-        /// <summary>
-        /// return the map's ViewPortPointToLocation Function
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
+     
+        // return the map's ViewPortPointToLocation Function
         public Location ViewPortToLocation(Point point)
         {
             return this.map.ViewportPointToLocation(point);
         }
 
         
-        /// <summary>
-        /// add immutable pushpins to the map
-        /// </summary>
-        /// <param name="loc"></param>
-        /// <param name="label"></param>
+      
+        // add immutable pushpins to the map
         public void AddPushPins(Location loc, string label)
         {
-
             var pin = new Pushpin();
             {
                 pin.Location = new Location(loc);
@@ -168,13 +149,8 @@ namespace DiReCTUI.Map
             }
             map.Children.Add(pin);
         }
-
-        /// <summary>
-        /// add draggable pushpin to the map
-        /// </summary>
-        /// <param name="Latitude"></param>
-        /// <param name="Longitude"></param>
-        /// <param name="label"></param>
+        
+        // add draggable pushpin to the map
         public void AddDraggablePins(Location loc, string label)
         {
             var pin = new DraggablePin(map);
@@ -207,12 +183,8 @@ namespace DiReCTUI.Map
         }
 
         // private helpers for draw circle
-        /// <summary>
-        /// formula from online to convert from Location type to meters
-        /// </summary>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        /// <returns></returns>
+      
+        // formula from online to convert from Location type to meters
         private LocationCollection CreateCircleLocations(Location center, double radius)
         {
             var earthRadius = earthRadiusInKilometers;
@@ -233,43 +205,27 @@ namespace DiReCTUI.Map
 
             return locations;
         }
-        /// <summary>
-        /// convert degree to radian
-        /// </summary>
-        /// <param name="degrees"></param>
-        /// <returns></returns>
+ 
+        // convert degree to radian
         private double ToRadian(double degrees)
         {
             return degrees * (Math.PI / 180);
         }
-
-        /// <summary>
-        /// radian to degree
-        /// </summary>
-        /// <param name="radians"></param>
-        /// <returns></returns>
+        
+        // radian to degree
         private double ToDegrees(double radians)
         {
             return radians * (180 / Math.PI);
         }
 
-
-        /// <summary>
-        /// Use to store the last touchpoint by user
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Use to store the last touchpoint by user
         private void BingMap_TouchDown(object sender, TouchEventArgs e)
         {
             var touchPoint = e.GetTouchPoint(this);
             lastTouchLocation = map.ViewportPointToLocation(touchPoint.Position);
         }
 
-        /// <summary>
-        /// Button that zooms in the map
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Button that zooms in the map
         private void ZoomIn_Click(object sender, EventArgs e)
         {
             stalliteMap.Zoom = stalliteMap.Zoom + 1;
@@ -277,23 +233,15 @@ namespace DiReCTUI.Map
 
         }
 
-        /// <summary>
-        /// Button that zoomout out the map
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Button that zoomout out the map
         private void ZoomOut_Click(object sender, EventArgs e)
         {
             map.ZoomLevel--;
             stalliteMap.Zoom--;
         }
 
-        /// <summary>
-        /// testing button
-        /// currently it switches from the Mecrator map (googleMap) to Satellite map
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // testing button
+        // currently it switches from the Mecrator map (googleMap) to Satellite map
         private void Add_Marker_Click(object sender, EventArgs e)
         {
 
@@ -309,8 +257,6 @@ namespace DiReCTUI.Map
                 stalliteMap.Visibility = Visibility.Hidden;
                 map.Visibility = Visibility.Visible;
             }
-
-
         }
         
         

@@ -11,9 +11,10 @@ namespace DiReCTUI.Controls
     public partial class SOP
     {
 
-        public List<SOP> LocationSOPCollection = new List<SOP>();
-        public Location Location;
-        public List<string> SOPTask;
+        private List<SOP> LocationSOPCollection = new List<SOP>();
+
+        public Location Location { get; set; }
+        public List<string> SOPTask { get; set; }
         
         public SOP()
         {
@@ -23,7 +24,6 @@ namespace DiReCTUI.Controls
         {
             this.Location = location;
             this.SOPTask = sopTask;
-            
         }
        
         public void Add(Location location, List<string> sopTask)

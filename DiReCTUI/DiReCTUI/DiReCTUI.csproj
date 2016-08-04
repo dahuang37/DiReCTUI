@@ -88,7 +88,7 @@
     </ApplicationDefinition>
     <Compile Include="Controls\DialogController.cs" />
     <Compile Include="Controls\DebrisFlowSOP.cs" />
-    <Compile Include="Controls\GPSInterface.cs" />
+    <Compile Include="Controls\IGPSTracker.cs" />
     <Compile Include="Controls\SOP.cs" />
     <Compile Include="Controls\SOPDisplay.cs" />
     <Compile Include="Map\Credential.cs" />

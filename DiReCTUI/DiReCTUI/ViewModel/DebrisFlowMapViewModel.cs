@@ -24,22 +24,25 @@ namespace DiReCTUI.ViewModel
     public class DebrisFlowMapViewModel : ViewModelBase
     {
        
-        // these two are supposed to be readonly but then I can't set the value
-        DebrisFlowRecord _debrisFlowRecord;
-        DebrisFlowCollection _debrisFlowCollection;
+        private DebrisFlowRecord debrisFlowRecord;
+        private DebrisFlowCollection debrisFlowCollection;
 
         // might be removed to another later
-        private IDialogCoordinator _dialogCoordinator;
+        private IDialogCoordinator dialogCoordinator;
         private CustomDialog custom;
+
+        // these are used to load and display sop
         private SOP sop;
         private SOPDisplay sopDisplay;
         private ObservableCollection<SOPDisplay> sopTypes = new ObservableCollection<SOPDisplay>();
        
+        // private display variables
         private Visibility addButtonContent = Visibility.Collapsed;
         private RelayCommand toggleAddButton;
-        private RelayCommand addWindow;
+        private RelayCommand addDialog;
         private MapController mapController;
 
+        // Displays the SOP Types to be recorded
         public ObservableCollection<SOPDisplay> SOPTypes
         {
             get { return sopTypes; }
@@ -58,6 +61,7 @@ namespace DiReCTUI.ViewModel
                 }
             }
         }
+
         // Command to toggle the visibility of Add Button's content visibility
         public ICommand ToggleAddButton
         {
@@ -78,19 +82,19 @@ namespace DiReCTUI.ViewModel
         }
 
         // Add dialog for user to input
-        public ICommand AddWindow
+        public ICommand AddDialog
         {
             get
             {
-                if (addWindow == null)
+                if (addDialog == null)
                 {
-                    addWindow = new RelayCommand(p => CreateWindow(p));
+                    addDialog = new RelayCommand(p => CreateDialog(p));
                 }
-                return this.addWindow;
+                return this.addDialog;
             }
         }
-
-        private async void CreateWindow(object parameter)
+        // Base on what user click, generate the corresonding dialog type
+        private async void CreateDialog(object parameter)
         {
             var str = parameter as string;
             this.ChangeView();
@@ -98,10 +102,10 @@ namespace DiReCTUI.ViewModel
             {
                 case "Rock":
                     custom = new CustomDialog() { Title = str };
-                    var RockViewModel = new RockViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom),
-                        _debrisFlowCollection, new DebrisFlowRecord.Rock());
+                    var RockViewModel = new RockViewModel(instance => dialogCoordinator.HideMetroDialogAsync(this, custom),
+                        debrisFlowCollection, new DebrisFlowRecord.Rock());
                     custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
-                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
+                    await dialogCoordinator.ShowMetroDialogAsync(this, custom);
                     break;
                 case "Slope":
                     break;
@@ -116,12 +120,13 @@ namespace DiReCTUI.ViewModel
             }
         }
         
+        // load / initialize all the variables
         public DebrisFlowMapViewModel(MainMap map, DebrisFlowRecord debrisFlowRecord, DebrisFlowCollection debrisFlowCollection) 
         {
-            this._debrisFlowRecord = debrisFlowRecord;
-            this._debrisFlowCollection = debrisFlowCollection;
+            this.debrisFlowRecord = debrisFlowRecord;
+            this.debrisFlowCollection = debrisFlowCollection;
 
-            this._dialogCoordinator = new DialogCoordinator();
+            this.dialogCoordinator = new DialogCoordinator();
 
             //set up map controller
             mapController = new MapController(map);
@@ -142,7 +147,7 @@ namespace DiReCTUI.ViewModel
             List<string> titleList = sop.SOPTypes;
             foreach (string title in titleList)
             {
-                sopTypes.Add(new SOPDisplay() { Title = title, Command = AddWindow });
+                sopTypes.Add(new SOPDisplay() { Title = title, Command = AddDialog });
             }
         }
 
@@ -159,6 +164,7 @@ namespace DiReCTUI.ViewModel
             }
         }
 
+        // when the user's location changed, checked if the new location is in range of any designated point
         async void OnLocationChanged(object s, LocationChangedEventArgs e)
         {
             var locationSOP = sop.GetLocationSOP();
@@ -168,10 +174,10 @@ namespace DiReCTUI.ViewModel
                 {
                     custom = new CustomDialog() { Title = "Please Record" };
                     List<string> sopTask = sop.SOPTask;
-                    var ReminderViewModel = new DebrisFlowReminderViewModel(instance => _dialogCoordinator.HideMetroDialogAsync(this, custom),
+                    var ReminderViewModel = new DebrisFlowReminderViewModel(instance => dialogCoordinator.HideMetroDialogAsync(this, custom),
                         sopTask);
                     custom.Content = new DebrisFlowReminderDialog { DataContext = ReminderViewModel };
-                    await _dialogCoordinator.ShowMetroDialogAsync(this, custom);
+                    await dialogCoordinator.ShowMetroDialogAsync(this, custom);
                     return;
                 }
             }

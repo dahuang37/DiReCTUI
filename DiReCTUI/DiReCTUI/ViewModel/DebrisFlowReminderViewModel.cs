@@ -22,9 +22,9 @@ namespace DiReCTUI.ViewModel
             get { return recordList; }
         }
         
+        // add the items to be recorded to the list
         public DebrisFlowReminderViewModel(Action<DialogBase> closeHandler, List<string> sopTask) : base(closeHandler)
         {
-
             foreach(string str in sopTask)
             {
                 recordList.Add(new SOPDisplay() { Title = str });

@@ -9,7 +9,6 @@ namespace DiReCTUI.ViewModel
 {
     public class DialogBase : ViewModelBase
     {
-
         private RelayCommand closeCommand;
         private Action<DialogBase> closeHandler;
 

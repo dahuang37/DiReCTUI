@@ -18,7 +18,7 @@ using DiReCTUI.Controls;
 
 namespace DiReCTUI.Map
 {
-    public class MapController : GPSInterface
+    public class MapController : IGPSTracker
     {
         private string status;
         private Location location;
@@ -52,7 +52,7 @@ namespace DiReCTUI.Map
             }
         }
 
-        // This indicates user's location
+        // user's location
         public Location Location
         {
             get { return location; }
@@ -67,6 +67,7 @@ namespace DiReCTUI.Map
         // set up the map and marker
         public MapController(MainMap map)
         {
+            //StartTracking();
             this.map = map;
             this.currentMarker = map.GetCurrentMarker();
             if (map != null)
@@ -76,6 +77,7 @@ namespace DiReCTUI.Map
         }
 
         // set the Location to where the Touch/Mouse Click
+        // this should be removed later when the app is actually using GPS to track user location
         public void SetCurrentPosition(object s, MouseEventArgs e)
         {
             var mouseMapPosition = e.GetPosition(map);
@@ -138,14 +140,12 @@ namespace DiReCTUI.Map
 
             return d;
         }
-
         private double ConvertToRadians(double angle)
         {
             return (Math.PI / 180) * angle;
         }
-
-       
-        /// add SOP pushpin, Pushpin with circle around the center
+        
+        // add SOP pushpin, Pushpin with circle around the center
         public void AddPushPinWithCircle(Location location, List<string> label, double radius = 0.15)
         {
             map.DrawCircle(location, radius);

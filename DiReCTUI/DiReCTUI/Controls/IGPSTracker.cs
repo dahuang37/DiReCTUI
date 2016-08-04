@@ -10,7 +10,7 @@ using Microsoft.Maps.MapControl.WPF;
 
 namespace DiReCTUI.Controls
 {
-    public interface GPSInterface
+    public interface IGPSTracker
     {
         
         Location Location
