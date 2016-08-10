@@ -91,7 +91,6 @@
     <Compile Include="Controls\IGPSTracker.cs" />
     <Compile Include="Controls\SOP.cs" />
     <Compile Include="Controls\SOPDisplay.cs" />
-    <Compile Include="Map\Credential.cs" />
     <Compile Include="Map\DraggablePin.cs" />
     <Compile Include="Map\LocationChangedEventArgs.cs" />
     <Compile Include="Map\MainMap.xaml.cs">

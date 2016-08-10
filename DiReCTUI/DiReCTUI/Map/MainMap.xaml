@@ -17,7 +17,7 @@
             ZoomLevel="16"
             TouchDown="BingMap_TouchDown"
             Visibility="Visible"
-            CredentialsProvider="your-crediential-here"
+            CredentialsProvider="your-credential-here"
                >
             <local:CustomTileLayer />
         </m:Map>
