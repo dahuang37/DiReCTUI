@@ -9,4 +9,5 @@ namespace DiReCTUI.Controls
     public class DialogController
     {
     }
+
 }

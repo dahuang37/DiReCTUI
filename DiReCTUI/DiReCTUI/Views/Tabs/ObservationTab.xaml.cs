@@ -23,11 +23,7 @@ namespace DiReCTUI.Views.Tabs
             InitializeComponent();
         }
 
-        /// <summary>
-        /// initialize map and viewmodel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // initialize map and viewmodel
         private void Debris_Flow_Click(object sender, RoutedEventArgs e)
         {      
             var debrisFlowPage = new DebrisFlowPage();

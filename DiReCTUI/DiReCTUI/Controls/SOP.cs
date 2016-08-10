@@ -47,6 +47,7 @@ namespace DiReCTUI.Controls
         {
             LocationSOPCollection.Clear();
         }
-       
+
     }
+    
 }

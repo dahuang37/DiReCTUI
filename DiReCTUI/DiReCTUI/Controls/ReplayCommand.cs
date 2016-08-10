@@ -13,15 +13,10 @@ namespace DiReCTUI
     /// </summary>
     public class RelayCommand : ICommand
     {
-        #region Fields
-
+  
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
-
-        #endregion // Fields
-
-        #region Constructors
-
+        
         /// <summary>
         /// Creates a new command that can always execute.
         /// </summary>
@@ -50,10 +45,7 @@ namespace DiReCTUI
             _canExecute = canExecute;
         }
 
-        #endregion // Constructors
-
-        #region ICommand Members
-
+        
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
@@ -71,6 +63,7 @@ namespace DiReCTUI
             _execute(parameter);
         }
 
-        #endregion // ICommand Members
+ 
     }
+    
 }

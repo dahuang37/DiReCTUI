@@ -49,27 +49,13 @@
             Grid.Row="2"
             Grid.Column="0"
             Margin="0 8 0 0">
-            Rock Picture
+            Rock Picture Direction
         </TextBlock>
         <TextBox 
-            Text="{Binding RockPicture}"
+            Text="{Binding RockPictureDirection}"
             Margin="0 8 0 0"
             Grid.Row="2"
             Grid.Column="1"/>
-
-        <TextBlock 
-            Grid.Row="3"
-            Grid.Column="0"
-            Margin="0 8 0 0">
-            Rock Note
-        </TextBlock>
-        <TextBox 
-            Height="50"
-            Margin="0 8 0 0"
-            Grid.Row="3"
-            Grid.Column="1"
-            Text="{Binding RockNote}">
-        </TextBox>
 
         <StackPanel 
             Orientation="Horizontal" 

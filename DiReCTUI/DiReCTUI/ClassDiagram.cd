@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DiReCTUI.App" Collapsed="true">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.75" Y="2.5" Width="1.5" />
+    <Position X="16.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
@@ -16,29 +16,29 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.25" Y="2.5" Width="1.5" />
+    <Position X="22.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ReplayCommand.cs</FileName>
+      <FileName>Controls\ReplayCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.Controls.DebrisFlowSOP" Collapsed="true">
-    <Position X="6" Y="2.5" Width="1.5" />
+    <Position X="25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Controls\DebrisFlowSOP.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Controls.SOP" Collapsed="true">
-    <Position X="7.75" Y="3.5" Width="1.5" />
+    <Position X="25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAEAAAAAAAAAAAoAAACBAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Controls\SOP.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.CustomTileSource" Collapsed="true">
-    <Position X="6" Y="1.5" Width="1.5" />
+    <Position X="25.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAABAAA=</HashCode>
       <FileName>Map\MainMap.xaml.cs</FileName>
@@ -46,7 +46,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.CustomTileLayer" Collapsed="true">
-    <Position X="13" Y="0.5" Width="1.5" />
+    <Position X="24.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Map\MainMap.xaml.cs</FileName>
@@ -54,75 +54,75 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.Credential" Collapsed="true">
-    <Position X="11.25" Y="0.5" Width="1.5" />
+    <Position X="21.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Map\Credential.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.DraggablePin" Collapsed="true">
-    <Position X="13" Y="1.5" Width="1.5" />
+    <Position X="22.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EBgAEAAAAAAAAEAAAAAAAAIEAAEAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Map\DraggablePin.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Model.BackgroundInfo" Collapsed="true">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Model\BackgroundInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Model.DebrisFlowCollection" Collapsed="true">
-    <Position X="7.75" Y="1.5" Width="1.5" />
+    <Position X="4" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAIBAAAAAAAAAAACAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\DebrisFlowCollection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Model.DebrisFlowRecord" Collapsed="true">
-    <Position X="3.5" Y="4.75" Width="1.5" />
+    <Position X="2.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAgAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Observations\DebrisFlowRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Model.ObservationRecord" Collapsed="true">
-    <Position X="3.5" Y="3.5" Width="1.5" />
+    <Position X="2.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAACBAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAEEAA=</HashCode>
       <FileName>Model\Observations\ObservationRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Properties.Resources" Collapsed="true">
-    <Position X="13" Y="2.5" Width="1.5" />
+    <Position X="12.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Properties.Settings" Collapsed="true">
-    <Position X="6" Y="3.5" Width="1.5" />
+    <Position X="11" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.ViewModel.DebrisFlowMapViewModel" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Position X="12.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAEgJEAAAAAAIAACAAACAYABAgAQAAACCABAAABAAAQ=</HashCode>
       <FileName>ViewModel\DebrisFlowMapViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.ViewModel.RockViewModel" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="7.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAIAACACAAAAAECAAAABAAAAAAAAAgAAAAJBAAAA=</HashCode>
+      <HashCode>gAAAAIAAAACAAAAAACAAAABAAAAAAAAAgAAAAJBCAAA=</HashCode>
       <FileName>ViewModel\RockViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.ViewModel.ViewModelBase" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+    <Position X="10.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAQAQgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\ViewModelBase.cs</FileName>
@@ -130,7 +130,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="DiReCTUI.Views.DebrisFlowMap" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="1.5" Width="1.5" />
+    <Position X="16.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\DebrisFlowMap.xaml.cs</FileName>
@@ -138,7 +138,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.Views.DebrisFlowPage" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.25" Y="1.5" Width="1.5" />
+    <Position X="16.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\DebrisFlowPage.xaml.cs</FileName>
@@ -146,7 +146,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.Views.Tabs.ObservationTab" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="2.5" Width="1.5" />
+    <Position X="16.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>Views\Tabs\ObservationTab.xaml.cs</FileName>
@@ -154,22 +154,110 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DiReCTUI.Controls.DialogController" Collapsed="true">
-    <Position X="1.5" Y="5" Width="1.5" />
+    <Position X="24.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Controls\DialogController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DiReCTUI.Map.MapController" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.5" />
+    <Position X="21.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAsABEAAAAAAACIAIAAABSCAACBAAAAgAEAAAAAAA=</HashCode>
       <FileName>Map\MapController.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="DiReCTUI.Controls.SOPDisplay" Collapsed="true">
+    <Position X="25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\SOPDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Map.LocationChangedEventArgs" Collapsed="true">
+    <Position X="24.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\LocationChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Map.MainMap" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgAgSAgAAAAAAIAoAAAABACAAAAABIIACAACAAAAAA=</HashCode>
+      <FileName>Map\MainMap.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DiReCTUI.ViewModel.DebrisFlowReminderViewModel" Collapsed="true">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>ViewModel\DebrisFlowReminderViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.ViewModel.DialogBase" Collapsed="true">
+    <Position X="8.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAEAAAABAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ViewModel\DialogBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Views.DebrisFlowRecordDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\DebrisFlowRockDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DiReCTUI.Views.DebrisFlowReminderDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\DebrisFlowReminderDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DiReCTUI.Model.Observations.Catchment" Collapsed="true">
+    <Position X="5.75" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="DiReCTUI.Model.DebrisFlowRecord" ManuallyRouted="true">
+      <Path>
+        <Point X="3" Y="5.427" />
+        <Point X="3" Y="6.363" />
+        <Point X="6.5" Y="6.363" />
+        <Point X="6.5" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Observations\Catchment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Model.Observations.Plantation" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Model\Observations\Plantation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Model.Observations.Rock" Collapsed="true">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAACAAA=</HashCode>
+      <FileName>Model\Observations\Rock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiReCTUI.Model.Observations.Slope" Collapsed="true">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Model\Observations\Slope.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="DiReCTUI.Controls.IGPSTracker" Collapsed="true">
-    <Position X="6" Y="4.75" Width="1.5" />
+    <Position X="22.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAIAIAAAAAAAAABAAAAAAEAAAAAAA=</HashCode>
       <FileName>Controls\IGPSTracker.cs</FileName>

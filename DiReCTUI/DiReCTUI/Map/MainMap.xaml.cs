@@ -39,6 +39,7 @@ namespace DiReCTUI.Map
         }
     }
 
+
     public class CustomTileLayer : MapTileLayer
     {
         public CustomTileLayer()
@@ -47,10 +48,12 @@ namespace DiReCTUI.Map
         }
     }
 
+
+
     /// <summary>
     /// Interaction logic for MainMap.xaml
     /// </summary>
-    public partial class MainMap : UserControl
+    public partial class MainMap 
     {
 
         // use to save the last point user touch screen to add marker
@@ -66,7 +69,6 @@ namespace DiReCTUI.Map
         {
             InitializeComponent();
 
-            map.CredentialsProvider = new Credential().getCredential();
             map.Focus();
 
             ///this part was in the demo, but I found that removing this part
@@ -258,7 +260,9 @@ namespace DiReCTUI.Map
                 map.Visibility = Visibility.Visible;
             }
         }
-        
-        
+
+
     }
+
+   
 }

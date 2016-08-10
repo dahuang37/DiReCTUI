@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 using DiReCTUI.Model;
+using DiReCTUI.Model.Observations;
 
 namespace DiReCTUI.ViewModel
 {
@@ -13,8 +14,8 @@ namespace DiReCTUI.ViewModel
     {
         
         private RelayCommand save;
-        private DebrisFlowRecord.Rock.RockTypes selectedRockType;
-        private DebrisFlowRecord.Rock rock;
+        private Rock.RockTypes selectedRockType;
+        private Rock rock;
         private DebrisFlowCollection debrisFlowCollection;
 
         public int RockDiameter
@@ -27,17 +28,17 @@ namespace DiReCTUI.ViewModel
             }
         }
 
-        public string RockPicture
+        public string RockPictureDirection
         {
-            get { return rock.RockPicturePath; }
+            get { return rock.RockPictureDirection; }
             set
             {
-                rock.RockPicturePath = value;
-                OnPropertyChanged("RockPicture");
+                rock.RockPictureDirection = value;
+                OnPropertyChanged("RockPictureDirection");
             }
         }
         
-        public DebrisFlowRecord.Rock.RockTypes SelectedRockType
+        public Rock.RockTypes SelectedRockType
         {
             get { return selectedRockType; }
             set
@@ -48,25 +49,15 @@ namespace DiReCTUI.ViewModel
             }
         }
 
-        public IEnumerable<DebrisFlowRecord.Rock.RockTypes> RockTypeValues
+        public IEnumerable<Rock.RockTypes> RockTypeValues
         {
             get
             {
-                return Enum.GetValues(typeof(DebrisFlowRecord.Rock.RockTypes))
-                    .Cast<DebrisFlowRecord.Rock.RockTypes>();
+                return Enum.GetValues(typeof(Rock.RockTypes))
+                    .Cast<Rock.RockTypes>();
             }
         }
-
-        public string RockNote
-        {
-            get { return rock.RockNotes; }
-            set
-            {
-                rock.RockNotes = value;
-                OnPropertyChanged("RockNote");
-            }
-        }
-
+        
         public ICommand Save
         {
             get
@@ -85,12 +76,11 @@ namespace DiReCTUI.ViewModel
 
         }
         
-        public RockViewModel(Action<DialogBase> closeHandler, DebrisFlowCollection debrisFlowCollection, DebrisFlowRecord.Rock Rock) : base(closeHandler)
+        public RockViewModel(Action<DialogBase> closeHandler, DebrisFlowCollection debrisFlowCollection, Rock rock) : base(closeHandler)
         {
            
-            rock = Rock;
-            RockPicture = "Heyhy";
-            debrisFlowCollection = debrisFlowCollection;
+            this.rock = rock;
+            this.debrisFlowCollection = debrisFlowCollection;
             
         }
 

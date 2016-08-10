@@ -40,6 +40,7 @@ namespace DiReCTUI.Views
                 this.NavigationService.GoBack();
             }
         }
-        
+
+       
     }
 }

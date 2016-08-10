@@ -8,14 +8,14 @@ namespace DiReCTUI.Model
 {
     public class DebrisFlowCollection
     {
-        List<DebrisFlowRecord.Rock> debrisFlowRecords;
+        List<DebrisFlowRecord> debrisFlowRecords;
         
         public DebrisFlowCollection()
         {
-            debrisFlowRecords = new List<DebrisFlowRecord.Rock>();
+            debrisFlowRecords = new List<DebrisFlowRecord>();
         }
 
-        public void AddRecord(DebrisFlowRecord.Rock record)
+        public void AddRecord(DebrisFlowRecord record)
         {
             
             if (!debrisFlowRecords.Contains(record))
@@ -24,14 +24,14 @@ namespace DiReCTUI.Model
             }
         }
 
-        public bool ContainRecord(DebrisFlowRecord.Rock record)
+        public bool ContainRecord(DebrisFlowRecord record)
         {
             return debrisFlowRecords.Contains(record);
         }
 
-        public List<DebrisFlowRecord.Rock> GetRecord()
+        public List<DebrisFlowRecord> GetRecord()
         {
-            return new List<DebrisFlowRecord.Rock>(debrisFlowRecords);
+            return new List<DebrisFlowRecord>(debrisFlowRecords);
         }
 
         public int Count()

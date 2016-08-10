@@ -34,7 +34,7 @@ namespace DiReCTUI.Controls
             "Basic Info"
         };
 
-        
-        
+
+
     }
 }

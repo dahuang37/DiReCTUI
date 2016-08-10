@@ -100,16 +100,20 @@
     <Compile Include="Map\MapController.cs" />
     <Compile Include="Model\BackgroundInfo.cs" />
     <Compile Include="Model\DebrisFlowCollection.cs" />
+    <Compile Include="Model\Observations\Catchment.cs" />
     <Compile Include="Model\Observations\DebrisFlowRecord.cs" />
     <Compile Include="Model\Observations\ObservationRecord.cs" />
-    <Compile Include="ReplayCommand.cs" />
+    <Compile Include="Controls\ReplayCommand.cs" />
+    <Compile Include="Model\Observations\Plantation.cs" />
+    <Compile Include="Model\Observations\Rock.cs" />
+    <Compile Include="Model\Observations\Slope.cs" />
     <Compile Include="ViewModel\DebrisFlowMapViewModel.cs" />
     <Compile Include="ViewModel\DebrisFlowReminderViewModel.cs" />
     <Compile Include="ViewModel\DialogBase.cs" />
     <Compile Include="ViewModel\RockViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="Views\DebrisFlowRecordDialog.xaml.cs">
-      <DependentUpon>DebrisFlowRecordDialog.xaml</DependentUpon>
+    <Compile Include="Views\DebrisFlowRockDialog.xaml.cs">
+      <DependentUpon>DebrisFlowRockDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DebrisFlowReminderDialog.xaml.cs">
       <DependentUpon>DebrisFlowReminderDialog.xaml</DependentUpon>
@@ -147,7 +151,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DebrisFlowRecordDialog.xaml">
+    <Page Include="Views\DebrisFlowRockDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,7 +190,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

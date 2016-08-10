@@ -18,6 +18,7 @@ namespace DiReCTUI.Controls
         public SOPDisplay()
         {
         }
-        
+
     }
+
 }

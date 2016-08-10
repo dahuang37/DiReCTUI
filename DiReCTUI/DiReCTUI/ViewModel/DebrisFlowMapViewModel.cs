@@ -18,6 +18,7 @@ using MahApps.Metro.Controls;
 
 using System.Windows.Controls;
 using DiReCTUI.Views;
+using DiReCTUI.Model.Observations;
 
 namespace DiReCTUI.ViewModel
 {
@@ -103,7 +104,7 @@ namespace DiReCTUI.ViewModel
                 case "Rock":
                     custom = new CustomDialog() { Title = str };
                     var RockViewModel = new RockViewModel(instance => dialogCoordinator.HideMetroDialogAsync(this, custom),
-                        debrisFlowCollection, new DebrisFlowRecord.Rock());
+                        debrisFlowCollection, new Rock());
                     custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
                     await dialogCoordinator.ShowMetroDialogAsync(this, custom);
                     break;

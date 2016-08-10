@@ -16,4 +16,6 @@ namespace DiReCTUI.Map
             this.location = location;
         }
     }
+
+   
 }

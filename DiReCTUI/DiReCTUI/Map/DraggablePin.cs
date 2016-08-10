@@ -96,7 +96,8 @@ namespace DiReCTUI.Map
                 this.Location = mouseGeocode;
             }
         }
-    
+
     }
+
 }
 
