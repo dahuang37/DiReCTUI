@@ -18,6 +18,7 @@ namespace DiReCTUI.ViewModel
         private Rock rock;
         private DebrisFlowCollection debrisFlowCollection;
 
+        // properties from Rock class
         public int RockDiameter
         {
             get { return rock.AverageRockDiameter; }
@@ -38,6 +39,7 @@ namespace DiReCTUI.ViewModel
             }
         }
         
+        // indicates the selected item in the combo box
         public Rock.RockTypes SelectedRockType
         {
             get { return selectedRockType; }
@@ -49,6 +51,7 @@ namespace DiReCTUI.ViewModel
             }
         }
 
+        // binds with the combo box to display the values
         public IEnumerable<Rock.RockTypes> RockTypeValues
         {
             get
@@ -57,7 +60,9 @@ namespace DiReCTUI.ViewModel
                     .Cast<Rock.RockTypes>();
             }
         }
-        
+        // end
+
+        // bind with the save button
         public ICommand Save
         {
             get
@@ -69,6 +74,8 @@ namespace DiReCTUI.ViewModel
                 return save;
             }
         }
+
+        // add the record into the collection and close the dialog
         private void SaveObject()
         {
             this.debrisFlowCollection.AddRecord(rock);
@@ -76,6 +83,7 @@ namespace DiReCTUI.ViewModel
 
         }
         
+        // takes the close command, collection, and an instance of rock class
         public RockViewModel(Action<DialogBase> closeHandler, DebrisFlowCollection debrisFlowCollection, Rock rock) : base(closeHandler)
         {
            

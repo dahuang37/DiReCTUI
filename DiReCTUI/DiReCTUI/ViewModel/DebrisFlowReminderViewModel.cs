@@ -11,12 +11,14 @@ namespace DiReCTUI.ViewModel
 {
 
     /// <summary>
-    /// this class binds with the DebrisFlowReminderDialog 
+    /// this class binds with the DebrisFlowReminderDialog
+    /// The debrisFlowReminderDialog shows up when the user approaches one defined location
     /// </summary>
     public class DebrisFlowReminderViewModel : DialogBase
     {
         
         private ObservableCollection<SOPDisplay> recordList = new ObservableCollection<SOPDisplay>();
+        // binds with the listbox, must use observable collection to bind with listbox
         public ObservableCollection<SOPDisplay> RecordList
         {
             get { return recordList; }

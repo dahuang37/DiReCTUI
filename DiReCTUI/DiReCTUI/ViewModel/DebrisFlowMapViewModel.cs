@@ -102,10 +102,14 @@ namespace DiReCTUI.ViewModel
             switch (str)
             {
                 case "Rock":
+                    // initialize a basic dialog and set the title
                     custom = new CustomDialog() { Title = str };
+                    // initialize rock view model and pass the close capability, collection, and new object.
                     var RockViewModel = new RockViewModel(instance => dialogCoordinator.HideMetroDialogAsync(this, custom),
                         debrisFlowCollection, new Rock());
+                    //set the dialog's content to the rock view page
                     custom.Content = new DebrisFlowRecordDialog { DataContext = RockViewModel };
+                    // wait for the dialog to finish
                     await dialogCoordinator.ShowMetroDialogAsync(this, custom);
                     break;
                 case "Slope":
@@ -146,6 +150,7 @@ namespace DiReCTUI.ViewModel
         void AddSOPTypes(DebrisFlowSOP sop)
         {
             List<string> titleList = sop.SOPTypes;
+            // takes the list of data types from SOP and add it to the list
             foreach (string title in titleList)
             {
                 sopTypes.Add(new SOPDisplay() { Title = title, Command = AddDialog });
@@ -158,6 +163,7 @@ namespace DiReCTUI.ViewModel
             if (mapController != null)
             {
                 var locationSOP = sop.GetLocationSOP();
+                // takes the defined locations from SOP and add pushpins onto map
                 foreach (SOP s in locationSOP)
                 {
                     mapController.AddPushPinWithCircle(s.Location, s.SOPTask);
